@@ -20,6 +20,7 @@ export interface privateAgreeType {
     isAgree: boolean;
     isUseConfirm: boolean;
     isAdvertisionConfirm?: boolean;
+
 }
 
 export interface Logout {

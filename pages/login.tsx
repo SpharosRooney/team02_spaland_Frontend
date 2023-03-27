@@ -49,11 +49,14 @@ export default function login() {
             //   console.log(res);
             // });
 
-            axios.post('http://10.10.10.196:8080/api/v1/auth/authenticate', {
+            axios.post('http://10.10.10.71:8080/api/v1/auth/authenticate', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:true}).then(res => {
-                setLoginData(res.data);
+                console.log('res',res)
+                console.log('res.data',res.data)
+                console.log('res.header',res.headers)
+                setLoginData(res.data.data);
                 setIsLogIn(true);
                 let myLogin = localStorage;
                 myLogin.setItem("userEmail", res.data.userEmail);

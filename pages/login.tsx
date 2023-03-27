@@ -8,11 +8,12 @@ import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import Router from 'next/router';
 
+axios.defaults.withCredentials = true;
+
 export default function login() { 
 
     const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
     const setIsLogIn = useSetRecoilState<boolean>(userIsLoginState);
-
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -49,16 +50,17 @@ export default function login() {
             //   console.log(res);
             // });
 
-            axios.post('http://10.10.10.196:8080/api/v1/auth/authenticate', {
+            axios.post('http://10.10.10.71:8080/api/v1/auth/authenticate', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:true}).then(res => {
                 setLoginData(res.data);
                 setIsLogIn(true);
-                let myLogin = localStorage;
-                myLogin.setItem("userEmail", res.data.userEmail);
-                myLogin.setItem("token", res.data.token);
-                myLogin.setItem("refreshToken", res.data.refreshToken);
+                const token = res.data.token;
+                const refreshToken = res.data.refreshToken;
+                localStorage.setItem("token", token);
+                localStorage.setItem("refreshToken", refreshToken);
+                return res.data;
             }).then(() => {
                 Swal.fire({
                     icon: "success",
@@ -72,12 +74,7 @@ export default function login() {
             })
                 .catch(err => {
                     console.log(err);
-                    Swal.fire({
-                        icon: "success",
-                        text: "Welcome!",
-                    })
                 })
-
         }
     };
 

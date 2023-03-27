@@ -8,11 +8,12 @@ import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import Router from 'next/router';
 
+axios.defaults.withCredentials = true;
+
 export default function login() { 
 
     const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
     const setIsLogIn = useSetRecoilState<boolean>(userIsLoginState);
-
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -58,10 +59,11 @@ export default function login() {
                 console.log('res.header',res.headers)
                 setLoginData(res.data.data);
                 setIsLogIn(true);
-                let myLogin = localStorage;
-                myLogin.setItem("userEmail", res.data.userEmail);
-                myLogin.setItem("token", res.data.token);
-                myLogin.setItem("refreshToken", res.data.refreshToken);
+                const token = res.data.token;
+                const refreshToken = res.data.refreshToken;
+                localStorage.setItem("token", token);
+                localStorage.setItem("refreshToken", refreshToken);
+                return res.data;
             }).then(() => {
                 Swal.fire({
                     icon: "success",
@@ -75,12 +77,7 @@ export default function login() {
             })
                 .catch(err => {
                     console.log(err);
-                    Swal.fire({
-                        icon: "success",
-                        text: "Welcome!",
-                    })
                 })
-
         }
     };
 

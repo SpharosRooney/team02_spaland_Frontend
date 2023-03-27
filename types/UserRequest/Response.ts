@@ -1,6 +1,4 @@
 export interface LoginRes {
-    userEmail: string;
-    accessToken: string;
+    token: string;
     refreshToken: string;
-    isLogin: boolean,
 }

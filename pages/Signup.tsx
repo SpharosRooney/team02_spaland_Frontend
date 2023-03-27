@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import Step01 from '@/components/page/signup/step01';
 import Step02 from '@/components/page/signup/step02';
 import Step03 from '@/components/page/signup/step03';
-import Step04 from '@/components/page/signup/step04';
 import StButton from '@/components/ui/StButton';
 import axios from 'axios';
 import Link from 'next/link';
@@ -138,7 +137,7 @@ export default function signup() {
         })
         return;
       } else {
-        axios.post('http://10.10.10.104:8080/api/v1/auth/signup', {
+        axios.post('http://10.10.10.71:8080/api/v1/auth/signup', {
           userName: inputData.userName,
           userphone: inputData.phone,
           userEmail: inputData.userEmail,

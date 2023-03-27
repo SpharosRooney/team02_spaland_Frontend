@@ -8,6 +8,10 @@ import { headerMenu } from '@/types/starbucksTypes'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { LoginRes } from '@/types/UserRequest/Response'
 import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
+import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
+import axios from 'axios'
+import { Logout } from '@/types/UserInformation/Information'
+
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
 
@@ -23,6 +27,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
   const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [token, setToken] =useState<Logout[]>();
 
 
   useEffect(() => {
@@ -43,6 +48,25 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       .then(data => setsubNavBottomData(data))
   }, [])
 
+  //logout handler 추가
+  const logout = async() => {
+    axios.post('LOGOUT-url', {
+      headers: {
+        'Content-Type' : 'application/json',
+        headers : { Authorization : `Bearer ${token}` }
+      },
+    })
+    .then((res) => {
+      setToken(res.data);
+      localStorage.setItem("userEmail", res.data.userEmail);
+      localStorage.setItem("token", res.data.token);  
+      localStorage.setItem("refreshToken", res.data.refreshToken);
+      localStorage.getItem('token')
+      localStorage.removeItem("token");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("refreshToken");
+    });
+}
 
   return (
     <>
@@ -61,7 +85,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   headerIcons.map((icon) => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
                     icon.name === 'mypage' ?
                       <li key={icon.id}>
-                        <Link href={"/login"}><img src={icon.icon} /></Link>
+                        { token ?
+                          (<img src={icon.icon} onClick={logout}/>) :
+                          (<Link href={"/login"}><img src={icon.icon} /></Link>)
+                        }
                       </li>
                       :
                       icon.name === 'cart' ?

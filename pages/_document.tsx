@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <link rel="stylesheet" href="../assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/style.css" />
       </Head>
       <body>
         <Main />

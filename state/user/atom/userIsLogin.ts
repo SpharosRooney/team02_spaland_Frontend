@@ -10,18 +10,12 @@ export default function userIsLogin({ children }: userIsLoginProps) {
     const [token , setToken ] = useState<boolean>(false)
 
     useEffect(() => {
-        const Token = localStorage.getItem('Token')? true : false
-        if(Token === false ) {
+        const token = localStorage.getItem('token') ? true : false
+        if(token === false ) {
             Router.push('/login')
         } else {
-            setToken(Token)
+            setToken(token)
         }
     }, [children])
-  
-    return (
-        <>
-        {token === false && <login/>}
-        {token && children}
-        </>
-    )
+
 }

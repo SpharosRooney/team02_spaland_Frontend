@@ -7,11 +7,11 @@ import { LoginRes } from '@/types/UserRequest/Response';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import Router from 'next/router';
-
-axios.defaults.withCredentials = true;
+import Cookies from 'universal-cookie';
 
 export default function login() { 
 
+    const cookies = new Cookies();
     const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
     const setIsLogIn = useSetRecoilState<boolean>(userIsLoginState);
 
@@ -54,15 +54,17 @@ export default function login() {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:true}).then(res => {
-                console.log('res',res)
-                console.log('res.data',res.data)
-                console.log('res.header',res.headers)
+                console.log(loginData)
+                // console.log('res',res)
+                // console.log('res.data',res.data)
+                // console.log('res.header',res.headers)
                 setLoginData(res.data);
                 setIsLogIn(true);
                 const token = res.data.token;
                 const refreshToken = res.data.refreshToken;
                 localStorage.setItem("token", token);
-                localStorage.setItem("refreshToken", refreshToken);
+                // localStorage.setItem("refreshToken", refreshToken);
+                cookies.set("refreshToken", refreshToken, {sameSite: 'strict'})
                 return res.data;
             }).then(() => {
                 Swal.fire({

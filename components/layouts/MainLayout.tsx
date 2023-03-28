@@ -1,11 +1,19 @@
 import { bottomNavMenuType, subNavMenuType } from '@/types/navMenuType'
-import Head from 'next/head'
 import Link from 'next/link'
+import Image from "next/image"
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+
+import { filterMenuType, filterSubCategoryType, filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
 import { headerNavMenus, headerIcons, categoryList } from "@/datas/starbucksStaticDatas";
 import { headerMenu } from '@/types/starbucksTypes'
+
+//recoil
+import { useRecoilValue } from "recoil";
 import { useRecoilState, useSetRecoilState } from 'recoil'
+import { cartState } from "../../state/cartState";
+
+
 import { LoginRes } from '@/types/UserRequest/Response'
 import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
 import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
@@ -19,7 +27,9 @@ import { Logout } from '@/types/UserInformation/Information'
 export default function MainLayout(props: { children: React.ReactNode }) {
 
   const router = useRouter()
-  console.log(router.pathname)
+  const { pathname, query } = useRouter();
+  const productPath = pathname.split("/")[1];
+  const cartCnt = useRecoilValue(cartState)
 
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
 
@@ -27,7 +37,12 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
   const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [token, setToken] =useState<Logout[]>();
+  const [token, setToken] = useState<Logout[]>();
+  const [category, setCategory] = useState<filterMenuType[]>();
+  const [sizeList, setSizeList] = useState<sizeType[]>();
+
+  const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
+  const [filterList, setFilterList] = useState<filterType[]>([])
 
 
   useEffect(() => {
@@ -49,24 +64,63 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   }, [])
 
   //logout handler 추가
-  const logout = async() => {
+  const logout = async () => {
     axios.post('LOGOUT-url', {
       headers: {
-        'Content-Type' : 'application/json',
-        headers : { Authorization : `Bearer ${token}` }
+        'Content-Type': 'application/json',
+        headers: { Authorization: `Bearer ${token}` }
       },
     })
-    .then((res) => {
-      setToken(res.data);
-      localStorage.setItem("userEmail", res.data.userEmail);
-      localStorage.setItem("token", res.data.token);  
-      localStorage.setItem("refreshToken", res.data.refreshToken);
-      localStorage.getItem('token')
-      localStorage.removeItem("token");
-      localStorage.removeItem("userEmail");
-      localStorage.removeItem("refreshToken");
-    });
-}
+      .then((res) => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("refreshToken");
+      });
+  }
+
+  useEffect(() => {
+    axios.get(`http://localhost:3001/size`)
+      .then((res) => {
+        setSizeList(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }, [])
+
+  useEffect(() => {
+    console.log(query.category)
+    axios.get(`http://localhost:3001/smallCategory?bigCategory=${query.category}`)
+      .then((res) => {
+        console.log(res.data)
+        setSubCategory(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }, [query.category])
+
+  useEffect(() => {
+    console.log("filterList", filterList)
+    let url = ''
+
+    filterList.map((filter) => (
+      filter.checked ? url += `&${filter.name}=${filter.value}` : ''
+    ))
+    router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
+  }, [filterList])
+
+  const handleFilter = (name: String) => {
+    setFilterList([])
+    router.push(`/listview?category=${name}`)
+  }
+
+  const handleSubFilter = (event: ChangeEvent<HTMLInputElement>) => {
+    let checker = filterList.find((filter) => filter.value === event.target.value)
+    if (checker?.checked === true && event.target.checked === false) {
+      let newList = filterList.filter((filter) => filter.value !== event.target.value)
+      setFilterList(newList)
+    } else {
+      setFilterList([...filterList, { name: event.target.name, value: event.target.value, checked: event.target.checked }])
+    }
+  }
 
   return (
     <>
@@ -85,8 +139,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   headerIcons.map((icon) => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
                     icon.name === 'mypage' ?
                       <li key={icon.id}>
-                        { token ?
-                          (<img src={icon.icon} onClick={logout}/>) :
+                        {token ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
+                          (<img src={icon.icon} onClick={logout} />) :
                           (<Link href={"/login"}><img src={icon.icon} /></Link>)
                         }
                       </li>
@@ -99,17 +153,94 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                         </li>
                         :
                         icon.name === 'search' ?
-                        <li key={icon.id}>
-                          <Link href={icon.link}>
-                            <img src={icon.icon} />
-                          </Link>
-                        </li>
-                        : ""
-                    ))
-                  }
+                          <li key={icon.id}>
+                            <Link href={icon.link}>
+                              <img src={icon.icon} />
+                            </Link>
+                          </li>
+                          : ""
+                  ))}
               </ul>
             </nav>
           </div>
+          {pathname === "/product" ? (
+            <div className="header-bottom">
+              <nav>
+                <ul>
+                  {
+                    headerMenus.map((menu) => (
+                      <li
+                        key={menu.id}
+                        className={pathname === menu.link ? "active" : ""}
+                      >
+                        <Link href={menu.link}>{menu.name}</Link>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </nav>
+            </div>
+          ) : null
+          }
+
+          {pathname === "/listview" ?
+            <div className="header-bottom">
+
+              <nav>
+                <ul>
+                  {categoryList.map((menu) => (
+                    <li
+                      key={menu.id}
+                      onClick={() => handleFilter(menu.name)}
+                    >
+                      {menu.name}
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+            : null
+          }
+          {
+            subCategory &&
+
+            <div className="header-bottom">
+              <nav>
+                <ul>
+                  {
+                    subCategory.map((menu, idx) => (
+                      <li key={idx}>
+                        <input type='checkbox' name="subCategory" value={`${menu.name}`} onChange={handleSubFilter} />
+                        <label>{menu.name}</label>
+                      </li>
+                    ))
+                  }
+
+
+                </ul>
+              </nav>
+            </div>
+          }
+          {
+            sizeList && (query.category === "머그/컵" || query.category === "텀블러/보온병") ?
+
+              <div className="header-bottom">
+                <nav>
+                  <ul>
+                    {
+                      sizeList.map((menu, idx) => (
+                        <li key={idx}>
+                          <input type='checkbox' name="size" value={`${menu.name}`} onChange={handleSubFilter} />
+                          <label>{menu.name}</label>
+                        </li>
+                      ))
+                    }
+
+                  </ul>
+                </nav>
+              </div>
+              : null
+          }
           {
             navBottomData && navBottomData.map(nav => (
               router.pathname === nav.link ? (

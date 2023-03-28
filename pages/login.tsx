@@ -57,7 +57,7 @@ export default function login() {
                 console.log('res',res)
                 console.log('res.data',res.data)
                 console.log('res.header',res.headers)
-                setLoginData(res.data.data);
+                setLoginData(res.data);
                 setIsLogIn(true);
                 const token = res.data.token;
                 const refreshToken = res.data.refreshToken;

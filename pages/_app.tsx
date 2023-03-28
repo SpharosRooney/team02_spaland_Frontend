@@ -9,12 +9,11 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-
   return (
-      <RecoilRoot>
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
-      </RecoilRoot>
+    <RecoilRoot>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </RecoilRoot>
   )
 }

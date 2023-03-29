@@ -97,20 +97,20 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       })
   }, [query.category])
 
-  useEffect(() => {
-    console.log("filterList", filterList)
-    let url = ''
+  // useEffect(() => {
+  //   console.log("filterList", filterList)
+  //   let url = ''
 
-    filterList.map((filter) => (
-      filter.checked ? url += `&${filter.name}=${filter.value}` : ''
-    ))
-    router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
-  }, [filterList])
+  //   filterList.map((filter) => (
+  //     filter.checked ? url += `&${filter.name}=${filter.value}` : ''
+  //   ))
+  //   router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
+  // }, [filterList])
 
-  const handleFilter = (name: String) => {
-    setFilterList([])
-    router.push(`/listview?category=${name}`)
-  }
+  // const handleFilter = (name: String) => {
+  //   setFilterList([])
+  //   router.push(`/listview?category=${name}`)
+  // }
 
   const handleSubFilter = (event: ChangeEvent<HTMLInputElement>) => {
     let checker = filterList.find((filter) => filter.value === event.target.value)
@@ -163,7 +163,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </ul>
             </nav>
           </div>
-          {pathname === "/product" ? (
+          {/* {pathname === "/product" ? (
             <div className="header-bottom">
               <nav>
                 <ul>
@@ -180,10 +180,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 </ul>
               </nav>
             </div>
-          ) : null
+          ) : ""
           }
 
-          {pathname === "/listview" ?
+          {pathname === "/searchreult" ?
             <div className="header-bottom">
 
               <nav>
@@ -199,7 +199,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 </ul>
               </nav>
             </div>
-            : null
+            : ""
           }
           {
             subCategory &&
@@ -215,8 +215,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                       </li>
                     ))
                   }
-
-
                 </ul>
               </nav>
             </div>
@@ -239,8 +237,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   </ul>
                 </nav>
               </div>
-              : null
-          }
+              : ""
+          } */}
           {
             navBottomData && navBottomData.map(nav => (
               router.pathname === nav.link ? (

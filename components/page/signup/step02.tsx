@@ -67,7 +67,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (name === 'confirmKey') setConfirmKey(value);
-        if (name === 'password' && value.length > 8) {
+        if (name === 'password' && value.length > 8 && passwordRegex.test(inputData.password)) {
             if (!passwordRegex.test(value)) {
                 if (value.length > 20) {
                     setErrMsg({ ...errMsg, passwordErr: "비밀번호는 20자리 이하로 해주세요." })

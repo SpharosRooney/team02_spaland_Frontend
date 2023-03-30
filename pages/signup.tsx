@@ -112,38 +112,11 @@ export default function signup() {
       } else if (inputData.userNickname === '') {
         Swal.fire({
           icon: 'warning',
-          text: '닉네임을 입력하지 않았습니다. 그대로 진행하시겠습니까?',
+          text: '닉네임을 입력하지 않았습니다. 닉네임을 입력 해주세요.',
           cancelButtonText:'닉네임 정하기',
-          showCancelButton: true,
           customClass: {
-            confirmButton: 'swal-confirm-button',
             cancelButton: 'swal-cancel-button'
           }
-        }).then((result) => {
-          if(result.isConfirmed){
-            setStepId(stepId + 1)
-          }
-          return;
-        })
-      } else if (inputData.userNickname) {
-        Swal.fire({
-          icon: 'warning',
-          text: `닉네임을 ${inputData.userNickname}으로 정하시겠습니까?`,
-          cancelButtonText:'다시 정하기',
-          showCancelButton: true,
-          customClass: {
-            confirmButton: 'swal-confirm-button',
-            cancelButton: 'swal-cancel-button'
-          }
-        }).then((res) => {
-          if(res.isConfirmed){
-          } else {
-            setInputData({
-              ...inputData,
-              userNickname: "",
-            })
-          }
-          return;
         })
       } else if (inputData.password !== inputData.confirmPassword) {
         Swal.fire({
@@ -164,8 +137,21 @@ export default function signup() {
           userNickname: inputData.userNickname,
         })
           .then((res) => {
-            console.log(res)
-            setStepId(stepId + 1)
+            if (inputData.userNickname) {
+              Swal.fire({
+                icon: 'warning',
+                text: `닉네임을 ${inputData.userNickname}으로 정하시겠습니까?`,
+                cancelButtonText:'다시 정하기',
+                showCancelButton: true,
+                customClass: {
+                  confirmButton: 'swal-confirm-button',
+                  cancelButton: 'swal-cancel-button'
+                }
+              })
+                setStepId(stepId + 1)
+                console.log(res) 
+                return;
+            }
           })
           .catch((err) => {
             console.log(err)

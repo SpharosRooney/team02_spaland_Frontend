@@ -13,7 +13,7 @@ import Config from '@/configs/config.export';
 export default function login() { 
 
     const router = useRouter();
-    const Base_URL = Config().baseUrl;
+    // const Base_URL = Config().baseUrl;
     const [loginData, setLoginData] = useRecoilState(userLoginState);
     const [cookies, setCookie] =useCookies(["id"]);
 
@@ -34,42 +34,44 @@ export default function login() {
 
     //로그인 확인용
     const handleSubmit = (event: any) => {
-        console.log("/login")
+        event.preventDefault();
         console.log(inputData);
         if (inputData.userEmail === "" || inputData.password === "") {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "이메일과 비밀번호를 입력해주세요!",
+                customClass: {
+                    confirmButton: 'swal-confirm-button'
+                }
             });
             return;
-        } else {
+        }
+        else {
             axios.post('http://10.10.10.71:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:true}).then((res) => {
                 console.log(res)
                 setLoginData({
-                    userNickname: res.data.data.userNickname,
-                    token: res.data.data.token,
-                    refreshToken:res.data.data.refreshToken,
+                    userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                    token: res.data.token,
+                    refreshToken:res.data.refreshToken,
                     isLogin: true
                 });
-                const refreshToken = res.data.data.refreshToken;
-                const userNickname = res.data.data.userNickname;
-                const token = res.data.data.token;
-                localStorage.setItem("userNickname", userNickname);
-                localStorage.setItem("refreshToken", refreshToken);
-                setCookie("id", token, {path: "/"})
+                localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                localStorage.setItem("token", res.data.token);
+                setCookie("id", res.data.refreshToken, {path: "/"})
                 Swal.fire({
                     icon: "success",
-                    text: "Welcome!",
+                    text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 })
                 router.push("/");
             })
                 .catch(err => {
                     console.log(err);
                 })
+            return;
         }
     };
 

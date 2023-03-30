@@ -19,6 +19,7 @@ import { LoginRes } from '@/types/UserRequest/Response'
 import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
 import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -26,22 +27,7 @@ import axios from 'axios'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
-
-  const [isLogin, setIsLogin] = useRecoilState(userLoginState);
-
-  useEffect(() => {
-    const myLogin = localStorage.getItem("token");
-    if(myLogin && !isLogin.isLogin){
-      console.log("로그인 되어있음")
-      setIsLogin({
-        userNickname: localStorage.getItem("userNickname") || "",
-        token: localStorage.getItem("token") || "",
-        refreshToken: localStorage.getItem("refreshToken") || "",
-        isLogin: true
-      })
-    }
-  }, [])
-
+  const [cookies, setCookie, removecookie] =useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
   console.log()
@@ -61,6 +47,40 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
   const [filterList, setFilterList] = useState<filterType[]>([])
+  const [isLogin, setIsLogin] = useRecoilState(userLoginState);
+
+
+  //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
+  //비교 해야할 값이 숫자면 Number()로 감싸주기
+
+  // 각자의 백엔드 카테고리 url을 적기.
+  // useEffect(() => {
+  //   axios.get("카테고리-url")
+  //   .then((res) =>{
+  //     let myData: MenuDataType[] = []
+  //     res.data.data.subCategories.forEach((item : headerMenu) => {
+  //       myData.push({
+  //         id: item.id,
+  //         name: item.name,
+  //         key:"category"
+  //       })
+  //     })
+  //     setFilterData(myData)
+  //   })
+  // },[])
+
+  useEffect(() => {
+    const myLogin = localStorage.getItem("token");
+    if(myLogin && !isLogin.isLogin){
+      console.log("로그인 되어있음")
+      setIsLogin({
+        userNickname: localStorage.getItem("userNickname") || "",
+        token: localStorage.getItem("token") || "",
+        refreshToken: localStorage.getItem("refreshToken") || "",
+        isLogin: true
+      })
+    }
+  }, [])
 
 
   useEffect(() => {
@@ -83,6 +103,46 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
+    axios.post("logout-url", {
+      default: {
+        headers: { Authorization: "Bearer " + setCookie("id", refreshToken) }
+    }})
+    Swal.fire({
+      title: '로그아웃 하시겠습니까?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `확인`,
+      denyButtonText: `취소`,
+    }).then((res) => {
+      if (res.isConfirmed) {
+        setIsLogin({
+          userNickname: "",
+          token: "",
+          refreshToken: "",
+          isLogin: false
+        })
+        localStorage.removeItem("token");
+        removecookie("id");
+        localStorage.removeItem("userNickname");
+        let timerInterval: string | number | NodeJS.Timer | undefined;
+        Swal.fire({
+          html: '로그아웃 중...',
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+        },
+          willClose: () => { 
+            clearInterval(Number(timerInterval));
+          },
+      }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer');
+        }
+      });
+        router.push("/")
+      }
+    })
     // axios.post('LOGOUT-url', {
     //   headers: {
     //     'Content-Type': 'application/json',
@@ -159,7 +219,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                     icon.name === 'mypage' ?
                       <li key={icon.id}>
                         {isLogin.isLogin ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
-                          (<img src={icon.icon} onClick={logout} />) :
+                          (
+                              <img src={"/assets/images/icons/logout.png"} onClick={logout} />
+                          )
+                          :
                           (<Link href={"/login"}><img src={icon.icon} /></Link>)
                         }
                       </li>

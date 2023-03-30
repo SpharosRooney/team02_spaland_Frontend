@@ -19,7 +19,6 @@ import { LoginRes } from '@/types/UserRequest/Response'
 import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
 import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
 import axios from 'axios'
-import { Logout } from '@/types/UserInformation/Information'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -57,7 +56,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
   const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [token, setToken] = useState<Logout[]>();
   const [category, setCategory] = useState<filterMenuType[]>();
   const [sizeList, setSizeList] = useState<sizeType[]>();
 
@@ -85,16 +83,17 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
-    axios.post('LOGOUT-url', {
-      headers: {
-        'Content-Type': 'application/json',
-        headers: { Authorization: `Bearer ${token}` }
-      },
-    })
-      .then((res) => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("refreshToken");
-      });
+    // axios.post('LOGOUT-url', {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     headers: { Authorization: `Bearer ${token}` }
+    //   },
+    // })
+    //   .then((res) => {
+    //     removecookie('token', '', { path: '/' });
+    //     localStorage.removeItem("token");
+    //     localStorage.removeItem("refreshToken");
+    //   });
   }
 
   useEffect(() => {
@@ -159,7 +158,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   headerIcons.map((icon) => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
                     icon.name === 'mypage' ?
                       <li key={icon.id}>
-                        {token ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
+                        {isLogin.isLogin ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
                           (<img src={icon.icon} onClick={logout} />) :
                           (<Link href={"/login"}><img src={icon.icon} /></Link>)
                         }

@@ -50,10 +50,10 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     //최소 8자 이상, 최소 하나의 알파벳 문자가 포함, 최소 하나의 숫자, 특수문자가 포함.
 
     const [errMsg, setErrMsg] = useState<SignupErrType>({
-        emailErr: '',
-        passwordErr: '',
-        confirmPasswordErr: '',
-        confirmKeyErr: ''
+        emailErr: "",
+        passwordErr: "",
+        confirmPasswordErr: "",
+        confirmKeyErr: ""
     });
 
     const baseUrl = Config().baseUrl;
@@ -76,7 +76,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                 }
             }
             return;
-        } else {
+        } else if(inputData.password === ""){
             setErrMsg({ ...errMsg, passwordErr: "" })
         }
 
@@ -88,6 +88,11 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             ...inputData,
             [name]: value,
         })
+        if(inputData.password !== inputData.confirmPassword){
+            setErrMsg({ ...errMsg, confirmPasswordErr: "비밀번호가 일치하지 않습니다." })
+        } else {
+            setErrMsg({ ...errMsg, confirmPasswordErr: "" })
+        }
     }
 
     const handleEmailCofirm = () => {
@@ -263,11 +268,17 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                                     disabled={inputData.isUserConfirm}
                                 />
                                 <button type="button" onClick={handleConfirmKey} className={inputData.isUserConfirm ? "isDisable" : ""}>인증하기</button>
-                                {!inputData.isUserConfirm ? (
-                                    <Countdown date={confirmTime} renderer={renderer} />
-                                ) : ""}
                             </div>
-                            <p>{errMsg.confirmKeyErr}</p>
+                            <div className="confirm-countdown-box">
+                                <div className="countdown-box">
+                                    {!inputData.isUserConfirm ? (
+                                        <Countdown date={confirmTime} renderer={renderer} />
+                                    ) : ""}
+                                </div>
+                                <div className="confirm-error-box">
+                                    <p>{errMsg.confirmKeyErr}</p>
+                                </div>
+                            </div>
                         </div>
                     }
                     <div className="password-box">
@@ -275,11 +286,12 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                         <input
                             type="password"
                             name="password"
-                            placeholder='최대 12문자까지 입력'
+                            placeholder='최대 20문자까지 입력'
                             onChange={handleChange}
-                            maxLength={12}
                         />
-                        {/* <p>{errMsg.passwordErr}</p> */}
+                    </div>
+                    <div className="password-error-box">
+                        <p>{errMsg.passwordErr}</p>
                     </div>
                     <div className="confirmPassword-box">
                         <p>비밀번호 확인 : </p>
@@ -288,9 +300,10 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             name="confirmPassword"
                             placeholder='비밀번호 재입력'
                             onChange={handleChange}
-                            maxLength={12}
                         />
-                        {/* <p>{errMsg.confirmPasswordErr}</p> */}
+                    </div>
+                    <div className="confirmPassword-error-box">
+                        <p>{errMsg.confirmPasswordErr}</p>
                     </div>
                     <div className="userNickname-box">
                         <p>닉네임 : </p>

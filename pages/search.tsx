@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import SearchBar from '@/components/header/SearchBar'
 import { seacrchKeyword } from '@/types/search/searchKeywords';
 import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 export default function search() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
+    const router = useRouter();
     const [keyword, setKeyWord] = useState('');
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +16,8 @@ export default function search() {
     }
 
     const handleAddKeyWord = () => {
-        navigate(`/searchreuslt/${keyword}`);
+        router.push(`/searchreuslt/${keyword}`);
+        // navigate(`/searchreuslt/${keyword}`);
     }
 
     // const [keywords, setKeyWords] = useState<searchKeyword[]>([])

@@ -1,52 +1,85 @@
 import { inputRegisterType } from '@/types/UserInformation/Information';
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import Config from "@/configs/config.export";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Countdown from 'react-countdown';
+import { SignupErrType } from '@/types/signup/signErrType';
 
 interface ChildProps {
     inputData: inputRegisterType;
     setInputData: React.Dispatch<React.SetStateAction<inputRegisterType>>;
 }
+
+const renderer = (props: {
+    hours: any;
+    minutes: any;
+    seconds: any;
+    completed: any;
+}) => {
+    if (props.completed) {
+        Swal.fire({
+            icon: "warning",
+            text: `입력 시간이 초과 되었습니다. 다시 시도해주세요.`,
+            customClass: {
+                confirmButton: "swal-confirm-button",
+            },
+        });
+        return <></>;
+    } else {
+        // Render a countdown
+        return (
+            <span>
+                {props.minutes} : {props.seconds}
+            </span>
+        );
+    }
+};
+
 const Step02 = ({ inputData, setInputData }: ChildProps) => {
 
+    //countdown date = {Date.now() +}
+    const [confirmTime, setConfirmTime] = useState<number>(1)
     const [confirmKey, setConfirmKey] = useState<string>("");
     const [confirmView, setConfirmView] = useState<boolean>(false);
-
-    const MINUTES_IN_MS = 3 * 60;
-    const INTERVAL = 1000;
-    const [timeLeft, setTimeLeft] = useState<number>(MINUTES_IN_MS);
-
-    const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
+    const [duplicateView, setDuplicateView] = useState<boolean>(false);
 
     //create email regex code
+    const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
+    const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$^*])(?=.*[0-9]).{8,20}$/;
+    //최소 8자 이상, 최소 하나의 알파벳 문자가 포함, 최소 하나의 숫자, 특수문자가 포함.
+
+    const [errMsg, setErrMsg] = useState<SignupErrType>({
+        emailErr: '',
+        passwordErr: '',
+        confirmPasswordErr: '',
+        confirmKeyErr: ''
+    });
+
+    const baseUrl = Config().baseUrl;
 
     useEffect(() => {
         console.log(new Date())
         console.log(inputData)
     }, [inputData])
 
-    useEffect(() => {
-        console.log(timeLeft)
-        const timer = setInterval(() => {
-            setTimeLeft((prevTime) => prevTime - 1);
-        }, INTERVAL);
-
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            setTimeLeft(MINUTES_IN_MS);
-            console.log('타이머가 종료되었습니다.');
-        }
-
-        return () => {
-            clearInterval(timer);
-        };
-    }, [timeLeft]);
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (name === 'confirmKey') setConfirmKey(value);
+        if (name === 'password' && value.length > 8) {
+            if (!passwordRegex.test(value)) {
+                if (value.length > 20) {
+                    setErrMsg({ ...errMsg, passwordErr: "비밀번호는 20자리 이하로 해주세요." })
+                } else {
+                    setErrMsg({ ...errMsg, passwordErr: "비밀 번호는 숫자, 영문자, 특수문자(!@#$^*)를 포함한 8자리 이상이어야 합니다." })
+                }
+            }
+            return;
+        } else {
+            setErrMsg({ ...errMsg, passwordErr: "" })
+        }
+
         if (name === 'userEmail' && expression.test(value)) {
             // 이메일 중복확인
             console.log('이메일 중복확인')
@@ -71,6 +104,16 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             return;
         }
         console.log("이메일 전송")
+        if(inputData.userEmail === ""){
+            Swal.fire({
+                icon: 'error',
+                text: '이메일을 입력해주세요.',
+                customClass: {
+                    confirmButton: 'swal-confirm-button'
+                }
+            })
+            return;
+        }
 
         axios.post('http://10.10.10.71:8080/api/v1/email/confirm', {
             userEmail: inputData.userEmail,
@@ -78,7 +121,23 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             .then((res) => {
                 if (res.data === true) {
                     setConfirmView(true)
+                    setDuplicateView(true)
+                    setErrMsg({ ...errMsg, emailErr: ""});
+                    Swal.fire({
+                        icon: 'success',
+                        text: `인증번호가 ${inputData.userEmail}로 전송되었습니다.`,
+                        customClass: {
+                            confirmButton: 'swal-confirm-button'
+                        }
+                    })
+                    setConfirmTime(Date.now() + 180000)
                 } else if (res.data === false) {
+                    setConfirmView(false)
+                    setDuplicateView(false)
+                    setInputData({
+                        ...inputData,
+                        userEmail: "",
+                    })
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -87,7 +146,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             confirmButton: 'swal-confirm-button'
                         }
                     })
-                    setConfirmView(false)
+                    setErrMsg({ ...errMsg, emailErr: ""});
+                    return;
                 }
             })
             .catch((err) => {
@@ -104,6 +164,11 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             .then((res) => {
                 console.log(res)
                 // 키값이 일치하면 인증완료
+                setInputData({
+                    ...inputData,
+                    isUserConfirm: true,
+                });
+                setErrMsg({ ...errMsg, confirmKeyErr: ""})
                 Swal.fire({
                     icon: 'success',
                     text: '인증 완료되었습니다.',
@@ -114,29 +179,10 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             })
             .catch((err) => {
                 console.log(err)
+                setErrMsg({ ...errMsg, confirmKeyErr: "인증번호가 일치하지 않습니다." })
+                setConfirmKey("")
             })
     }
-    // const handlephone = () => {
-    //     console.log("휴대폰 번호 확인")
-    //     axios.post('http://10.10.10.39:8080/api/v1/email/confirm', {
-    //         phone: inputData.phone,
-    //     })
-    //         .then((res) => {
-    //             console.log(res)
-    //             Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'Oops...',
-    //                 text: '사용 가능합니다.',
-    //                 customClass: {
-    //                     confirmButton: 'swal-confirm-button'
-    //                 }
-    //             })
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //             alert('가입한 이력이 있는 전화번호 입니다.')
-    //         })
-    // }
     // const handlenickname = () => {
     //     console.log("닉네임 전송")
     //     axios.post('url', {
@@ -198,8 +244,10 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             placeholder='이메일 입력'
                             onChange={handleChange}
                             required={true}
+                            className={inputData.isUserConfirm ? "isDisable" : ""}
+                            disabled={inputData.isUserConfirm}
                         />
-                        <button type="button" onClick={handleEmailCofirm}>이메일인증</button>
+                        <button type="button" onClick={handleEmailCofirm} className={inputData.isUserConfirm ? "isDisable" : ""}>이메일인증</button>
                     </div>
                     {
                         confirmView &&
@@ -211,10 +259,15 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                                     name="confirmKey"
                                     placeholder='인증키 입력'
                                     onChange={handleChange}
+                                    className={inputData.isUserConfirm ? "isDisable" : ""}
+                                    disabled={inputData.isUserConfirm}
                                 />
-                                <button type="button" onClick={handleConfirmKey}>인증하기</button>
+                                <button type="button" onClick={handleConfirmKey} className={inputData.isUserConfirm ? "isDisable" : ""}>인증하기</button>
+                                {!inputData.isUserConfirm ? (
+                                    <Countdown date={confirmTime} renderer={renderer} />
+                                ) : ""}
                             </div>
-                            <p>{moment(timeLeft / 60, 'mm:ss').format("mm:ss")}</p>
+                            <p>{errMsg.confirmKeyErr}</p>
                         </div>
                     }
                     <div className="password-box">
@@ -226,6 +279,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             onChange={handleChange}
                             maxLength={12}
                         />
+                        {/* <p>{errMsg.passwordErr}</p> */}
                     </div>
                     <div className="confirmPassword-box">
                         <p>비밀번호 확인 : </p>
@@ -236,6 +290,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             onChange={handleChange}
                             maxLength={12}
                         />
+                        {/* <p>{errMsg.confirmPasswordErr}</p> */}
                     </div>
                     <div className="userNickname-box">
                         <p>닉네임 : </p>

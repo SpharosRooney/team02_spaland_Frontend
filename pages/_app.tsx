@@ -14,8 +14,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
       <RecoilRoot>
         <MainLayout>
-          {/* <BrowserRouter> */}
-            {/* <Route path="/searchresult" Component={searchresult}></Route> */}
+          {/* <BrowserRouter>
+            <Route path="/searchresult" element={<searchresult/>}></Route> */}
             <Component {...pageProps} />
           {/* </BrowserRouter> */}
         </MainLayout>

@@ -6,14 +6,16 @@ import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginSta
 import { LoginRes } from '@/types/UserRequest/Response';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
-import Router from 'next/router';
-import Cookies from 'universal-cookie';
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
+import Config from '@/configs/config.export';
 
 export default function login() { 
 
-    const cookies = new Cookies();
-    const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
-    const setIsLogIn = useSetRecoilState<boolean>(userIsLoginState);
+    const router = useRouter();
+    const Base_URL = Config().baseUrl;
+    const [loginData, setLoginData] = useRecoilState(userLoginState);
+    const [cookies, setCookie] =useCookies(["id"]);
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -23,7 +25,6 @@ export default function login() {
     const [isError, setIsError] = useState({
         userEmail: false,
         password: false,
-
     });
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +32,9 @@ export default function login() {
         setInputData({ ...inputData, [name]: value });
     };
 
-    //로그인 확인용 => Recoil 셋업 되는대로 라우팅 처리 하겠습니다.
+    //로그인 확인용
     const handleSubmit = (event: any) => {
-        event.preventDefault();
+        console.log("/login")
         console.log(inputData);
         if (inputData.userEmail === "" || inputData.password === "") {
             Swal.fire({
@@ -43,39 +44,28 @@ export default function login() {
             });
             return;
         } else {
-            // RequestLogin({
-            //   userEmail: inputData.email,
-            //   password: inputData.password,
-            // }).then((res) => {
-            //   console.log(res);
-            // });
-
-            axios.post('http://10.10.10.71:8080/api/v1/auth/authenticate', {
+            axios.post('http://10.10.10.71:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:true}).then(res => {
-                console.log(loginData)
-                // console.log('res',res)
-                // console.log('res.data',res.data)
-                // console.log('res.header',res.headers)
-                setLoginData(res.data);
-                setIsLogIn(true);
-                const token = res.data.token;
-                const refreshToken = res.data.refreshToken;
-                localStorage.setItem("token", token);
-                // localStorage.setItem("refreshToken", refreshToken);
-                cookies.set("refreshToken", refreshToken, {sameSite: 'strict'})
-                return res.data;
-            }).then(() => {
+            },{withCredentials:true}).then((res) => {
+                console.log(res)
+                setLoginData({
+                    userNickname: res.data.data.userNickname,
+                    token: res.data.data.token,
+                    refreshToken:res.data.data.refreshToken,
+                    isLogin: true
+                });
+                const refreshToken = res.data.data.refreshToken;
+                const userNickname = res.data.data.userNickname;
+                const token = res.data.data.token;
+                localStorage.setItem("userNickname", userNickname);
+                localStorage.setItem("refreshToken", refreshToken);
+                setCookie("id", token, {path: "/"})
                 Swal.fire({
                     icon: "success",
                     text: "Welcome!",
                 })
-                .then(function(loginresult){
-                    if (loginresult) {
-                        location.href = "/";
-                    }
-                })
+                router.push("/");
             })
                 .catch(err => {
                     console.log(err);

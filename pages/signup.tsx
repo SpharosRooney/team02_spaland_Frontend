@@ -9,8 +9,11 @@ import Step03 from '@/components/page/signup/step03';
 import StButton from '@/components/ui/StButton';
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function signup() {
+
+  const router = useRouter();
 
   const [stepId, setStepId] = useState<number>(1)
   const [inputData, setInputData] = useState<inputRegisterType>({
@@ -27,7 +30,7 @@ export default function signup() {
       isUseConfirm: false,
       isAdvertisionConfirm: false,
     },
-    confirmKey: ''
+    confirmKey: '',
   })
 
   const steps: any = [
@@ -76,11 +79,11 @@ export default function signup() {
           }
         })
         return;
-      } else if (inputData.userEmail === '') {
+      } else if (!inputData.isUserConfirm) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: '이메일을 입력해주세요.',
+          text: '이메일 중복 확인과 이메일 인증을 해주세요.',
           customClass: {
             confirmButton: 'swal-confirm-button'
           }
@@ -108,14 +111,40 @@ export default function signup() {
         return;
       } else if (inputData.userNickname === '') {
         Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '닉네임을 입력해주세요.',
+          icon: 'warning',
+          text: '닉네임을 입력하지 않았습니다. 그대로 진행하시겠습니까?',
+          cancelButtonText:'닉네임 정하기',
+          showCancelButton: true,
           customClass: {
-            confirmButton: 'swal-confirm-button'
+            confirmButton: 'swal-confirm-button',
+            cancelButton: 'swal-cancel-button'
           }
+        }).then((result) => {
+          if(result.isConfirmed){
+            setStepId(stepId + 1)
+          }
+          return;
         })
-        return;
+      } else if (inputData.userNickname) {
+        Swal.fire({
+          icon: 'warning',
+          text: `닉네임을 ${inputData.userNickname}으로 정하시겠습니까?`,
+          cancelButtonText:'다시 정하기',
+          showCancelButton: true,
+          customClass: {
+            confirmButton: 'swal-confirm-button',
+            cancelButton: 'swal-cancel-button'
+          }
+        }).then((res) => {
+          if(res.isConfirmed){
+          } else {
+            setInputData({
+              ...inputData,
+              userNickname: "",
+            })
+          }
+          return;
+        })
       } else if (inputData.password !== inputData.confirmPassword) {
         Swal.fire({
           icon: 'error',
@@ -126,18 +155,8 @@ export default function signup() {
           }
         })
         return;
-      } else if (inputData.confirmKey === "") {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: '이메일 인증이 필요합니다.',
-          customClass: {
-            confirmButton: 'swal-confirm-button'
-          }
-        })
-        return;
       } else {
-        axios.post('http://10.10.10.71:8080/api/v1/auth/signup', {
+        axios.post('http://10.10.10.71:8080/api/v1/users/signup', {
           userName: inputData.userName,
           userphone: inputData.phone,
           userEmail: inputData.userEmail,
@@ -162,7 +181,7 @@ export default function signup() {
         return;
       }
     } else if (stepId === 3) {
-      location.href = "/login";
+      router.push("/login");
       return;
     }
   }

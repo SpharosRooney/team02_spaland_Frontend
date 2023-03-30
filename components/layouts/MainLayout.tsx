@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from "next/image"
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
 
 import { filterMenuType, filterSubCategoryType, filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
 import { headerNavMenus, headerIcons, categoryList } from "@/datas/starbucksStaticDatas";
@@ -26,7 +27,26 @@ import { Logout } from '@/types/UserInformation/Information'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
-  const router = useRouter()
+
+  const [isLogin, setIsLogin] = useRecoilState(userLoginState);
+
+  useEffect(() => {
+    const myLogin = localStorage.getItem("token");
+    if(myLogin && !isLogin.isLogin){
+      console.log("로그인 되어있음")
+      setIsLogin({
+        userNickname: localStorage.getItem("userNickname") || "",
+        token: localStorage.getItem("token") || "",
+        refreshToken: localStorage.getItem("refreshToken") || "",
+        isLogin: true
+      })
+    }
+  }, [])
+
+  const router = useRouter();
+  console.log(router.pathname)
+  console.log()
+
   const { pathname, query } = useRouter();
   const productPath = pathname.split("/")[1];
   const cartCnt = useRecoilValue(cartState)

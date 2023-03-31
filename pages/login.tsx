@@ -48,10 +48,12 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://10.10.10.77:8080/api/v1/users/login', {
+            axios.post('http://10.10.10.196:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             }, { withCredentials: true }).then((res) => {
+                console.log('asd',res)
+                console.log('asdasd',res.headers)
                 setLoginData({
                     userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                     token: res.data.token,

@@ -127,7 +127,7 @@ header {
 .header-bottom nav ul {
   opacity: 0.8;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 0px;
   margin: 0px;
@@ -204,7 +204,7 @@ header {
 }
 
 .header-sub nav ul li:first-child {
-  padding-right: 20px;
+  
 }
 
 .header-sub nav ul li:last-child {

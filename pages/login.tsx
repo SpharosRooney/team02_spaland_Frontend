@@ -5,9 +5,9 @@ import Swal from 'sweetalert2';
 import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginState';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
-import FooterButton from '@/components/footer/FooterButton';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import LoginFooterButton from '@/components/footer/LoginFooterButton';
 
 
 export default function login() {
@@ -48,17 +48,17 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://10.10.10.196:8080/api/v1/users/login', {
+            axios.post('http://10.10.10.77:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             }, { withCredentials: true }).then((res) => {
-                console.log('가나다',res.headers)
                 setLoginData({
                     userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                     token: res.data.token,
                     refreshToken: res.data.refreshToken,
                     isLogin: true
                 });
+                // console.log(res.data.token)
                 localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 localStorage.setItem("token", res.data.token);
                 setCookie("id", res.data.refreshToken, { path: "/" })
@@ -67,6 +67,7 @@ export default function login() {
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 })
                 router.push("/");
+                return res.data;
             })
                 .catch(err => {
                     console.log(err);
@@ -133,7 +134,11 @@ export default function login() {
                             <li><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
-                    <FooterButton inputvalue='로그인하기' />
+                    <footer className="login-footer">
+                        <div className="login-footer-btn">
+                            <button type='submit'>로그인하기</button>
+                        </div>
+                    </footer>
                 </form>
             </div>
         </>

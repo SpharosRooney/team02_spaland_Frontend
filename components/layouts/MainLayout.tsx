@@ -106,10 +106,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
-    axios.post("logout-url", {
-      default: {
+    axios.get('http://10.10.10.77:8080/api/v1/users/logout', {
         headers: { Authorization: `Bearer ${cookies}` }
-    }})
+    })
     Swal.fire({
       title: '로그아웃 하시겠습니까?',
       showDenyButton: true,

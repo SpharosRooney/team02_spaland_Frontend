@@ -70,7 +70,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // },[])
 
   useEffect(() => {
-    const myLogin = localStorage.getItem("token");
+    const myLogin = localStorage.getItem("accessToken");
 
     if(myLogin && !isLogin.isLogin){
       console.log("로그인 되어있음")
@@ -106,6 +106,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
+    axios.post('http://10.10.10.196:8080/api/v1/users/logout')
     Swal.fire({
       title: '로그아웃 하시겠습니까?',
       showDenyButton: true,
@@ -113,6 +114,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       confirmButtonText: `확인`,
       denyButtonText: `취소`,
     }).then((res) => {
+      // axios.defaults.headers.common[
+      //   "Authorization"
+      // ] = `Bearer ${isLogin.accessToken}`;
       if (res.isConfirmed) {
         setIsLogin({
           userNickname: "",
@@ -120,9 +124,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           // refreshToken 사용할때 주석 해제
           // refreshToken: "",
           isLogin: false
-        })
-        axios.post('http://10.10.10.196:8080/api/v1/users/logout', {
-          headers: { Authorization: "accessToken" }
         })
         localStorage.removeItem("accessToken");
         // refreshToken 사용할때 주석 해제
@@ -144,7 +145,16 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           console.log('I was closed by the timer');
         }
       });
-        router.push("/")
+        location.reload();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "로그아웃에 실패하였습니다.",
+          customClass: {
+              confirmButton: 'swal-confirm-button'
+          }
+      });
       }
     })
     // axios.post('LOGOUT-url', {

@@ -27,7 +27,7 @@ import Swal from 'sweetalert2'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
-  const [cookies, setCookie, removecookie] =useCookies(["id"]);
+  const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
   console.log()
@@ -71,6 +71,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     const myLogin = localStorage.getItem("token");
+
     if(myLogin && !isLogin.isLogin){
       console.log("로그인 되어있음")
       setIsLogin({
@@ -105,7 +106,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const logout = async () => {
     axios.post("logout-url", {
       default: {
-        headers: { Authorization: "Bearer " + setCookie("id", refreshToken) }
+        headers: { Authorization: `Bearer ${cookies}` }
     }})
     Swal.fire({
       title: '로그아웃 하시겠습니까?',
@@ -122,7 +123,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           isLogin: false
         })
         localStorage.removeItem("token");
-        removecookie("id");
+        removecookie("id", { path: "/" });
         localStorage.removeItem("userNickname");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({

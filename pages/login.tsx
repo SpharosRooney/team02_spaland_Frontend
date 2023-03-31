@@ -6,16 +6,15 @@ import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginSta
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 import LoginFooterButton from '@/components/footer/LoginFooterButton';
+import { LoginRes } from '@/types/UserRequest/Response';
 
 
 export default function login() {
 
     const router = useRouter();
     // const Base_URL = Config().baseUrl;
-    const [loginData, setLoginData] = useRecoilState(userLoginState);
-    const [cookies, setCookie] = useCookies(["id"]);
+    const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -53,35 +52,34 @@ export default function login() {
             axios.post('http://10.10.10.196:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:false}).then((res) => {
-                console.log(res)
+            },{withCredentials:false}).then((res) => {                
                 setLoginData({
                     userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                    token: res.headers.authorization,
-                    refreshToken:res.headers.refreshToken,
+                    accessToken: res.headers.authorization,
+                    // refreshToken:res.headers.cookie.refreshToken,
                     isLogin: true
                 });
-
-                console.log(res.headers)
-                console.log(res.headers.authorization)
-                // console.log(res.headers.refreshToken)
-                const token = res.headers.authorization;
-                const userNickname = res.data;
-                const refreshToken = res.headers.refreshToken;
                 
+                const userNickname = res.data;
+                
+                const accessToken = res.headers.authorization;
                 axios.defaults.headers.common[
                     "Authorization"
-                ] = `Bearer ${token}`;
+                ] = `Bearer ${accessToken}`;
 
-                // const {refreshToken} = res.headers.;
+
+                // https로 바꾸면 사용하기로 함.(refreshToken)
+                // const refreshToken = res.headers.cookie;
+
+
                 // axios.defaults.headers.common[
                 //     "Authorization"
-                // ] = `Bearer ${refreshToken}`;
+                // ] = `${refreshToken}`;
                 
-                // console.log(res.data.token)
-                localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                localStorage.setItem("token", res.data.token);
-                setCookie("id", res.data.refreshToken, {path: "/"})
+                localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                localStorage.setItem("accessToken", accessToken); // 로컬은 무엇을 넣든 다 문자열로 저장됨.
+                
+
                 Swal.fire({
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
@@ -163,6 +161,25 @@ export default function login() {
             </div>
         </>
     )
-}
 
+                        // 서버에서 보내온 쿠키 사용하기
+                        // const cookie = res.headers['set-cookie'];
+                        // console.log(cookie);
+                        // document.cookie = cookie;
+                        // console.log(document.cookie);
+                        // const token = cookie.split('=')[1];
+                        // console.log(token);
+                        // axios.defaults.headers.common[
+
+
+                        // 서버에서 보내온 쿠키 저장하기
+                        // const cookie = res.headers['set-cookie'];
+                        // console.log(cookie);
+                        // document.cookie = cookie;
+                        // console.log(document.cookie);
+                        // const token = cookie.split('=')[1];
+                        // console.log(token);
+                        // axios.defaults.headers.common[
+
+}
 

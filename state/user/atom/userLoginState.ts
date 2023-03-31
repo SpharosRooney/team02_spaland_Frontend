@@ -5,8 +5,9 @@ const userLoginState = atom({
     key: "userLoginState",
     default: {
         userNickname: "",
-        token: "",
-        refreshToken: "",
+        accessToken: "",
+        // refreshToken 사용할때 주석 해제
+        // refreshToken: "",
         isLogin: false
     },
 });

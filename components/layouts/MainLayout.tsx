@@ -17,7 +17,6 @@ import { cartState } from "../../state/cartState";
 
 import { LoginRes } from '@/types/UserRequest/Response'
 import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
-import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
@@ -48,7 +47,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
   const [filterList, setFilterList] = useState<filterType[]>([])
-  const [isLogin, setIsLogin] = useRecoilState(userLoginState);
+  const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
 
 
   //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
@@ -77,8 +76,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       console.log("로그인 되어있음")
       setIsLogin({
         userNickname: localStorage.getItem("userNickname") || "",
-        token: localStorage.getItem("token") || "",
-        refreshToken: localStorage.getItem("refreshToken") || "",
+        accessToken: localStorage.getItem("accessToken") || "",
+        // refreshToken 사용할때 주석 해제
+        // refreshToken: localStorage.getItem("refreshToken") || "",
         isLogin: true
       })
     }
@@ -106,9 +106,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
-    // axios.get('http://10.10.10.77:8080/api/v1/users/logout', {
-    //     headers: { Authorization: `Bearer ${cookies}` }
-    // })
     Swal.fire({
       title: '로그아웃 하시겠습니까?',
       showDenyButton: true,
@@ -119,12 +116,17 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       if (res.isConfirmed) {
         setIsLogin({
           userNickname: "",
-          token: "",
-          refreshToken: "",
+          accessToken: "",
+          // refreshToken 사용할때 주석 해제
+          // refreshToken: "",
           isLogin: false
         })
-        localStorage.removeItem("token");
-        removecookie("id", { path: "/" });
+        axios.post('http://10.10.10.196:8080/api/v1/users/logout', {
+          headers: { Authorization: "accessToken" }
+        })
+        localStorage.removeItem("accessToken");
+        // refreshToken 사용할때 주석 해제
+        // localStorage.removeItem("refreshToken");
         localStorage.removeItem("userNickname");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({

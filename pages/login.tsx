@@ -10,12 +10,12 @@ import { useCookies } from 'react-cookie';
 import LoginFooterButton from '@/components/footer/LoginFooterButton';
 
 
-export default function login() { 
+export default function login() {
 
     const router = useRouter();
     // const Base_URL = Config().baseUrl;
     const [loginData, setLoginData] = useRecoilState(userLoginState);
-    const [cookies, setCookie] =useCookies(["id"]);
+    const [cookies, setCookie] = useCookies(["id"]);
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -79,9 +79,9 @@ export default function login() {
                 // ] = `Bearer ${refreshToken}`;
                 
                 // console.log(res.data.token)
-                localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                localStorage.setItem("token", token);
-                setCookie("id", refreshToken, {path: "/"})
+                localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                localStorage.setItem("token", res.data.token);
+                setCookie("id", res.data.refreshToken, {path: "/"})
                 Swal.fire({
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
@@ -101,7 +101,7 @@ export default function login() {
             <div className="signupmodalBox">
                 <header className="signup-header">
                     <div className="signup-header-cancel">
-                    <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
+                        <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
                     </div>
                     <div className="login-header-bot">
                         <p>로그인</p>
@@ -164,3 +164,5 @@ export default function login() {
         </>
     )
 }
+
+

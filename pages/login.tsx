@@ -3,18 +3,19 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginState';
-import { LoginRes } from '@/types/UserRequest/Response';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
-import Router from 'next/router';
-import Cookies from 'universal-cookie';
 import FooterButton from '@/components/footer/FooterButton';
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
+
 
 export default function login() { 
 
-    const cookies = new Cookies();
-    const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
-    const setIsLogIn = useSetRecoilState<boolean>(userIsLoginState);
+    const router = useRouter();
+    // const Base_URL = Config().baseUrl;
+    const [loginData, setLoginData] = useRecoilState(userLoginState);
+    const [cookies, setCookie] =useCookies(["id"]);
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -24,7 +25,6 @@ export default function login() {
     const [isError, setIsError] = useState({
         userEmail: false,
         password: false,
-
     });
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ export default function login() {
         setInputData({ ...inputData, [name]: value });
     };
 
-    //로그인 확인용 => Recoil 셋업 되는대로 라우팅 처리 하겠습니다.
+    //로그인 확인용
     const handleSubmit = (event: any) => {
         event.preventDefault();
         console.log(inputData);
@@ -41,46 +41,37 @@ export default function login() {
                 icon: "error",
                 title: "Oops...",
                 text: "이메일과 비밀번호를 입력해주세요!",
+                customClass: {
+                    confirmButton: 'swal-confirm-button'
+                }
             });
             return;
-        } else {
-            // RequestLogin({
-            //   userEmail: inputData.email,
-            //   password: inputData.password,
-            // }).then((res) => {
-            //   console.log(res);
-            // });
-
-            axios.post('http://10.10.10.71:8080/api/v1/auth/authenticate', {
+        }
+        else {
+            axios.post('http://10.10.10.71:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:true}).then(res => {
-                console.log(loginData)
-                // console.log('res',res)
-                // console.log('res.data',res.data)
-                // console.log('res.header',res.headers)
-                setLoginData(res.data);
-                setIsLogIn(true);
-                const token = res.data.token;
-                const refreshToken = res.data.refreshToken;
-                localStorage.setItem("token", token);
-                // localStorage.setItem("refreshToken", refreshToken);
-                cookies.set("refreshToken", refreshToken, {sameSite: 'strict'})
-                return res.data;
-            }).then(() => {
+            },{withCredentials:true}).then((res) => {
+                console.log(res)
+                setLoginData({
+                    userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                    token: res.data.token,
+                    refreshToken:res.data.refreshToken,
+                    isLogin: true
+                });
+                localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                localStorage.setItem("token", res.data.token);
+                setCookie("id", res.data.refreshToken, {path: "/"})
                 Swal.fire({
                     icon: "success",
-                    text: "Welcome!",
+                    text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 })
-                .then(function(loginresult){
-                    if (loginresult) {
-                        location.href = "/";
-                    }
-                })
+                router.push("/");
             })
                 .catch(err => {
                     console.log(err);
                 })
+            return;
         }
     };
 

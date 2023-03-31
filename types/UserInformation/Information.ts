@@ -23,12 +23,6 @@ export interface privateAgreeType {
 
 }
 
-export interface Logout {
-    userEmail: string;
-    token: string;
-    refreshToken: string;
-}
-
 export interface ReIssueTokenRes extends BaseRes {
     data: TokenInfo;
 }

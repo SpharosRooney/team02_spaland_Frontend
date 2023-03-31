@@ -8,6 +8,7 @@ import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import Router from 'next/router';
 import Cookies from 'universal-cookie';
+import FooterButton from '@/components/footer/FooterButton';
 
 export default function login() { 
 
@@ -141,11 +142,7 @@ export default function login() {
                             <li><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
-                    <footer className="login-footer">
-                        <div className="login-footer-btn">
-                            <button type='submit'>로그인하기</button>
-                        </div>
-                    </footer>
+                    <FooterButton inputvalue='로그인하기'/>
                 </form>
             </div>
         </>

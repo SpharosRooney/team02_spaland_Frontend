@@ -3,6 +3,7 @@ import moment from 'moment';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Countdown from 'react-countdown';
 
 interface ChildProps {
     inputData: inputRegisterType;
@@ -16,6 +17,19 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     const MINUTES_IN_MS = 3 * 60;
     const INTERVAL = 1000;
     const [timeLeft, setTimeLeft] = useState<number>(MINUTES_IN_MS);
+
+    const [time,setTime] = useState<number>()
+
+    const renderer = (props: {
+        hours:any;
+        minutes:any;
+        seconds:any;
+        completed : any;
+    }) => {
+        if(props.completed) {
+            Swal
+        }
+    }
 
     const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
 
@@ -68,6 +82,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                     confirmButton: 'swal-confirm-button'
                 }
             })
+            setTime(Date.now() + 180000)
             return;
         }
         console.log("이메일 전송")
@@ -215,6 +230,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                                 <button type="button" onClick={handleConfirmKey}>인증하기</button>
                             </div>
                             <p>{moment(timeLeft / 60, 'mm:ss').format("mm:ss")}</p>
+                            {/* <Countdown date={time} renderer={renderer} /> */}
                         </div>
                     }
                     <div className="password-box">

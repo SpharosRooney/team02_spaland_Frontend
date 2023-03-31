@@ -19,6 +19,7 @@ import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginSta
 import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
 import axios from 'axios'
 import { Logout } from '@/types/UserInformation/Information'
+import ProductCategory from '../widgets/ProductCategory'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -44,6 +45,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
   const [filterList, setFilterList] = useState<filterType[]>([])
 
+  const [isactive, setIsactive] = useState<boolean>(false)
 
   useEffect(() => {
     fetch('http://localhost:3001/nav')
@@ -97,21 +99,22 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       })
   }, [query.category])
 
-  useEffect(() => {
-    console.log("filterList", filterList)
-    let url = ''
+  // useEffect(() => {
+  //   console.log("filterList", filterList)
+  //   let url = ''
 
-    filterList.map((filter) => (
-      filter.checked ? url += `&${filter.name}=${filter.value}` : ''
-    ))
-    router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
-  }, [filterList])
+  //   filterList.map((filter) => (
+  //     filter.checked ? url += `&${filter.name}=${filter.value}` : ''
+  //   ))
+  //   router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
+  // }, [filterList])
 
-  const handleFilter = (name: String) => {
-    setFilterList([])
-    router.push(`/listview?category=${name}`)
-  }
+  // const handleFilter = (name: String) => {
+  //   setFilterList([])
+  //   router.push(`/listview?category=${name}`)
+  // }
 
+  
   const handleSubFilter = (event: ChangeEvent<HTMLInputElement>) => {
     let checker = filterList.find((filter) => filter.value === event.target.value)
     if (checker?.checked === true && event.target.checked === false) {
@@ -163,84 +166,45 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </ul>
             </nav>
           </div>
-          {pathname === "/product" ? (
-            <div className="header-bottom">
-              <nav>
-                <ul>
-                  {
-                    headerMenus.map((menu) => (
-                      <li
-                        key={menu.id}
-                        className={pathname === menu.link ? "active" : ""}
-                      >
-                        <Link href={menu.link}>{menu.name}</Link>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </nav>
-            </div>
-          ) : null
-          }
-
-          {pathname === "/listview" ?
-            <div className="header-bottom">
-
-              <nav>
-                <ul>
-                  {categoryList.map((menu) => (
-                    <li
-                      key={menu.id}
-                      onClick={() => handleFilter(menu.name)}
-                    >
-                      {menu.name}
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-            : null
-          }
           {
-            subCategory &&
-
-            <div className="header-bottom">
-              <nav>
-                <ul>
-                  {
-                    subCategory.map((menu, idx) => (
-                      <li key={idx}>
-                        <input type='checkbox' name="subCategory" value={`${menu.name}`} onChange={handleSubFilter} />
-                        <label>{menu.name}</label>
-                      </li>
-                    ))
-                  }
-
-
-                </ul>
-              </nav>
-            </div>
-          }
-          {
-            sizeList && (query.category === "머그/컵" || query.category === "텀블러/보온병") ?
-
+            pathname === "/product" ? (
               <div className="header-bottom">
                 <nav>
                   <ul>
                     {
-                      sizeList.map((menu, idx) => (
-                        <li key={idx}>
-                          <input type='checkbox' name="size" value={`${menu.name}`} onChange={handleSubFilter} />
-                          <label>{menu.name}</label>
+                      headerMenus.map((menu) => (
+                        <li
+                          key={menu.id}
+                          className={pathname === menu.link ? "active" : ""}
+                        >
+                          <Link href={menu.link}>{menu.name}</Link>
                         </li>
                       ))
                     }
-
                   </ul>
                 </nav>
               </div>
-              : null
+            ) : null
           }
+
+          {/* {
+            pathname === "/listview" ? (
+              <div className="header-bottom">
+                <nav>
+                  <ul>
+                    {categoryList.map((menu) => (
+                      <li
+                        key={menu.id}
+                        onClick={() => handleFilter(menu.name)}
+                      >
+                        {menu.name}
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+            ) : null
+          } */}
           {
             navBottomData && navBottomData.map(nav => (
               router.pathname === nav.link ? (
@@ -292,7 +256,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                       eventSubNavData && eventSubNavData.map(eventsubnav => (
                         <li
                           key={eventsubnav.id}
-                          className={router.pathname === eventsubnav.link ? "active" : ""}
+                          className={router.pathname === eventsubnav.link && isactive ? "active" : ""}
                         >{eventsubnav.name}</li>
                       ))
                     }
@@ -301,6 +265,11 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </div>
             ) :
               ""
+          }
+          {
+            router.pathname === '/listview' ? (
+              <ProductCategory />
+            ) : ""
           }
         </header>
       </div >

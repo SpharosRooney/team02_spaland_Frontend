@@ -131,6 +131,7 @@ header {
   align-items: center;
   padding: 0px;
   margin: 0px;
+  overflow-x: scroll;
 }
 
 .header-bottom nav ul li {
@@ -144,6 +145,7 @@ header {
   border-bottom-style: solid;
   border-bottom-color: var(--color-white);
   transition: 0.3s;
+  white-space : nowrap;
 }
 
 .header-bottom nav ul li a {

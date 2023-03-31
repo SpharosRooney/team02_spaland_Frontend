@@ -10,12 +10,12 @@ import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 
 
-export default function login() { 
+export default function login() {
 
     const router = useRouter();
     // const Base_URL = Config().baseUrl;
     const [loginData, setLoginData] = useRecoilState(userLoginState);
-    const [cookies, setCookie] =useCookies(["id"]);
+    const [cookies, setCookie] = useCookies(["id"]);
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -48,20 +48,20 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://10.10.10.71:8080/api/v1/users/login', {
+            axios.post('http://10.10.10.196:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:true}).then((res) => {
-                console.log(res)
+            }, { withCredentials: true }).then((res) => {
+                console.log('가나다',res.headers)
                 setLoginData({
                     userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                     token: res.data.token,
-                    refreshToken:res.data.refreshToken,
+                    refreshToken: res.data.refreshToken,
                     isLogin: true
                 });
                 localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 localStorage.setItem("token", res.data.token);
-                setCookie("id", res.data.refreshToken, {path: "/"})
+                setCookie("id", res.data.refreshToken, { path: "/" })
                 Swal.fire({
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
@@ -80,7 +80,7 @@ export default function login() {
             <div className="signupmodalBox">
                 <header className="signup-header">
                     <div className="signup-header-cancel">
-                    <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
+                        <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
                     </div>
                     <div className="login-header-bot">
                         <p>로그인</p>
@@ -133,9 +133,11 @@ export default function login() {
                             <li><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
-                    <FooterButton inputvalue='로그인하기'/>
+                    <FooterButton inputvalue='로그인하기' />
                 </form>
             </div>
         </>
     )
 }
+
+

@@ -98,6 +98,13 @@ export default function ProductOrderSection() {
                 style={{
                     zIndex: 100,
                 }}
+                springConfig={{
+                    stiffness: 400,
+                    damping: 20,
+                    mass: 0.2,
+                }}
+                draggable={false}
+
             >
                 <Sheet.Container>
                     <Sheet.Content>
@@ -114,13 +121,13 @@ export default function ProductOrderSection() {
                                 alignItems: 'center',
                                 flexDirection: 'column',
                             }}>
-                                <div style={{ width: '90%', backgroundColor: '#f7f7f7' }}>
+                                <div style={{ width: '90%', backgroundColor: '#f7f7f7', height:'80px' }}>
                                     <p>23 SS 체리 튤립 로맨틱 워터보틀 384ml</p>
                                     <div style={{ display: 'flex' }}>
-                                        <div style={{ width: '50%' }}>
-                                            <span>-</span>
+                                        <div style={{ width: '50%' ,backgroundColor: '#f7f7f7'}}>
+                                            <button>-</button>
                                             <span>1</span>
-                                            <span>+</span>
+                                            <button>+</button>
                                         </div>
                                         <div style={{ width: '50%', textAlign: 'end' }}>33,000원</div>
                                     </div>

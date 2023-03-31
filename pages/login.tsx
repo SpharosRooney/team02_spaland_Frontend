@@ -34,6 +34,8 @@ export default function login() {
 
     //로그인 확인용
     const handleSubmit = (event: any) => {
+        axios.defaults.baseURL = 'http://localhost:3000';
+
         event.preventDefault();
         console.log(inputData);
         if (inputData.userEmail === "" || inputData.password === "") {
@@ -48,26 +50,44 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://10.10.10.77:8080/api/v1/users/login', {
+            axios.post('http://10.10.10.196:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:true}).then((res) => {
+            },{withCredentials:false}).then((res) => {
+                console.log(res)
                 setLoginData({
                     userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                    token: res.data.token,
-                    refreshToken:res.data.refreshToken,
+                    token: res.headers.authorization,
+                    refreshToken:res.headers.refreshToken,
                     isLogin: true
                 });
+
+                console.log(res.headers)
+                console.log(res.headers.authorization)
+                // console.log(res.headers.refreshToken)
+                const token = res.headers.authorization;
+                const userNickname = res.data;
+                const refreshToken = res.headers.refreshToken;
+                
+                axios.defaults.headers.common[
+                    "Authorization"
+                ] = `Bearer ${token}`;
+
+                // const {refreshToken} = res.headers.;
+                // axios.defaults.headers.common[
+                //     "Authorization"
+                // ] = `Bearer ${refreshToken}`;
+                
                 // console.log(res.data.token)
-                localStorage.setItem("userNickname", res.data); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                localStorage.setItem("token", res.data.token);
-                setCookie("id", res.data.refreshToken, {path: "/"})
+                localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                localStorage.setItem("token", token);
+                setCookie("id", refreshToken, {path: "/"})
                 Swal.fire({
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 })
                 router.push("/");
-                return res.data;
+                return res;
             })
                 .catch(err => {
                     console.log(err);

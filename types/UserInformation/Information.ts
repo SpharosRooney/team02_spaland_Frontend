@@ -28,7 +28,7 @@ export interface ReIssueTokenRes extends BaseRes {
 }
 
 export interface TokenInfo {
-    token: string;
+    accessToken: string;
 }
 
 export interface LogoutRes {

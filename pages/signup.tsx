@@ -129,7 +129,7 @@ export default function signup() {
         })
         return;
       } else {
-        axios.post('http://10.10.10.77:8080/api/v1/users/signup', {
+        axios.post('http://10.10.10.196:8080/api/v1/users/signup', {
           userName: inputData.userName,
           userphone: inputData.phone,
           userEmail: inputData.userEmail,
@@ -147,13 +147,12 @@ export default function signup() {
                   confirmButton: 'swal-confirm-button',
                   cancelButton: 'swal-cancel-button'
                 }
-              })
-              .then((res) => {
-                console.log(res) 
+              }).then(function() {
                 setStepId(stepId + 1)
-            })
+              })
               return;
-            }})
+            }
+          })
           .catch((err) => {
             console.log(err)
             Swal.fire({

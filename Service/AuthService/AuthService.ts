@@ -22,9 +22,9 @@ export async function RequestReissueToken() {
     return await axios.post('token-url')
         .then((res) => {
             const response: ReIssueTokenRes = res.data;
-            const newAccessToken = response.data.token;
-            localStorage.removeItem("token");
-            localStorage.setItem("token", newAccessToken);
+            const newAccessToken = response.data.accessToken;
+            localStorage.removeItem("accessToken");
+            localStorage.setItem("accessToken", newAccessToken);
         })
         .catch((ex) => {
             //TODO

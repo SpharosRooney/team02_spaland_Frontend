@@ -20,6 +20,7 @@ import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginSta
 import { RequestLogout, RequestReissueToken } from '@/Service/AuthService/AuthService'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import ProductCategory from '../widgets/ProductCategory'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -83,6 +84,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     }
   }, [])
 
+  const [isactive, setIsactive] = useState<boolean>(false)
 
   useEffect(() => {
     fetch('http://localhost:3001/nav')
@@ -373,7 +375,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                       eventSubNavData && eventSubNavData.map(eventsubnav => (
                         <li
                           key={eventsubnav.id}
-                          className={router.pathname === eventsubnav.link ? "active" : ""}
+                          className={router.pathname === eventsubnav.link && isactive ? "active" : ""}
                         >{eventsubnav.name}</li>
                       ))
                     }
@@ -382,6 +384,11 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </div>
             ) :
               ""
+          }
+          {
+            router.pathname === '/listview' ? (
+              <ProductCategory />
+            ) : ""
           }
         </header>
       </div >

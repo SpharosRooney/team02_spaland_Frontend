@@ -3,12 +3,12 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginState';
-import { LoginRes } from '@/types/UserRequest/Response';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
+import FooterButton from '@/components/footer/FooterButton';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
-import Config from '@/configs/config.export';
+
 
 export default function login() { 
 
@@ -133,11 +133,7 @@ export default function login() {
                             <li><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
-                    <footer className="login-footer">
-                        <div className="login-footer-btn">
-                            <button type='submit'>로그인하기</button>
-                        </div>
-                    </footer>
+                    <FooterButton inputvalue='로그인하기'/>
                 </form>
             </div>
         </>

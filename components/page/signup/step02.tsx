@@ -106,6 +106,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                     confirmButton: 'swal-confirm-button'
                 }
             })
+            setTime(Date.now() + 180000)
             return;
         }
         console.log("이메일 전송")
@@ -326,3 +327,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
 }
 
 export default Step02;
+
+function setTime(arg0: number) {
+    throw new Error('Function not implemented.');
+}

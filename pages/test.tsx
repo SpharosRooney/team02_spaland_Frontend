@@ -1,126 +1,138 @@
-export interface RequestPayAdditionalParams {
-    digital?: boolean;
-    vbank_due?: string;
-    m_redirect_url?: string;
-    app_scheme?: string;
-    biz_num?: string;
-}
+// import FooterTeacherButton from "@/components/footer/FooterTeacherButton";
+// import Sheet, { SheetRef } from 'react-modal-sheet';
+// import { useRef, useState } from 'react';
+// import FooterButton from "@/components/footer/FooterButton";
 
-export interface Display {
-    card_quota?: number[];
-}
 
-export interface RequestPayParams extends RequestPayAdditionalParams {
-    pg?: string;
-    pay_method: string;
-    escrow?: boolean;
-    merchant_uid: string;
-    name?: string;
-    amount: number;
-    custom_data?: any;
-    tax_free?: number;
-    currency?: string;
-    language?: string;
-    buyer_name?: string;
-    buyer_tel: string;
-    buyer_email?: string;
-    buyer_addr?: string;
-    buyer_postcode?: string;
-    notice_url?: string | string[];
-    display?: Display;
-}
+// export default function test() {
+//     const [isOpen, setOpen] = useState(true);
+//     const ref = useRef<SheetRef>();
+//     const snapTo = (i: number) => ref.current?.snapTo(i);
 
-export interface RequestPayAdditionalResponse {
-    apply_num?: string;
-    vbank_num?: string;
-    vbank_name?: string;
-    vbank_holder?: string | null;
-    vbank_date?: number;
-}
 
-export interface RequestPayResponse extends RequestPayAdditionalResponse {
-    success: boolean;
-    error_code: string;
-    error_msg: string;
-    imp_uid: string | null;
-    merchant_uid: string;
-    pay_method?: string;
-    paid_amount?: number;
-    status?: string;
-    name?: string;
-    pg_provider?: string;
-    pg_tid?: string;
-    buyer_name?: string;
-    buyer_email?: string;
-    buyer_tel?: string;
-    buyer_addr?: string;
-    buyer_postcode?: string;
-    custom_data?: any;
-    paid_at?: number;
-    receipt_url?: string;
-}
+//     return (
+//         <>
+//             <div style={{ marginTop: '100px' }}>
+//                 <button onClick={() => setOpen(!isOpen)}>Open sheet</button>
 
-export type RequestPayResponseCallback = (response: RequestPayResponse) => void;
+//                 {/* Opens to 400 since initial index is 1 */}
+//                 <Sheet
+//                     ref={ref}
+//                     isOpen={isOpen}
+//                     onClose={() => setOpen(!isOpen)}
+//                     snapPoints={[140, 120]}
+//                     initialSnap={1}
+//                     springConfig={{
+//                         stiffness: 400,
+//                         damping: 20,
+//                         mass: 0.2,
+//                     }}
+//                     draggable={false}
+//                     onSnap={snapIndex =>
+//                         console.log('> Current snap point index:', snapIndex)
+//                     }
+//                 >
+//                     <Sheet.Container style={{ zIndex: 0 }}>
+//                         <button onClick={() => snapTo(0)}>Snap to index 0</button>
+//                         <button onClick={() => snapTo(1)}>Snap to index 1</button>
+//                     </Sheet.Container>
+//                     <FooterButton inputvalue="구매하기" />
+//                 </Sheet>
 
-export interface Iamport {
-    init: (accountID: string) => void;
-    request_pay: (
-        params: RequestPayParams,
-        callback?: RequestPayResponseCallback
-    ) => void;
-}
 
-declare global {
-    interface Window {
-        IMP?: Iamport;
+//             </div>
+//         </>
+//     );
+// }
+
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import myStyle from '../components/footer/FooterTeacherButton.module.css'
+import Sheet, { SheetRef } from 'react-modal-sheet';
+
+import { useRef } from 'react';
+
+
+const OrderToggleButton = styled.div`
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  margin-bottom: 1rem;
+`
+const OrderButton = styled.div`
+  width: 100%;
+  border-radius: 30px;
+  background-color: rgb(0, 155, 57);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 300;
+  text-align: center;
+  padding: 8px 0;
+`
+
+export default function ProductOrderSection() {
+
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const ref = useRef<SheetRef>();
+
+
+    const handleOpen = () => {
+        setIsOpen(!isOpen)
     }
-}
-
-
-export default function test() {
-    const onClickPayment = () => {
-
-        if (!window.IMP) return;
-
-        /* 1. 가맹점 식별하기 */
-        const { IMP } = window;
-        IMP.init('imp31284226'); // 가맹점 식별코드
-        /* 2. 결제 데이터 정의하기 */
-        const data: RequestPayParams = {
-            pg: "inicis_unified.{INIpayTest}", // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
-            pay_method: "card", // 결제수단
-            merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-            amount: 1000, // 결제금액
-            name: "아임포트 결제 데이터 분석", // 주문명
-            buyer_name: "홍길동", // 구매자 이름
-            buyer_tel: "01012341234", // 구매자 전화번호
-            buyer_email: "example@example", // 구매자 이메일
-            buyer_addr: "신사동 661-16", // 구매자 주소
-            buyer_postcode: "06018", // 구매자 우편번호
-        };
-
-        /* 4. 결제 창 호출하기 */
-        IMP.request_pay(data, callback);
-    };
-
-    /* 3. 콜백 함수 정의하기 */
-    function callback(response: RequestPayResponse) {
-
-        const { success, error_msg } = response;
-        if (success) {
-            alert("결제 성공");
-        } else {
-            alert(`결제 실패: ${error_msg}`);
-        }
-    }
-
 
     return (
         <>
-            <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-            <div style={{ marginTop: "200px" }}></div>
-            <button onClick={onClickPayment}>결제하기</button>
+            <div className={isOpen ? myStyle.productOrderSectionOpen : myStyle.productOrderSection}>
+                {
+                    !isOpen ? <OrderToggleButton onClick={handleOpen} /> : null
+                }
+
+                <OrderButton onClick={handleOpen}>주문하기</OrderButton>
+            </div>
+            <Sheet
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                detent="content-height"
+                style={{
+                    zIndex: 100,
+                }}
+            >
+                <Sheet.Container>
+                    <Sheet.Content>
+                        <div style={{ height: '300px', boxSizing: 'border-box', paddingTop: '1rem' }}>
+                            <OrderToggleButton onClick={() => setIsOpen(false)} />
+                            <div style={{
+                                // position: 'fixed',
+                                // bottom: 0,
+                                width: '100%',
+                                padding: '1rem',
+                                boxSizing: 'border-box',
+                                display: 'flex',
+                                justifyContent: 'space-around',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                            }}>
+                                <div style={{ width: '90%', backgroundColor: '#f7f7f7' }}>
+                                    <p>23 SS 체리 튤립 로맨틱 워터보틀 384ml</p>
+                                    <div style={{ display: 'flex' }}>
+                                        <div style={{ width: '50%' }}>
+                                            <span>-</span>
+                                            <span>1</span>
+                                            <span>+</span>
+                                        </div>
+                                        <div style={{ width: '50%', textAlign: 'end' }}>33,000원</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ padding: '1rem', marginRight: '1rem' }}>
+                                <p style={{ textAlign: 'end' }}><span>합계</span>33,000 <span>원</span></p>
+                            </div>
+                        </div>
+                    </Sheet.Content>
+                </Sheet.Container>
+            </Sheet>
         </>
     );
 }
-

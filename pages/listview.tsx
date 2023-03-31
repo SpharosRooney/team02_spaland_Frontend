@@ -1,13 +1,24 @@
+import ProductListCard from "@/components/ui/ProductListCard";
 import ProductCategory from "@/components/widgets/ProductCategory";
 
 export default function listview() {
 
     // postman 에서 공백 혹은 띄워쓰기 처리 방식
-    
+
     return (
         <>
-            {/* <ProductCategory /> */}
-            {/* <section id="searchresult_section_product">
+            <header />
+            <div className="header-top"/>
+            <ProductCategory />
+            <div style={{display:'flex', justifyContent:"end"}}>
+            <select style={{display:"flex",}}>
+                <option value="1">신상품순</option>
+                <option value="2">추천순</option>
+                <option value="3">낮은가격순</option>
+                <option value="4">높은가격순</option>
+            </select>
+            </div>
+            <section id="searchresult_section_product">
                 <div className="searchresult-product-list">
                     <div className="searchresult-product-item">
                         <div className="searchresult-product-item__img">
@@ -86,7 +97,7 @@ export default function listview() {
                         </div>
                     </div>
                 </div>
-            </section> */}
+            </section>
         </>
     )
 }

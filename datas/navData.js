@@ -231,22 +231,22 @@ export const menuListDepth3 = [
         data: [
             {
                 id: 1,
-                name: "플라스틱 텀블러",
+                name: "Short",
                 key: "categoryMiddle",
             },
             {
                 id: 2,
-                name: "스텐리스 텀블러",
+                name: "Tall",
                 key: "categoryMiddle",
             },
             {
                 id: 3,
-                name: "보온병",
+                name: "Grande",
                 key: "categoryMiddle",
             },
             {
                 id: 4,
-                name: "콜드컵",
+                name: "Venti",
                 key: "categoryMiddle",
             },
         ],
@@ -286,22 +286,22 @@ export const menuListDepth4 = [
         data: [
             {
                 id: 1,
-                name: "플라스틱 텀블러",
+                name: "Spring",
                 key: "subCategory",
             },
             {
                 id: 2,
-                name: "스텐리스 텀블러",
+                name: "커티스 쿨릭",
                 key: "subCategory",
             },
             {
                 id: 3,
-                name: "보온병",
+                name: "체리블라썸",
                 key: "subCategory",
             },
             {
                 id: 4,
-                name: "콜드컵",
+                name: "밸런타인 데이",
                 key: "subCategory",
             },
         ],

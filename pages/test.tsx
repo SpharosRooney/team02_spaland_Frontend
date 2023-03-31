@@ -48,10 +48,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import myStyle from '../components/footer/FooterTeacherButton.module.css'
-import Sheet, { SheetRef } from 'react-modal-sheet';
-
-import { useRef } from 'react';
-
+import Sheet from 'react-modal-sheet';
+import Link from 'next/link';
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -75,21 +73,22 @@ const OrderButton = styled.div`
 export default function ProductOrderSection() {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const ref = useRef<SheetRef>();
+    const [count, setCount] = useState<number>(1)
 
 
     const handleOpen = () => {
         setIsOpen(!isOpen)
     }
 
+
     return (
         <>
             <div className={isOpen ? myStyle.productOrderSectionOpen : myStyle.productOrderSection}>
                 {
-                    !isOpen ? <OrderToggleButton onClick={handleOpen} /> : null
+                    !isOpen ? (<><OrderToggleButton onClick={handleOpen} /><OrderButton onClick={handleOpen}>주문하기</OrderButton></>)
+                        : null
                 }
 
-                <OrderButton onClick={handleOpen}>주문하기</OrderButton>
             </div>
             <Sheet
                 isOpen={isOpen}
@@ -98,18 +97,13 @@ export default function ProductOrderSection() {
                 style={{
                     zIndex: 100,
                 }}
-                springConfig={{
-                    stiffness: 400,
-                    damping: 20,
-                    mass: 0.2,
-                }}
-                draggable={false}
-
+                disableDrag={true}
+                prefersReducedMotion={true}
             >
                 <Sheet.Container>
                     <Sheet.Content>
                         <div style={{ height: '300px', boxSizing: 'border-box', paddingTop: '1rem' }}>
-                            <OrderToggleButton onClick={() => setIsOpen(false)} />
+                            <OrderToggleButton onClick={handleOpen} />
                             <div style={{
                                 // position: 'fixed',
                                 // bottom: 0,
@@ -121,25 +115,34 @@ export default function ProductOrderSection() {
                                 alignItems: 'center',
                                 flexDirection: 'column',
                             }}>
-                                <div style={{ width: '90%', backgroundColor: '#f7f7f7', height:'80px' }}>
+                                <div style={{ width: '90%', backgroundColor: '#f7f7f7', height: '80px' }}>
                                     <p>23 SS 체리 튤립 로맨틱 워터보틀 384ml</p>
                                     <div style={{ display: 'flex' }}>
-                                        <div style={{ width: '50%' ,backgroundColor: '#f7f7f7'}}>
-                                            <button>-</button>
-                                            <span>1</span>
-                                            <button>+</button>
+                                        <div style={{ width: '50%', backgroundColor: '#f7f7f7' }}>
+                                            <button style={{ borderRadius: '30px' }} onClick={() => setCount(count - 1)}>-</button>
+                                            <span>{count}</span>
+                                            <button style={{ borderRadius: '30px' }} onClick={() => setCount(count + 1)}>+</button>
                                         </div>
                                         <div style={{ width: '50%', textAlign: 'end' }}>33,000원</div>
                                     </div>
                                 </div>
                             </div>
                             <div style={{ padding: '1rem', marginRight: '1rem' }}>
-                                <p style={{ textAlign: 'end' }}><span>합계</span>33,000 <span>원</span></p>
+                                <p style={{ textAlign: 'end' }}><span>합계</span>33,000<span>원</span></p>
                             </div>
+                            <footer className="cart-footer" style={{ height: '10%' }}>
+                                <div className="submit-box">
+                                    <div className="cart-footer-bot" style={{alignItems:'center'}}>
+                                        <img src = '/assets/images/icons/shopping-cart.svg' alt="cart" width={'20px'} height={'20px'} />
+                                        <button className="cart-gift"><Link href='giftcard'>선물하기 </Link></button>
+                                        <button className="cart-buy"><Link href='buypage'>구매하기</Link></button>
+                                    </div>
+                                </div>
+                            </footer>
                         </div>
                     </Sheet.Content>
                 </Sheet.Container>
             </Sheet>
         </>
     );
-}
+} 

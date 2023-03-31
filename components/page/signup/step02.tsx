@@ -106,7 +106,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                     confirmButton: 'swal-confirm-button'
                 }
             })
-            setTime(Date.now() + 180000)
+            setConfirmTime(Date.now() + 180000)
             return;
         }
         console.log("이메일 전송")
@@ -121,7 +121,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             return;
         }
 
-        axios.post('http://10.10.10.71:8080/api/v1/email/confirm', {
+        axios.post('http://10.10.10.77:8080/api/v1/email/confirm', {
             userEmail: inputData.userEmail,
         })
             .then((res) => {
@@ -163,7 +163,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     const handleConfirmKey = () => {
         console.log(confirmKey)
         //서버에 키값 확인
-        axios.post('http://10.10.10.71:8080/api/v1/email/checkcode', {
+        axios.post('http://10.10.10.77:8080/api/v1/email/checkcode', {
             userEmail: inputData.userEmail,
             confirmKey: inputData.confirmKey
         })
@@ -327,7 +327,3 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
 }
 
 export default Step02;
-
-function setTime(arg0: number) {
-    throw new Error('Function not implemented.');
-}

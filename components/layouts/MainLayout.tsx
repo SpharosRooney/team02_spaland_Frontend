@@ -20,6 +20,8 @@ import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginSta
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
+import { menuModalState } from '@/state/atom/menuModalState'
+import Menu from '../modal/Menu'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -27,6 +29,8 @@ import ProductCategory from '../widgets/ProductCategory'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
+  const [isMenuModalOpen,setIsMenuModalOpen] = useState<boolean>(false);
+  // const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
@@ -41,7 +45,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [bestSubNavData, setBestSubNottomNavData] = useState<subNavMenuType[]>()
   const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
   const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [category, setCategory] = useState<filterMenuType[]>();
   const [sizeList, setSizeList] = useState<sizeType[]>();
 
@@ -211,13 +215,15 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
+    <Menu
+      isMenuModalOpen={isMenuModalOpen}
+      setIsMenuModalOpen={setIsMenuModalOpen}
+    />
       <div className="container">
         <header>
           <div className="header-top">
-            <div className="menu-icon" onClick={() => setIsModalOpen(true)}>
-              {
-                <img src='assets/images/icons/menu.svg' />
-              }
+            <div className="menu-icon" onClick={()=> setIsMenuModalOpen(true)}>
+              <img src='assets/images/icons/menu.svg' />
             </div>
             <h1><Link href="/">온라인 스토어</Link></h1>
             <nav>

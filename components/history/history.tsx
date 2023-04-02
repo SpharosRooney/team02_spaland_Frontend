@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
 const History = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.getItem('keyword');
+  }
+
   const [keyword, setKeyword] = useState(localStorage.getItem('keyword') || '');
 
   const handleRemoveKeyword = () => {

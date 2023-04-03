@@ -1,3 +1,4 @@
+import React from 'react'
 import SearchBar from '@/components/ui/Searchbar';
 import History from '@/components/history/history';
 

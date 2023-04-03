@@ -1,4 +1,5 @@
 import { menuModalState } from '@/state/atom/menuModalState';
+import { ProductDetailType } from '@/types/fetchDataType';
 import axios from 'axios';
 import { AppPropsType } from 'next/dist/shared/lib/utils';
 import { useRouter } from 'next/router';
@@ -7,12 +8,14 @@ import { useRecoilState } from 'recoil';
 
 function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
     const router = useRouter();
+    const [allmenu, setAllmenu] = useState<ProductDetailType[]>([]);
 
-    // useEffect(() => {
-    //     axios(`http://192.168.35.226:8080/v1/api/categories/main`).then((res) =>
-    //       SetCategoryData(res.data)
-    //     );
-    //   }, []);
+    useEffect(() => {
+        axios.get("http://10.10.10.51/api/v1/product/get/all")
+          .then((response) => response.data)
+          .then((data) => setAllmenu(data))
+          .catch((error) => console.error(error));
+      }, []);
 
       const handleClose = () => {
         props.setIsMenuModalOpen(false)
@@ -20,21 +23,26 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
 
       const handlePushClose = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/v1/product/get/all`);
+            const response = await axios.get(`http://10.10.10.51/api/v1/product/get/all`);
             const products = response.data;
             // 전체 상품 정보를 가져온 후, 새로운 페이지로 이동
-            router.push({
-                pathname: `/listview?query=${products}`,
-                query: { products: JSON.stringify(products) },
-            });
+            
+            window.location.href = `/searchresult?query=${products}`;
+            // router.push({
+            //     pathname: `/searchresult`,
+            //     query: { query: products }, // 검색어(query)를 포함
+            // });
+            
             props.setIsMenuModalOpen(false);
         } catch (error) {
             console.error(error);
         }
         
+        // router.push("/searchresult");
+        // props.setIsMenuModalOpen(false);
     };
 
-    if (!props.isMenuModalOpen) return null;
+    if (!props.isMenuModalOpen) return <></>;
     return (
         <>
             <div className="menu-box">

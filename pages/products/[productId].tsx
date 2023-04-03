@@ -2,6 +2,8 @@ import FooterButton from '@/components/footer/FooterButton'
 import Separator_large from '@/components/ui/Separator_large'
 import ItemNoticeWidget from '@/components/widgets/ItemNoticeWidget'
 import { eventProductType } from '@/types/fetchDataType'
+import { eventProductListType, ProductDetailType, ProductListCardType } from '@/types/fetchDataType'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/router'
@@ -14,10 +16,14 @@ export default function Products() {
     const { baseUrl } = Config();
 
     console.log(query)
-    const [productData, setProductData] = useState<eventProductType>()
+    const [productData, setProductData] = useState<ProductDetailType[]>()
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/product/get/${query.productId}`)
-            .then(res => setProductData(res.data))
+            .then(res => {
+                console.log(res.data)
+                setProductData(res.data)
+            })
+            
     }, [query])
 
     console.log('123',query)

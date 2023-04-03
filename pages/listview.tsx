@@ -1,4 +1,3 @@
-import ProductListCard from "@/components/ui/ProductListCard";
 import ProductCategory from "@/components/widgets/ProductCategory";
 
 export default function listview() {

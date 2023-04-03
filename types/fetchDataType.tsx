@@ -1,10 +1,10 @@
-export interface mainEventListType{
+export interface mainEventListType {
     id: number;
     title: string;
     eventId: number;
 }
 
-export interface BestListType{
+export interface BestListType {
     id: number;
     title: string;
 }
@@ -31,7 +31,7 @@ export interface eventProductListType {
 
 export interface bestProductListType {
     id: number;
-    bestId:number;
+    bestId: number;
     productId: number;
 }
 
@@ -70,4 +70,13 @@ export interface productImageListType {
     id: number;
     imgUrl: string;
     imgAlt: string;
+    productImageList: [
+        {
+            id: number;
+            imgUrl: string;
+            imgAlt: string;
+        }
+    ],
+    frozen: number;
+    salesQuantity: number;
 }

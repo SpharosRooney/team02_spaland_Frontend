@@ -1,22 +1,36 @@
-import { useState } from 'react';
-import axios from 'axios';
-import Link from 'next/link';
+import { Keyword } from "@/types/search/searchKeywords";
+import axios from "axios";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 const SearchBar = () => {
-    const [keyword, setKeyword] = useState('');
+    const [keyword, setKeyword] = useState<Keyword>({
+        id: Date.now(),
+        keyword: "",
+    });
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         try {
-            await axios.get(`http://10.10.10.64:8080/api/v1/product/get?query=${keyword}`);
+            await axios.get(`http://localhost:8080/api/v1/product/get?query=${keyword.keyword}`);
             // 검색 결과 페이지로 이동
-            window.location.href = `/searchresult?query=${keyword}`;
-            localStorage.setItem("keyword", keyword);
+            window.location.href = `/searchresult?query=${keyword.keyword}`;
+
+            // 검색어를 localStorage에 저장
+            const keywords = JSON.parse(localStorage.getItem('keyword') || '[]');
+            keywords.unshift(keyword);
+            localStorage.setItem('keyword', JSON.stringify(keywords));
         } catch (error) {
             console.error(error);
         }
     };
+
+    const handleClose = () => {
+        // 검색창 닫기
+        window.location.href = '/';
+    }
 
     return (
         <header>
@@ -26,22 +40,25 @@ const SearchBar = () => {
                         <input
                             type="text"
                             placeholder="검색어를 입력하세요."
-                            value={keyword}
-                            onChange={(event) => setKeyword(event.target.value)}
+                            value={keyword.keyword}
+                            onChange={(event) =>
+                                setKeyword({
+                                    ...keyword,
+                                    keyword: event.target.value,
+                                })
+                            }
                         />
                         <button type="submit">
                             <img src="assets/images/icons/search.svg" />
                         </button>
                     </div>
                     <nav className="search-close">
-                        <Link href="/">
-                            <img src="assets/images/icons/close.png" />
-                        </Link>
+                        <img src="assets/images/icons/close.png" onClick={handleClose}/>
                     </nav>
                 </div>
             </form>
         </header>
     );
-};
+}
 
 export default SearchBar;

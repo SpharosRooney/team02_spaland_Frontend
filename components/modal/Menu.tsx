@@ -20,7 +20,7 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
 
       const handlePushClose = async () => {
         try {
-            const response = await axios.get(`http://10.10.10.64:8080/api/v1/product/get/all`);
+            const response = await axios.get(`http://localhost:8080/api/v1/product/get/all`);
             const products = response.data;
             // 전체 상품 정보를 가져온 후, 새로운 페이지로 이동
             router.push({

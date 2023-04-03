@@ -7,6 +7,7 @@ export interface seacrchKeyword {
     price : string;
 }
 
-export interface keyword {
-    keyword : string;
+export interface Keyword {
+    id: number;
+    keyword: string;
 }

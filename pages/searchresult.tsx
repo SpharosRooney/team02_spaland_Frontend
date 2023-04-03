@@ -18,7 +18,7 @@ const SearchResult = () => {
     useEffect(() => {
         const fetchSearchResults = async () => {
             try {
-                const response = await axios.get(`http://10.10.10.64:8080/api/v1/product/get?query=${query}`);
+                const response = await axios.get(`http://localhost:8080/api/v1/product/get?query=${query}`);
                 // setSearchResults(
                 //     categoryLarge = response.data.categoryLarge
                 //     );

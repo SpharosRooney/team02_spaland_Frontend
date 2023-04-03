@@ -125,7 +125,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     }
     if (confirmed) {
       try {
-        await axios.get('http://192.168.35.13:8080/api/v1/users/logout', {
+        await axios.get('http://localhost:8080/api/v1/users/logout', {
           headers: {
             Authorization: `${isLogin.accessToken}`
           }
@@ -356,7 +356,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                 </div>
               ) : ""))
           }
-          {/* {
+          {
             router.pathname === '/best' ? (
               <div className="header-sub">
                 <nav>
@@ -376,8 +376,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </div>
             ) :
               ""
-          } */}
-          {/* {
+          }
+          {
             router.pathname === '/event' ? (
               <div className="header-sub">
                 <nav>
@@ -395,7 +395,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               </div>
             ) :
               ""
-          } */}
+          }
           {
             router.pathname === '/listview' ? (
               <ProductCategory />

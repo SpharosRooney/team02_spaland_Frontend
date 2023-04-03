@@ -203,10 +203,6 @@ header {
   font-weight: bold;
 }
 
-.header-sub nav ul li:first-child {
-  
-}
-
 .header-sub nav ul li:last-child {
   padding-right: 10px;
 }

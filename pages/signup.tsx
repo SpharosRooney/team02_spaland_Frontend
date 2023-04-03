@@ -129,7 +129,7 @@ export default function signup() {
         })
         return;
       } else {
-        axios.post('http://192.168.35.13:8080/api/v1/users/signup', {
+        axios.post('http://10.10.10.64:8080/api/v1/users/signup', {
           userName: inputData.userName,
           userphone: inputData.phone,
           userEmail: inputData.userEmail,

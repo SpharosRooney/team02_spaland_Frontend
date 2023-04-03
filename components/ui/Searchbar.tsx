@@ -9,7 +9,7 @@ const SearchBar = () => {
         event.preventDefault();
 
         try {
-            await axios.get(`http://192.168.35.226:8080/api/v1/product/get?query=${keyword}`);
+            await axios.get(`http://10.10.10.64:8080/api/v1/product/get?query=${keyword}`);
             // 검색 결과 페이지로 이동
             window.location.href = `/searchresult?query=${keyword}`;
             localStorage.setItem("keyword", keyword);

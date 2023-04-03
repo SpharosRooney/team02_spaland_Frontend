@@ -1,4 +1,5 @@
 import { menuModalState } from '@/state/atom/menuModalState';
+import axios from 'axios';
 import { AppPropsType } from 'next/dist/shared/lib/utils';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
@@ -17,10 +18,22 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
         props.setIsMenuModalOpen(false)
       };
 
-    const handlePushClose = (path: string) => {
-        router.push(path);
-        props.setIsMenuModalOpen(false);
+      const handlePushClose = async () => {
+        try {
+            const response = await axios.get(`http://10.10.10.64:8080/api/v1/product/get/all`);
+            const products = response.data;
+            // 전체 상품 정보를 가져온 후, 새로운 페이지로 이동
+            router.push({
+                pathname: `/listview?query=${products}`,
+                query: { products: JSON.stringify(products) },
+            });
+            props.setIsMenuModalOpen(false);
+        } catch (error) {
+            console.error(error);
+        }
+        
     };
+
     if (!props.isMenuModalOpen) return null;
     return (
         <>
@@ -39,7 +52,7 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
 
                 <section className="menu-section">
                     <section className="menu-section-top">
-                        <div onClick={() => handlePushClose("http://192.168.35.226:8080/api/v1/product/get/all")}>
+                        <div onClick={handlePushClose}>
                             <a href="">전체 상품 보기 {">"}</a>
                         </div>
                     </section>

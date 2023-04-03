@@ -49,7 +49,7 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://10.10.10.196:8080/api/v1/users/login', {
+            axios.post('http://192.168.35.13:8080/api/v1/users/login', {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:false}).then((res) => {                

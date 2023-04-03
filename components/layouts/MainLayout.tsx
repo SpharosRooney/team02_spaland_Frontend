@@ -20,6 +20,8 @@ import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginSta
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
+import { menuModalState } from '@/state/atom/menuModalState'
+import Menu from '../modal/Menu'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -27,6 +29,8 @@ import ProductCategory from '../widgets/ProductCategory'
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
+  const [isMenuModalOpen,setIsMenuModalOpen] = useState<boolean>(false);
+  // const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
@@ -41,7 +45,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [bestSubNavData, setBestSubNottomNavData] = useState<subNavMenuType[]>()
   const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
   const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [category, setCategory] = useState<filterMenuType[]>();
   const [sizeList, setSizeList] = useState<sizeType[]>();
 
@@ -106,28 +110,32 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   //logout handler 추가
   const logout = async () => {
-    axios.post('http://10.10.10.196:8080/api/v1/users/logout')
-    Swal.fire({
-      title: '로그아웃 하시겠습니까?',
-      showDenyButton: true,
-      showCancelButton: false,
-      confirmButtonText: `확인`,
-      denyButtonText: `취소`,
-    }).then((res) => {
-      // axios.defaults.headers.common[
-      //   "Authorization"
-      // ] = `Bearer ${isLogin.accessToken}`;
-      if (res.isConfirmed) {
+    const confirmed = window.confirm('로그아웃 하시겠습니까?');
+    if (!isLogin.accessToken) {
+      // 로그인하지 않은 상태에서 로그아웃 버튼을 클릭한 경우
+      Swal.fire({
+        icon: "warning",
+        title: "로그인 상태가 아닙니다",
+        text: "로그인 후 다시 시도해주세요",
+        customClass: {
+          confirmButton: 'swal-confirm-button'
+        }
+      });
+      return;
+    }
+    if (confirmed) {
+      try {
+        await axios.get('http://192.168.35.13:8080/api/v1/users/logout', {
+          headers: {
+            Authorization: `${isLogin.accessToken}`
+          }
+        });
         setIsLogin({
           userNickname: "",
           accessToken: "",
-          // refreshToken 사용할때 주석 해제
-          // refreshToken: "",
           isLogin: false
-        })
+        });
         localStorage.removeItem("accessToken");
-        // refreshToken 사용할때 주석 해제
-        // localStorage.removeItem("refreshToken");
         localStorage.removeItem("userNickname");
         let timerInterval: string | number | NodeJS.Timer | undefined;
         Swal.fire({
@@ -136,39 +144,29 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           timerProgressBar: true,
           didOpen: () => {
             Swal.showLoading();
-        },
+          },
           willClose: () => { 
             clearInterval(Number(timerInterval));
           },
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log('I was closed by the timer');
-        }
-      });
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            console.log('I was closed by the timer');
+          }
+        });
         location.reload();
-      } else {
+      } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "로그아웃에 실패하였습니다.",
           customClass: {
-              confirmButton: 'swal-confirm-button'
+            confirmButton: 'swal-confirm-button'
           }
-      });
+        });
       }
-    })
-    // axios.post('LOGOUT-url', {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     headers: { Authorization: `Bearer ${token}` }
-    //   },
-    // })
-    //   .then((res) => {
-    //     removecookie('token', '', { path: '/' });
-    //     localStorage.removeItem("token");
-    //     localStorage.removeItem("refreshToken");
-    //   });
+    }
   }
+  
 
   useEffect(() => {
     axios.get(`http://localhost:3001/size`)
@@ -217,13 +215,15 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
+    <Menu
+      isMenuModalOpen={isMenuModalOpen}
+      setIsMenuModalOpen={setIsMenuModalOpen}
+    />
       <div className="container">
         <header>
           <div className="header-top">
-            <div className="menu-icon" onClick={() => setIsModalOpen(true)}>
-              {
-                <img src='assets/images/icons/menu.svg' />
-              }
+            <div className="menu-icon" onClick={()=> setIsMenuModalOpen(true)}>
+              <img src='assets/images/icons/menu.svg' />
             </div>
             <h1><Link href="/">온라인 스토어</Link></h1>
             <nav>

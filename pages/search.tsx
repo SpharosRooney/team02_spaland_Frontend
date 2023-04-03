@@ -1,24 +1,12 @@
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import SearchBar from '@/components/header/SearchBar'
+import SearchBar from '@/components/ui/Searchbar';
 import { seacrchKeyword } from '@/types/search/searchKeywords';
-import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
+import History from '@/components/history/history';
 
 export default function search() {
-    // const navigate = useNavigate();
-    const router = useRouter();
-    const [keyword, setKeyWord] = useState('');
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setKeyWord(value);
-    }
-
-    const handleAddKeyWord = () => {
-        router.push(`/searchreuslt/${keyword}`);
-        // navigate(`/searchreuslt/${keyword}`);
-    }
 
     // const [keywords, setKeyWords] = useState<searchKeyword[]>([])
     // const router = useRouter()
@@ -56,23 +44,8 @@ export default function search() {
     return (
         <>
             <div className="container">
-                <header>
-                    <form>
-                        <div className="header-top">
-                            <div className="search">
-                                <input
-                                    type="text"
-                                    placeholder="검색어를 입력하세요."
-                                    onChange={handleInputChange}
-                                />
-                                <Link href={`/searchreuslt/${keyword}`}><img src="assets/images/icons/search.svg" onClick={handleAddKeyWord}/></Link>
-                            </div>
-                            <nav className="search-close">
-                                <Link href="/"><img src="assets/images/icons/close.png" /></Link>
-                            </nav>
-                        </div>
-                    </form>
-                </header>
+                <SearchBar/>
+                <History/>
             </div>
             {/* <section>
                         <div className="search-words-box">

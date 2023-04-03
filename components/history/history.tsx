@@ -1,47 +1,51 @@
-import { searchKeyword } from '@/types/search/searchKeywords';
-import React, { useEffect, useState } from 'react'
-
-
-interface ChildProps {
-    keywords: searchKeyword;
-    setKeyWords: React.Dispatch<React.SetStateAction<searchKeyword>>;
-}
+import { useState } from 'react';
 
 const History = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.getItem('keyword');
+  }
 
+  const [keyword, setKeyword] = useState(localStorage.getItem('keyword') || '');
 
+  const handleRemoveKeyword = () => {
+    setKeyword('');
+    localStorage.removeItem('keyword');
+  };
 
-    return (
-        <>
-            {
-                <section id="recommand-md">
-                    <div className="search-result">
-                        <h4>최근 검색어가 없습니다.</h4>
-                    </div>
-                </section>
-            }
-            {
-                <section>
-                    <div className="search-words-box">
-                        <div>
-                            <p>최근 검색어</p>
-                        </div>
-                        <div className="search-words">
-                            <div className="search-word">
-                                <div className="word-p">
-                                    <p>텀블러</p>
-                                </div>
-                                <img src="assets/images/icons/close.png" onClick={} />
-                            </div>
-                        </div>
-                        <div className="total-delete">
-                            <button onClick={HandleAllDeleteWord}><p>전체 삭제</p></button>
-                        </div>
-                    </div>
-                </section>
-            }
-        </>
-    )
-}
+  return (
+    <>
+      {keyword.length > 0 ?
+        (
+          <section>
+            <div className="search-words-box">
+              <div style={{ marginTop: 70 }}>
+                <p>최근 검색어</p>
+              </div>
+              <div className="search-words">
+                <div className="search-word">
+                  <div className="word-p">
+                    <p>{keyword}</p>
+                  </div>
+                  <img src="assets/images/icons/close.png" onClick={handleRemoveKeyword} />
+                </div>
+              </div>
+              <div className="total-delete">
+                <button onClick={handleRemoveKeyword}><p>전체 삭제</p></button>
+              </div>
+            </div>
+          </section>
+        ) :
+        (
+          <section id="recommand-md">
+            <div className="search-result">
+              <h4>최근 검색어가 없습니다.</h4>
+            </div>
+          </section>
+        )
+      }
+    </>
+  );
+
+};
 
 export default History;

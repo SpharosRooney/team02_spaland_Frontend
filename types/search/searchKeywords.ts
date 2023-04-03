@@ -1,10 +1,13 @@
 export interface seacrchKeyword {
     keyword : string;
-    categoryLarge : string;
-    categoryMiddle : string;
-    option : string;
-    productSeason : string;
-    price : string;
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    frozen: number;
+    salesQuantity: number;
 }
 
 export interface Keyword {

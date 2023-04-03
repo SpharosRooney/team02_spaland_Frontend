@@ -4,7 +4,7 @@ import ProductListCard from '@/components/ui/ProductListCard'
 import Separator from '@/components/ui/Separator'
 import Separator_large from '@/components/ui/Separator_large'
 import ItemNoticeWidget from '@/components/widgets/ItemNoticeWidget'
-import { eventProductListType, ProductListCardType } from '@/types/fetchDataType'
+import { eventProductListType, ProductDetailType, ProductListCardType } from '@/types/fetchDataType'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -18,11 +18,12 @@ export default function Products() {
     const { baseUrl } = Config();
 
     console.log(query)
-    const [productData, setProductData] = useState<eventProductListType[]>()
+    const [productData, setProductData] = useState<ProductDetailType[]>()
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/product/get/${query.productId}`)
             .then(res => {
-                console.log(res)
+                console.log(res.data)
+                setProductData(res.data)
             })
             
     }, [query])

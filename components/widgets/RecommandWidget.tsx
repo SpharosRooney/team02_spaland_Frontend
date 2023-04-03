@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import ProductListCard from '../ui/ProductListCard'
 import TagListCard from '../ui/TagListCard'
-import { eventProductListType } from '@/types/fetchDataType'
+import { eventListType, eventProductListType } from '@/types/fetchDataType'
 import { tagListCardType } from '@/types/fetchDataType'
 import Config from '@/configs/config.export'
 import axios from 'axios'
 
 export default function RecommandWidget(props: { title: string }) {
 
-    const [eventItemList, setEventItemList] = useState<eventProductListType[]>()
+    const [eventItemList, setEventItemList] = useState<eventListType[]>()
 
     const { baseUrl } = Config();
 
+    const preTitle = props.title;
+    const encodedTitle = encodeURIComponent(preTitle);
+    console.log('props.title', props.title)
     useEffect(() => {
-        axios(`${baseUrl}/api/v1/product/get?event=${props.title}`)
-            .then(res => console.log('asdi', res))
+        axios(`${baseUrl}/api/v1/product/get?event=${encodedTitle}`)
+            .then(res => setEventItemList(res.data.data))
     }, [])
 
     return (
@@ -26,7 +29,7 @@ export default function RecommandWidget(props: { title: string }) {
                         eventItemList && eventItemList.map(item => (
                             <ProductListCard
                                 key={item.id}
-                                productId={item.productId}
+                                productId={item.id}
                             />
                         ))
                     }

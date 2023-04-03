@@ -80,3 +80,15 @@ export interface productImageListType {
     frozen: number;
     salesQuantity: number;
 }
+
+export interface eventListType {
+    id: number;
+    name: string;
+    description: string;
+    imgUrl: string;
+    imgAlt: string;
+    startDate: string;
+    endDate: string;
+    discountRate: number;
+    isDisplay: boolean;
+}

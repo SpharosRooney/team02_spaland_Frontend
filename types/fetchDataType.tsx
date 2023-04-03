@@ -40,3 +40,34 @@ export interface tagListCardType {
     eventId: number;
     tagId: number;
 }
+
+
+export interface eventProductListCardType {
+    id: number;
+    name: string;
+    discription: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    productImageList: Array<string>;
+    frozen: number;
+}
+
+
+export interface eventProductType {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    productImageList: Array<productImageListType>;
+    frozen: number;
+    salesQuantity: number;
+}
+
+export interface productImageListType {
+    id: number;
+    imgUrl: string;
+    imgAlt: string;
+}

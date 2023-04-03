@@ -14,5 +14,11 @@ export interface headerIconMenuType{
 export interface subNavMenuType {
     id: number;
     name : string;
-    link: string;
+    description : string;
+    imgUrl : string;
+    imgAlt : string;
+    startDate : string;
+    endDate : string;
+    discountRate : number;
+    isDisplay : boolean;
 }

@@ -12,7 +12,7 @@ export default function buypage() {
             </div>
             <div className="address-box">
                 <span>등록된 배송지가 없습니다.<p>배송지를 등록해주세요.</p></span>
-                <a href="address.html"><input type="button" className="address-btn" value="배송지 등록"/></a>
+                <a href="address"><input type="button" className="address-btn" value="배송지 등록"/></a>
             </div>
             <div className="item-information-box">
                 <button>
@@ -34,7 +34,7 @@ export default function buypage() {
                 <button>
                     <div className="item-coupon-btn">
                         <div><span><b>쿠폰 및 할인</b></span></div>
-                        <div><img src="assets/images/icons/down.png"/></div>
+                        <div><img src="assets/images/icons/down.png" width={20} height={20}/></div>
                     </div>
                 </button>
             </div>

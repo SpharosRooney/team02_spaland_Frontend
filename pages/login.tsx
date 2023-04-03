@@ -182,4 +182,3 @@ export default function login() {
                         // axios.defaults.headers.common[
 
 }
-

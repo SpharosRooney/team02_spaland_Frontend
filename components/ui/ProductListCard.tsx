@@ -1,7 +1,10 @@
 import { ProductListCardType } from '@/types/fetchDataType'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 export default function ProductListCard(props: { productId: number }) {
+
+    const router = useRouter()
     const [productData, setProductData] = useState<ProductListCardType>()
 
     useEffect(() => {
@@ -14,7 +17,7 @@ export default function ProductListCard(props: { productId: number }) {
         <>
             {
                 productData &&
-                <div className="recommand-product-item">
+                <div onClick={()=>router.push(`/products/${productData.id}`)}className="recommand-product-item">
                     <div className="recommand-product-item__img">
                         <img src={productData.imgUrl} alt={productData.title} />
                     </div>

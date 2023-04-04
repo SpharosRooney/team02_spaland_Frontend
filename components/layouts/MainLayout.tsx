@@ -5,22 +5,21 @@ import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
 
-import { filterMenuType, filterSubCategoryType, filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
-import { headerNavMenus, headerIcons, categoryList } from "@/datas/starbucksStaticDatas";
+import { filterMenuType, filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
+import { headerNavMenus, headerIcons } from "@/datas/starbucksStaticDatas";
 import { headerMenu } from '@/types/starbucksTypes'
 
 //recoil
 import { useRecoilValue } from "recoil";
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { cartState } from "../../state/cartState";
 
 
 import { LoginRes } from '@/types/UserRequest/Response'
-import { userIsLoginState, userLoginState } from '@/state/user/atom/userLoginState'
+import { userLoginState } from '@/state/user/atom/userLoginState'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
-import { menuModalState } from '@/state/atom/menuModalState'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
 
@@ -43,11 +42,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
 
-  const [bestSubNavData, setBestSubNottomNavData] = useState<subNavMenuType[]>()
-  const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
-  const [headerMenus, setHeaderMenus] = useState<headerMenu[]>(headerNavMenus);
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [category, setCategory] = useState<filterMenuType[]>();
   const [sizeList, setSizeList] = useState<sizeType[]>();
 
   const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
@@ -98,17 +93,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       .then(data => setNavBottomData(data))
   }, [])
 
-  useEffect(() => {
-    fetch('http://localhost:3001/bestsubnav')
-      .then(res => res.json())
-      .then(data => setBestSubNottomNavData(data))
-  }, [])
 
-  useEffect(() => {
-    fetch('http://localhost:3001/eventsubnav')
-      .then(res => res.json())
-      .then(data => setsubNavBottomData(data))
-  }, [])
 
   //logout handler 추가
   const logout = async () => {

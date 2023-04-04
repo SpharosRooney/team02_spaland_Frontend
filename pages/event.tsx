@@ -1,5 +1,3 @@
-import { ProductListCardType } from '@/types/fetchDataType';
-import { subNavMenuType } from '@/types/navMenuType'
 import Image from 'next/legacy/image';
 
 import React, { useEffect, useState } from 'react'
@@ -9,36 +7,44 @@ import SwiperCore from 'swiper'
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { relative } from 'path';
-import ProductListCard from '@/components/ui/ProductListCard';
 import EventProductListCard from '@/components/ui/EventProductListCard';
+import axios from 'axios';
+import Config from '@/configs/config.export';
+import { getImageSize } from 'react-image-size';
+import { eventListType } from '@/types/fetchDataType';
 const Event = () => {
 
-  const [productData, setProductData] = useState<ProductListCardType>()
+  const { baseUrl } = Config();
+
   const [slideindex, setSlideIndex] = useState<number>(0)
-  const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
+  const [eventSubNavData, setsubNavBottomData] = useState<eventListType[]>()
   const [isNotice, setIsNotice] = useState<boolean>(false)
 
   const [swiper, setSwiper] = useState<SwiperCore>();
 
+  const [imgSize, setImageSize] = useState({ width: 0, height: 0 })
+
   useEffect(() => {
-    fetch('http://10.10.10.51:8080/api/v1/event/all')
-      .then(res => res.json())
-      .then(data => setsubNavBottomData(data))
+    axios(`${baseUrl}/api/v1/event/all`)
+      .then((res) => res.data)
+      .then(data => setsubNavBottomData(data.data))
   }, [slideindex])
   console.log('asd',eventSubNavData)
 
-  useEffect(() => {
-    fetch(`http://localhost:3001/products/1`)
-      .then(res => res.json())
-      .then(data => setProductData(data))
-  }, [])
+  // const slidechange = () => {
+  //   if (slideindex !== 0) (
+  //     setIsNotice(false)
+  //   );
+  // }
 
-  const slidechange = () => {
-    if (slideindex !== 0) (
-      setIsNotice(false)
-    );
-  }
+  // useEffect(() => {
+  //   getImageSize().then((res) => {
+  //     setImageSize(res);
+  //   });
+  // }, []);
+
+
+
 
   return (
     <>
@@ -48,14 +54,13 @@ const Event = () => {
           <nav>
             <ul>
               {
-                eventSubNavData && eventSubNavData.map((eventsubnav) => (
+                eventSubNavData && eventSubNavData.map((nav) => (
                   <>
-                  {console.log('asd',eventsubnav.id)}
                     <li
-                      key={eventsubnav.id}
-                      className={slideindex === eventsubnav.id-1 ? "active" : ""}
-                      onClick={() => swiper ? swiper.slideTo(eventsubnav.id - 1) : ""}
-                    >{eventsubnav.name}</li>
+                      key={nav.id}
+                      className={slideindex === nav.id-1 ? "active" : ""}
+                      onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
+                    >{nav.name}</li>
                   </>
                 ))
               }
@@ -67,9 +72,8 @@ const Event = () => {
       <Swiper
         modules={[Pagination]}
         slidesPerView={1}
-        onSlideChange={(swiper) => (setSlideIndex(swiper.activeIndex))}
+        onSlideChange={(swiper) =>  (setSlideIndex(swiper.activeIndex))}
         onSlideChangeTransitionStart={() => (scrollTo(0, 0))}
-        onSlideChangeTransitionEnd={() => (slidechange())}
         onSwiper={setSwiper}
         style={{ marginTop: '107px' }}
         autoHeight={true}
@@ -78,21 +82,19 @@ const Event = () => {
           eventSubNavData && eventSubNavData.map((item) => (
             <SwiperSlide>
               <section className="special_section_image">
-                <div style={{width:'100%'}}>
+                <div style={{width:'100%'}}> 
                   <Image src={item.imgUrl} width={1000} height={3000} alt={item.imgAlt} />
                 </div>
               </section>
               <section className="special_section_product">
                 <div className="special-recommand-product-list">
-                  <EventProductListCard productId={item.id} />
+                  <EventProductListCard productTitle={item.name} />
                 </div>
               </section>
             </SwiperSlide>
           ))
         }
       </Swiper>
-
-
     </>
   )
 }

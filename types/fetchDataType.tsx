@@ -43,14 +43,16 @@ export interface tagListCardType {
 
 
 export interface eventProductListCardType {
-    id: number;
-    name: string;
-    discription: string;
-    price: number;
-    inventory: number;
-    titleImg: string;
-    productImageList: Array<string>;
+    createDate: string;
+    description: string;
     frozen: number;
+    id: number;
+    inventory: number;
+    name: string;
+    price: number;
+    salesQuantity: number;
+    titleImg: string;
+    updateTime: string;
 }
 
 
@@ -91,4 +93,22 @@ export interface eventListType {
     endDate: string;
     discountRate: number;
     isDisplay: boolean;
+}
+
+export interface ProductDetailType {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    productImageList: [
+        {
+            id: number;
+            imgUrl: string;
+            imgAlt: string;
+        }
+    ],
+    frozen: number;
+    salesQuantity: number;
 }

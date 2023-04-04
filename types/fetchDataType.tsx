@@ -1,10 +1,10 @@
-export interface mainEventListType {
+export interface mainEventListType{
     id: number;
     title: string;
     eventId: number;
 }
 
-export interface BestListType {
+export interface BestListType{
     id: number;
     title: string;
 }
@@ -31,7 +31,7 @@ export interface eventProductListType {
 
 export interface bestProductListType {
     id: number;
-    bestId: number;
+    bestId:number;
     productId: number;
 }
 
@@ -40,7 +40,6 @@ export interface tagListCardType {
     eventId: number;
     tagId: number;
 }
-
 
 export interface eventProductListCardType {
     createDate: string;

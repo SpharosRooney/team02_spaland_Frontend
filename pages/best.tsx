@@ -15,14 +15,18 @@ export default function best() {
     const [swiper, setSwiper] = useState<SwiperCore>();
     const [bestsubnav, setBestSubNav] = useState<subNavMenuType[]>();
     const [slideindex, setSlideIndex] = useState<number>(0)
+    const {baseUrl} = Config();
 
-    const { baseUrl } = Config();
     useEffect(() => {
         axios(`${baseUrl}/api/v1/categoryLarge/all`)
             .then(res => res.data.data)
             .then(data => setBestSubNav(data))
     }, [])
     console.log('bestsubnav', bestsubnav)
+
+    useEffect(()=> {
+        axios.get(``)
+    })
 
     return (
         <>

@@ -135,12 +135,17 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           willClose: () => { 
             clearInterval(Number(timerInterval));
           },
-        }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            console.log('I was closed by the timer');
-          }
+        }).then(() => {
+          // logout after the timer ends
+          setIsLogin({
+            userNickname: "",
+            accessToken: "",
+            isLogin: false,
+          });
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userNickname");
+          location.reload();
         });
-        location.reload();
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -153,6 +158,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       }
     }
   }
+
   
 
   useEffect(() => {

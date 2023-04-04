@@ -64,7 +64,7 @@ const SearchResult = () => {
                             </select>
                             </div>
                                     <div className="searchresult-product-list">
-                                        {searchresults.map((res) => (
+                                        {Array.isArray(searchresults) && searchresults.map((res) => (
                                             <div className="searchresult-product-item" key={res.id}>
                                                 <div className="searchresult-product-item__img">
                                                     <img src={res.titleImg} alt={res.description} />

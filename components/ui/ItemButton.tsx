@@ -12,7 +12,7 @@ export default function ItemButton(props: { title: string}) {
         <>
         <button>
             <p>{props.title}</p>
-            <img src='assets/images/icons/right-arrow-black.png' style={{ width: '20px', height: '20px' }}></img>
+            <img src='../assets/images/icons/right-arrow-black.png' style={{ width: '20px', height: '20px' }}></img>
         </button>
         </>
     )

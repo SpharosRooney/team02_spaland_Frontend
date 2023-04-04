@@ -1,4 +1,5 @@
 import { tagListCardType } from '@/types/fetchDataType'
+import router from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 export default function productListCard(props: { tagId: number }) {

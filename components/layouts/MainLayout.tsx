@@ -359,46 +359,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
               ) : ""))
           }
           {
-            router.pathname === '/best' ? (
-              <div className="header-sub">
-                <nav>
-                  <ul>
-                    {
-                      bestSubNavData && bestSubNavData.map(bestsubnav => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
-                        <li
-                          key={bestsubnav.id}
-                          className={router.pathname === bestsubnav.link ? "active" : ""}
-                        >
-                          <Link href={bestsubnav.link}>{bestsubnav.name}</Link>
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </nav>
-              </div>
-            ) :
-              ""
-          }
-          {
-            router.pathname === '/event' ? (
-              <div className="header-sub">
-                <nav>
-                  <ul>
-                    {
-                      eventSubNavData && eventSubNavData.map(eventsubnav => (
-                        <li
-                          key={eventsubnav.id}
-                          className={router.pathname === eventsubnav.link && isactive ? "active" : ""}
-                        >{eventsubnav.name}</li>
-                      ))
-                    }
-                  </ul>
-                </nav>
-              </div>
-            ) :
-              ""
-          }
-          {
             router.pathname === '/listview' ? (
               <ProductCategory />
             ) : ""

@@ -1,45 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import ProductListCard from '../ui/ProductListCard'
 import TagListCard from '../ui/TagListCard'
-import { eventProductListType } from '@/types/fetchDataType'
+import { eventListType, eventProductListType } from '@/types/fetchDataType'
 import { tagListCardType } from '@/types/fetchDataType'
+import Config from '@/configs/config.export'
+import axios from 'axios'
 
-export default function RecommandWidget(props: { title: string, eventId: number }) {
+export default function RecommandWidget(props: { title: string }) {
 
-    const [eventItemList, setEventItemList] = useState<eventProductListType[]>()
+    const [eventItemList, setEventItemList] = useState<eventListType[]>()
+
+    const { baseUrl } = Config();
+
+    const preTitle = props.title;
+    const encodedTitle = encodeURIComponent(preTitle);
+    console.log('props.title', props.title)
     useEffect(() => {
-        fetch(`http://localhost:3001/event-product-list?eventId=${props.eventId}`)
-            .then(res => res.json())
-            .then(data => setEventItemList(data))
+        axios(`${baseUrl}/api/v1/product/get?event=${encodedTitle}`)
+            .then(res => setEventItemList(res.data.data))
     }, [])
 
-    const [eventTagItemList, setEventTagItemList] = useState<tagListCardType[]>()
-    useEffect(() => {
-        fetch(`http://localhost:3001/event-tag-list?eventId=${props.eventId}`)
-            .then(res => (res.json()))
-            .then(data => setEventTagItemList(data))
-    }, [])
-    
     return (
         <section id="recommand-md">
             <div className="recommand-md-products">
                 <h2>{props.title}</h2>
-                <div className="recommand-product-list3">
-                    {
-                        eventTagItemList && eventTagItemList.map(item => (
-                            <TagListCard
-                                key={item.id}
-                                tagId={item.tagId}
-                            />
-                        ))
-                    }
-                </div>
                 <div className="recommand-product-list">
                     {
                         eventItemList && eventItemList.map(item => (
                             <ProductListCard
                                 key={item.id}
-                                productId={item.productId}
+                                productId={item.id}
                             />
                         ))
                     }

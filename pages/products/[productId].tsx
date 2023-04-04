@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import Config from '@/configs/config.export'
 import axios from 'axios'
 import ImageSizeReturn from '@/components/ui/ImageSizeReturn'
+import Image from 'next/image'
 
 export default function Products() {
 
@@ -55,7 +56,14 @@ export default function Products() {
                                         </p>
                                     </div>
                                     <div>
-                                        <button className="openBtn"><img src="../assets/images/icons/share.svg" /></button>
+                                        <button className="openBtn">
+                                        <Image
+                                            src="/assets/images/icons/share.svg"
+                                            width={20}
+                                            height={20}
+                                            alt= "share"
+                                        />
+                                        </button>
                                     </div>
                                 </div>
                                 <div>
@@ -73,7 +81,7 @@ export default function Products() {
                             </div>
                             {
                                 productData.productImageList && productData.productImageList.map((img) => (
-                                    <div className="border-color" >
+                                    <div className="border-color" key={img.id}>
                                         <ImageSizeReturn imgUrl={img.imgUrl} imgAlt={img.imgAlt} />
                                     </div>
                                 ))

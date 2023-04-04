@@ -72,7 +72,7 @@ export default function SearchProductCategory() {
         <>
             <div className="header-bottom" style={{ marginTop: 70 }}>
                 <div className="ft-top">
-                    <p className="ft-information">"{query}"의 검색결과</p>
+                    <p className="ft-information">&quot;{query}&quot;의 검색결과</p>
                 </div>
             </div>
             <SearchFilterMenuList

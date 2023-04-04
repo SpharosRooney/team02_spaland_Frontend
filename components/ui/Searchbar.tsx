@@ -1,6 +1,7 @@
 import Config from "@/configs/config.export";
 import { Keyword } from "@/types/search/searchKeywords";
 import axios from "axios";
+import Image from "next/image";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -51,11 +52,22 @@ const SearchBar = () => {
                             }
                         />
                         <button type="submit">
-                            <img src="assets/images/icons/search.svg" />
+                            <Image
+                                src="/assets/images/icons/search.svg"
+                                width={20}
+                                height={20}
+                                alt= "search"
+                            />
                         </button>
                     </div>
                     <nav className="search-close">
-                        <img src="assets/images/icons/close.png" onClick={handleClose}/>
+                        <Image
+                            src="/assets/images/icons/close.png"
+                            width={20}
+                            height={20}
+                            alt= "close"
+                            onClick={handleClose}
+                        />
                     </nav>
                 </div>
             </form>

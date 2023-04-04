@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-export default function buypage() {
+export default function Buypage() {
     return (
         <div className="container">
             <section id="buy">

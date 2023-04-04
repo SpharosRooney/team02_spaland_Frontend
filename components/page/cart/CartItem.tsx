@@ -1,5 +1,6 @@
 import { cartListState } from '@/state/cartListState'
 import { cartListType, cartType } from '@/types/cart/cartListType'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { useRecoilState } from 'recoil'
@@ -39,14 +40,24 @@ export default function CartItem(props: { data: cartListType }) {
             <div className="checkbox-border">
                 <div className="checkbox-border-left">
                     <input checked={props.data.check ? true : false} className={props.data.check ? 'checkboxOn' : 'checkbox'} type='checkbox'  onClick={handleCheck}/>
-                    <img src="assets/images/products/01.png" />
+                    <Image
+                        src="assets/images/products/01.png"
+                        width={20}
+                        height={20}
+                        alt= "productItem"
+                    />
                 </div>
                 <div className="checkbox-border-right">
                     <p className="subject">23 SS 체리 콕시클 라벤더 콜드컵 591ml</p>
                     <p className="price">55,000원</p>
                 </div>
                 <div className="cancel-button">
-                    <img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" />
+                    <Image
+                        src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+                        width={20}
+                        height={20}
+                        alt= "cancelButton"
+                    />
                 </div>
             </div>
             <div className="product-count">

@@ -11,8 +11,9 @@ import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Config from '@/configs/config.export';
+import Image from 'next/image';
 
-export default function signup() {
+export default function Signup() {
 
   const router = useRouter();
   const { baseUrl } = Config();
@@ -178,7 +179,14 @@ export default function signup() {
     <div className="signupmodalBox">
       <header className="signup-header">
         <div className="signup-header-cancel">
-          <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
+          <Link href={"/"}>
+          <Image
+            src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+            width={20}
+            height={20}
+            alt= "next"
+          />
+          </Link>
         </div>
       </header>
       {steps[stepId - 1][stepId]}

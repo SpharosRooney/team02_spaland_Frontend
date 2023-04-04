@@ -20,6 +20,7 @@ import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
+import Image from 'next/image';
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -290,7 +291,12 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         <header>
           <div className="header-top">
             <div className="menu-icon" onClick={()=> setIsMenuModalOpen(true)}>
-              <img src='assets/images/icons/menu.svg' />
+            <Image
+              src="/assets/images/icons/menu.svg"
+              width={20}
+              height={20}
+              alt= "menu"
+            />
             </div>
             <h1><Link href="/">온라인 스토어</Link></h1>
             <nav>
@@ -301,24 +307,47 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                       <li key={icon.id}>
                         {isLogin.isLogin ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
                           (
-                              <img src={"/assets/images/icons/logout.png"} onClick={logout} />
+                            <Image
+                              src="/assets/images/icons/logout.png"
+                              width={20}
+                              height={20}
+                              alt= "logout"
+                              onClick={logout}
+                            />
                           )
                           :
-                          (<Link href={"/login"}><img src={icon.icon} /></Link>)
+                          (<Link href={"/login"}>
+                            <Image
+                              src={icon.icon}
+                              width={20}
+                              height={20}
+                              alt= "login"
+                            />
+                          </Link>)
                         }
                       </li>
                       :
                       icon.name === 'cart' ?
                         <li key={icon.id}>
                           <Link href={icon.link}>
-                            <img src={icon.icon} />
+                            <Image
+                              src={icon.icon}
+                              width={20}
+                              height={20}
+                              alt= "cart"
+                            />
                           </Link>
                         </li>
                         :
                         icon.name === 'search' ?
                           <li key={icon.id}>
                             <Link href={icon.link}>
-                              <img src={icon.icon} />
+                              <Image
+                                src={icon.icon}
+                                width={20}
+                                height={20}
+                                alt= "search"
+                              />
                             </Link>
                           </li>
                           : ""
@@ -409,12 +438,12 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <nav>
                     <ul>
                       {
-                        navBottomData && navBottomData.map(nav => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
+                        navBottomData.map(item => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
                           <li
-                            key={nav.id}
-                            className={router.pathname === nav.link ? "active" : ""}
+                            key={item.id}
+                            className={router.pathname === item.link ? "active" : ""}
                           >
-                            <Link href={nav.link}>{nav.name}</Link>
+                            <Link href={item.link}>{item.name}</Link>
                           </li>
                         ))
                       }

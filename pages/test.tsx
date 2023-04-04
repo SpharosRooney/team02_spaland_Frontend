@@ -75,22 +75,29 @@ export default function ProductOrderSection() {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [count, setCount] = useState<number>(1)
+    const [succcess, setSuccess] = useState<boolean>(false)
 
 
     const handleOpen = () => {
         setIsOpen(!isOpen)
     }
 
-    if (count === 0) {
-        Swal.fire({
-            toast: true,
-            title: '최소 주문 수량은 1개 입니다.',
-            position: 'top',
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            color: 'rgb(0, 155, 57)',
-        })
+    const onClieckCount = (count: number) => {
+        if(count === 0) {
+            // Swal.fire({
+            //     title: '최소 주문 수량은 1개 입니다.',
+            //     icon: 'warning',
+            //     position: 'top',
+            //     showConfirmButton: false,
+            //     timmer: 2000,
+            //     timerProgressBar: true,
+            //     color:'#067040'
+                
+            // })
+
+        }else if (count > 3) {
+
+        }
     }
 
 
@@ -185,5 +192,5 @@ const SuccessModalWarp = styled.div`
     background-color: rgba(0,0,0,0.5);
     width: 100%;
     height: 100%;
-    z-index: 100;
-    `
+    z-index: 999;
+`

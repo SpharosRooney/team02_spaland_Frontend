@@ -51,7 +51,9 @@ export default function Products() {
                             <div>
                                 <div className="item-info">
                                     <div>
-                                        <p className="item-info-1"><b>{productData.name} </b><span className="item-new"> New</span></p>
+                                        <p className="item-info-1"><b>{productData.name} </b>
+                                        <span className="item-new"> New</span>
+                                        </p>
                                     </div>
                                     <div>
                                         <button className="openBtn"><img src="../assets/images/icons/share.svg" /></button>

@@ -1,3 +1,4 @@
+import Config from "@/configs/config.export";
 import { Keyword } from "@/types/search/searchKeywords";
 import axios from "axios";
 import React, { useState } from "react";
@@ -9,12 +10,13 @@ const SearchBar = () => {
         id: Date.now(),
         keyword: "",
     });
+    const { baseUrl } = Config();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         try {
-            await axios.get(`http://localhost:8080/api/v1/product/get?query=${keyword.keyword}`);
+            await axios.get(`${baseUrl}/api/v1/product/get?query=${keyword.keyword}`);
             // 검색 결과 페이지로 이동
             window.location.href = `/searchresult?query=${keyword.keyword}`;
 

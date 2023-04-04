@@ -22,6 +22,7 @@ import Swal from 'sweetalert2'
 import ProductCategory from '../widgets/ProductCategory'
 import { menuModalState } from '@/state/atom/menuModalState'
 import Menu from '../modal/Menu'
+import Config from '@/configs/config.export'
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -52,6 +53,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
   const [filterList, setFilterList] = useState<filterType[]>([])
   const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
+  const { baseUrl } = Config();
 
 
   //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
@@ -125,7 +127,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     }
     if (confirmed) {
       try {
-        await axios.get('http://localhost:8080/api/v1/users/logout', {
+        await axios.get(`${baseUrl}/api/v1/users/logout`, {
           headers: {
             Authorization: `${isLogin.accessToken}`
           }

@@ -12,9 +12,8 @@ export default function RecommandWidget(props: { title: string }) {
 
     const { baseUrl } = Config();
 
-    const preTitle = props.title;
-    const encodedTitle = encodeURIComponent(preTitle);
-    console.log('props.title', props.title)
+    const encodedTitle = encodeURIComponent(props.title);
+    // console.log('props.title', props.title)
     useEffect(() => {
         axios(`${baseUrl}/api/v1/product/get?event=${encodedTitle}`)
             .then(res => setEventItemList(res.data.data))

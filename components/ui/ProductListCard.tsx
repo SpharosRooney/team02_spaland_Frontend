@@ -1,21 +1,25 @@
-import { ProductListCardType } from '@/types/fetchDataType'
+import Config from '@/configs/config.export'
+import { ProductListCardType, eventProductType } from '@/types/fetchDataType'
+import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 export default function ProductListCard(props: { productId: number }) {
 
     const router = useRouter()
-    const [productData, setProductData] = useState<ProductListCardType>()
+    const [productData, setProductData] = useState<eventProductType[]>()
+    const { baseUrl } = Config();
+
 
     useEffect(() => {
-        fetch(`http://localhost:3001/products/${props.productId}`)
-            .then(res => res.json())
+        axios(`${baseUrl}/api/v1/product/get/${props.productId}`)
+            .then(res => res.data)
             .then(data => setProductData(data))
     }, [props.productId])
 
     return (
         <>
-            {
+            {/* {
                 productData &&
                 <div onClick={()=>router.push(`/products/${productData.id}`)}className="recommand-product-item">
                     <div className="recommand-product-item__img">
@@ -27,7 +31,7 @@ export default function ProductListCard(props: { productId: number }) {
                         <p className="item-price"><span>{productData.price}</span>원</p>
                     </div>
                 </div>
-            }
+            } */}
         </>
     )
 }

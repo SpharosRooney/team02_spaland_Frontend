@@ -12,6 +12,7 @@ import axios from 'axios';
 import Config from '@/configs/config.export';
 import { getImageSize } from 'react-image-size';
 import { eventListType } from '@/types/fetchDataType';
+import EventNoticeImg from '@/components/ui/EventNoticeImg';
 const Event = () => {
 
   const { baseUrl } = Config();
@@ -29,7 +30,7 @@ const Event = () => {
       .then((res) => res.data)
       .then(data => setsubNavBottomData(data.data))
   }, [slideindex])
-  console.log('asd',eventSubNavData)
+  console.log('asd', eventSubNavData)
 
   // const slidechange = () => {
   //   if (slideindex !== 0) (
@@ -37,14 +38,11 @@ const Event = () => {
   //   );
   // }
 
-  
-
-
-    // useEffect(() => {
-    //   getImageSize().then((res) => {
-    //     setImageSize(res);
-    //   });
-    // }, []);
+  // useEffect(() => {
+  //   getImageSize().then((res) => {
+  //     setImageSize(res);
+  //   });
+  // }, []);
 
 
 
@@ -61,7 +59,7 @@ const Event = () => {
                   <>
                     <li
                       key={nav.id}
-                      className={slideindex === nav.id-1 ? "active" : ""}
+                      className={slideindex === nav.id - 1 ? "active" : ""}
                       onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
                     >{nav.name}</li>
                   </>
@@ -75,7 +73,7 @@ const Event = () => {
       <Swiper
         modules={[Pagination]}
         slidesPerView={1}
-        onSlideChange={(swiper) =>  (setSlideIndex(swiper.activeIndex))}
+        onSlideChange={(swiper) => (setSlideIndex(swiper.activeIndex))}
         onSlideChangeTransitionStart={() => (scrollTo(0, 0))}
         onSwiper={setSwiper}
         style={{ marginTop: '107px' }}
@@ -85,9 +83,7 @@ const Event = () => {
           eventSubNavData && eventSubNavData.map((item) => (
             <SwiperSlide>
               <section className="special_section_image">
-                <div style={{width:'100%'}}> 
-                  <Image src={item.imgUrl} width={1000} height={3000} alt={item.imgAlt} />
-                </div>
+                <EventNoticeImg imgUrl={item.imgUrl} imgAlt={item.imgAlt} />
               </section>
               <section className="special_section_product">
                 <div className="special-recommand-product-list">

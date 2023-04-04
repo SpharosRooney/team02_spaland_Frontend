@@ -7,6 +7,7 @@ const nextConfig = {
     "blog.kakaocdn.net",
     "ifh.cc",
     "shop-phinf.pstatic.net",
+    "prod-starbucks-product-details.s3.ap-northeast-2.amazonaws.com",
   ]
   }
 }

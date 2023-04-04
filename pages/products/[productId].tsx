@@ -75,7 +75,7 @@ export default function Products() {
                             {
                                 productData.productImageList && productData.productImageList.map((img) => (
                                     <div className="border-color" >
-                                        <Image src={img.imgUrl} width={size.width} height={size.height} alt='' />
+                                        <Image src={img.imgUrl} width={1000} height={3000} alt='' />
                                     </div>
                                 ))
                             }

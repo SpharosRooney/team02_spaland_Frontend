@@ -51,6 +51,7 @@ import myStyle from '../components/footer/FooterTeacherButton.module.css'
 import Sheet from 'react-modal-sheet';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
+import ButtonUi from '@/components/ui/ButtonUi';
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -181,7 +182,23 @@ const SuccessViewModal = (props:{isModalOpen:boolean, setIsModalOpen:Dispatch<Se
 
     return (
         <>
-        <SuccessModalWarp></SuccessModalWarp>
+        <SuccessModalWarp>
+            
+            <ButtonUi
+            type='button'
+            text='장바구니로 이동'
+            size='medium'
+            colorType='secondary'
+            link='/cart'
+            />
+            <ButtonUi
+            type='button'
+            text='상품 더보기'
+            size='medium'
+            colorType='primary'
+            link='/listview'
+            />
+        </SuccessModalWarp>
         </>
     )
 }

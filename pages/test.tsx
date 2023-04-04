@@ -52,8 +52,12 @@ import Sheet from 'react-modal-sheet';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
 import ButtonUi from '@/components/ui/ButtonUi';
+<<<<<<< HEAD
 import ButtonUi from '@/components/ui/ButtonUi';
 import Image from 'next/image';
+=======
+
+>>>>>>> c588efc3291eb8896ee00968ff0f9754b0ded7fa
 
 const OrderToggleButton = styled.div`
   width: 40px;

@@ -24,7 +24,7 @@ section#category2 details summary{
 
 .searchresult-product-item__img img{
     width: 100%;
-    height: 50%;
+    height: auto;
 
 }
 

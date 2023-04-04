@@ -10,7 +10,7 @@ import axios from 'axios';
 import Config from '@/configs/config.export';
 import { eventListType } from '@/types/fetchDataType';
 import ImageSizeReturn from '@/components/ui/ImageSizeReturn';
-const Event = () => {
+export default function Event()  {
 
   const { baseUrl } = Config();
 
@@ -22,7 +22,7 @@ const Event = () => {
     axios(`${baseUrl}/api/v1/event/all`)
       .then((res) => res.data)
       .then(data => setsubNavBottomData(data.data))
-  }, [slideindex])
+  }, [])
   console.log('asd', eventSubNavData)
 
   return (
@@ -34,13 +34,13 @@ const Event = () => {
             <ul>
               {
                 eventSubNavData && eventSubNavData.map((nav) => (
-                  <>
+                  
                     <li
                       key={nav.id}
                       className={slideindex === nav.id - 1 ? "active" : ""}
                       onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
                     >{nav.name}</li>
-                  </>
+                  
                 ))
               }
             </ul>
@@ -59,13 +59,13 @@ const Event = () => {
       >
         {
           eventSubNavData && eventSubNavData.map((item) => (
-            <SwiperSlide>
-              <section className="special_section_image">
+            <SwiperSlide key={item.id}>
+              <section className="special_section_image" >
                 <ImageSizeReturn imgUrl={item.imgUrl} imgAlt={item.imgAlt} />
               </section>
               <section className="special_section_product">
                 <div className="special-recommand-product-list">
-                  <EventProductListCard productTitle={item.name} />
+                  <EventProductListCard key={item.id} productTitle={item.name} />
                 </div>
               </section>
             </SwiperSlide>
@@ -75,5 +75,3 @@ const Event = () => {
     </>
   )
 }
-
-export default Event

@@ -405,7 +405,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           {
             navBottomData && navBottomData.map(nav => (
               router.pathname === nav.link ? (
-                <div className="header-bottom">
+                <div className="header-bottom" key={nav.id}>
                   <nav>
                     <ul>
                       {

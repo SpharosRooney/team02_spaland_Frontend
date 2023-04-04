@@ -10,6 +10,6 @@ export default function ImageSizeReturn(props: { imgUrl: string, imgAlt: string 
     })
 
     return (
-        <Image src={props.imgUrl} width={size.width} height={size.height} alt={props.imgAlt} />
+        <Image src={props.imgUrl} width={size.width} height={size.height} alt={props.imgAlt} priority />
     )
 }

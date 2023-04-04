@@ -22,37 +22,24 @@ export default function Best() {
         axios(`${baseUrl}/api/v1/categoryLarge/all`)
             .then(res => res.data.data)
             .then(data => setBestSubNav(data))
-    }, [bestsubnav])
-    console.log('bestsubnav', bestsubnav)
+    }, [])
 
-    // useEffect(()=> {
-    //     axios.get(`${baseUrl}/api/v1/get/all`)
-    //     .then((res) => res.data.data)
-    //     .then((data) => setBestSubNav(data))
-    // }, [slideindex])
+    console.log('bestsubnav', bestsubnav)
 
     return (
         <>
-            {/* {
-                bestListData && bestListData.map(best => (
-                    <BestWidget
-                        key={best.id}
-                        bestId={best.bestId}
-                    />
-                ))
-            } */}
             <div className='header-top' />
             <div style={{ marginTop: '50px', position: 'fixed', width: '100%', zIndex: '2', background: 'white' }}>
                 <div className="header-sub">
                     <nav>
                         <ul>
-                            {bestsubnav && bestsubnav.map((best) => (
+                            {bestsubnav && bestsubnav.map((nav) => (
                                 <li
-                                    key={best.id}
-                                    className={slideindex === best.id - 1 ? "active" : ""}
-                                    onClick={() => swiper ? swiper.slideTo(best.id - 1) : ""}
+                                    key={nav.id}
+                                    className={slideindex === nav.id - 1 ? "active" : ""}
+                                    onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
                                 >
-                                    {best.name}
+                                    {nav.name}
                                 </li>
                             ))
                             }
@@ -71,12 +58,12 @@ export default function Best() {
                 autoHeight={true}
             >
                 {
-                    bestsubnav && bestsubnav.map((best) => (
+                    bestsubnav && bestsubnav.map((nav) => (
                         <>
                             <SwiperSlide>
-                                <section className="best-product">
+                                <section className="best-product" key={nav.id}>
                                     <div className="best-product-list">
-                                        <BestProductListCard categoryLarge={best.name} />
+                                        <BestProductListCard categoryLarge={nav.name} />
                                     </div>
                                 </section>
                             </SwiperSlide>

@@ -1,5 +1,5 @@
 import Config from '@/configs/config.export'
-import { ProductListCardType, eventProductType } from '@/types/fetchDataType'
+import { eventProductType } from '@/types/fetchDataType'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'

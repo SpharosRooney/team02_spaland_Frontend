@@ -65,6 +65,7 @@ export interface eventProductType {
     productImageList: Array<productImageListType>;
     frozen: number;
     salesQuantity: number;
+    isNew : boolean;
 }
 
 export interface productImageListType {

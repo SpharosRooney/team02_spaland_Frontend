@@ -11,7 +11,7 @@ import CartList from '@/components/page/cart/CartList'
 
 
 
-export default function cart() {
+export default function Cart() {
     const setCartList = useSetRecoilState<cartType>(cartListState);
 
     useEffect(() => {

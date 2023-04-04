@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TotalCheckBox from '@/components/ui/TotalCheckBox'
 import CheckBox from '@/components/ui/CheckBox'
 import StButton from '@/components/ui/StButton'
+import Image from 'next/image'
 
 interface ChildProps {
     inputData: inputRegisterType;
@@ -43,7 +44,12 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
         <>
             <div className="container">
                 <section className="signup-logo">
-                    <img src="https://www.starbucks.co.kr/common/img/common/logo.png" />
+                    <Image
+                        src="https://www.starbucks.co.kr/common/img/common/logo.png"
+                        width={20}
+                        height={20}
+                        alt= "logo"
+                    />
                 </section>
 
                 <section className="signup-notice">

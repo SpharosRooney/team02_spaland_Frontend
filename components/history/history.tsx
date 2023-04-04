@@ -1,5 +1,6 @@
 import { Keyword } from '@/types/search/searchKeywords';
 import axios from 'axios';
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 
@@ -36,11 +37,17 @@ const History = () => {
                 <p>최근 검색어</p>
               </div>
               <div className="search-words-box2">
-                {keywords.sort((a: Keyword, b: Keyword) => a.id - b.id).map((keyword) => (
-                  <div className="search-words">
-                    <div className="search-word" key={keyword.id}>
-                      <p>{keyword.keyword}</p>
-                      <img src="assets/images/icons/close.png" onClick={() => handleRemoveKeyword(keyword.id)} />
+                {keywords.sort((a: Keyword, b: Keyword) => a.id - b.id).map((key) => (
+                  <div className="search-words" key={key.id}>
+                    <div className="search-word">
+                      <p>{key.keyword}</p>
+                      <Image
+                        src="/assets/images/icons/close.png"
+                        width={20}
+                        height={20}
+                        alt= "next"
+                        onClick={() => handleRemoveKeyword(key.id)}
+                      />
                     </div>
                   </div>
                 ))}

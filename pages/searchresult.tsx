@@ -5,6 +5,7 @@ import { seacrchKeyword } from '@/types/search/searchKeywords';
 import { ProductDetailType } from '@/types/fetchDataType';
 import SearchProductCategory from '@/components/widgets/SearchProductCategory';
 import Config from '@/configs/config.export';
+import Image from 'next/image';
 
 const SearchResult = () => {
     const router = useRouter();
@@ -51,7 +52,7 @@ const SearchResult = () => {
                     <div className="header-top"/>
                         <div className="header-bottom">
                             <div className="ft-top">
-                                <p className="ft-information">"{query}"의 검색결과</p>
+                                <p className="ft-information">&quot;{query}&quot;의 검색결과</p>
                             </div>
                         </div>
                             {/* <SearchProductCategory /> */}
@@ -67,7 +68,12 @@ const SearchResult = () => {
                                         {Array.isArray(searchresults) && searchresults.map((res) => (
                                             <div className="searchresult-product-item" key={res.id}>
                                                 <div className="searchresult-product-item__img">
-                                                    <img src={res.titleImg} alt={res.description} />
+                                                <Image
+                                                    src={res.titleImg}
+                                                    width={20}
+                                                    height={20}
+                                                    alt= {res.description}
+                                                />
                                                 </div>
                                                 <div className="recommand-product-item__info">
                                                     <p className="item-new">new</p>
@@ -81,7 +87,7 @@ const SearchResult = () => {
             ) : (
                     <div className="header-bottom" style={{ marginTop: 70 }}>
                         <div className="ft-top">
-                            <p className="ft-information">"{query}"에 대한 검색 결과가 없습니다.</p>
+                            <p className="ft-information">&quot;{query}&quot;에 대한 검색 결과가 없습니다.</p>
                         </div>
                     </div>
             )}

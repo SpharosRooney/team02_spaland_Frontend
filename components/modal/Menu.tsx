@@ -3,6 +3,7 @@ import { menuModalState } from '@/state/atom/menuModalState';
 import { ProductDetailType } from '@/types/fetchDataType';
 import axios from 'axios';
 import { AppPropsType } from 'next/dist/shared/lib/utils';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil';
@@ -70,7 +71,13 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                         <div className="menu-product-list">
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "케이크"
+                                    />
+                                    
                                 </div>
                                 <div className="product-info">
                                     <p>케이크</p>
@@ -78,7 +85,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                             </div>
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "텀블러/보온병"
+                                    />
                                 </div>
                                 <div className="product-info">
                                     <p>텀블러/보온병</p>
@@ -86,7 +98,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                             </div>
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "머그/컵"
+                                    />
                                 </div>
                                 <div className="product-info">
                                     <p>머그/컵</p>
@@ -99,7 +116,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                         <div className="menu-product-list">
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "라이프스타일"
+                                    />
                                 </div>
                                 <div className="product-info">
                                     <p>라이프스타일</p>
@@ -107,7 +129,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                             </div>
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "티/커피용품"
+                                    />
                                 </div>
                                 <div className="product-info">
                                     <p>티/커피용품</p>
@@ -115,7 +142,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                             </div>
                             <div className="menu-product-item">
                                 <div className="product-img">
-                                    <img src="assets/images/double_cake.jpg" />
+                                    <Image
+                                        src="/assets/images/double_cake.jpg"
+                                        width={20}
+                                        height={20}
+                                        alt= "세트"
+                                    />
                                 </div>
                                 <div className="product-info">
                                     <p>세트</p>
@@ -132,7 +164,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                                     <span>기획전</span>
                                     <p>진행중인 기획전을 만나보세요.</p>
                                 </div>
-                                <img src="https://cdn-icons-png.flaticon.com/512/892/892528.png" />
+                                    <Image
+                                        src="https://cdn-icons-png.flaticon.com/512/892/892528.png"
+                                        width={20}
+                                        height={20}
+                                        alt= "right"
+                                    />
                             </div>
                         </a>
                         <a href="best.html">
@@ -141,7 +178,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
                                     <span>베스트</span>
                                     <p>스타벅스의 베스트 상품을 만나보세요.</p>
                                 </div>
-                                <img src="https://cdn-icons-png.flaticon.com/512/892/892528.png" />
+                                    <Image
+                                        src="https://cdn-icons-png.flaticon.com/512/892/892528.png"
+                                        width={20}
+                                        height={20}
+                                        alt= "right"
+                                    />
                             </div>
                         </a>
                     </div>

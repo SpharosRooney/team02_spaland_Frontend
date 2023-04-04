@@ -53,6 +53,7 @@ import Link from 'next/link';
 import Swal from 'sweetalert2';
 import ButtonUi from '@/components/ui/ButtonUi';
 import ButtonUi from '@/components/ui/ButtonUi';
+import Image from 'next/image';
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -214,11 +215,11 @@ const SucceesViewModal = (props: {isOpen:boolean, setIsOpen:Dispatch<SetStateAct
                     <div className={myStyle.noti}>
                         <p>장바구니에 추가 되었습니다.</p>
                         <Image
-                        src="/assets/images/icons/close.png"
-                        alt="close-button"
-                        width={20}
-                        height={20}
-                        onClick={() => props.setIsOpen(false)}
+                            src="/assets/images/icons/close.png"
+                            alt="close-button"
+                            width={20}
+                            height={20}
+                            onClick={() => props.setIsOpen(false)}
                         />
                     </div>
                     <div className={myStyle.button}>

@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function address() {
+export default function Address() {
     return (
         <>
         <ModalTopHeader subject='배송지 변경'/>

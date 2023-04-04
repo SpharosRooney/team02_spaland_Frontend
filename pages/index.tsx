@@ -3,9 +3,9 @@ import { NextPageWithLayout } from './_app'
 import RecommandWidget from '@/components/widgets/RecommandWidget'
 import { useEffect, useState } from 'react'
 import { eventListType, mainEventListType } from '@/types/fetchDataType'
-import Homebanner from '@/components/widgets/Homebanner'
 import Config from '@/configs/config.export'
 import axios from 'axios'
+import Homebanner from '@/components/widgets/Homebanner'
 
 
 const Home: NextPageWithLayout = () => {
@@ -27,7 +27,7 @@ const Home: NextPageWithLayout = () => {
         <meta name="author" content="SpaLand" />
         <title>StarBucks Clone Site</title>
       </Head>
-      <Homebanner />
+      <Homebanner/>
       {
         eventListData && eventListData.map(event => (
           <RecommandWidget

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -10,7 +11,14 @@ export default function CommonHeader(props:{subject:string}) {
                 </div>
                 <h1><Link href="index">온라인 스토어</Link></h1>
                 <div className="right-menu-icon">
-                    <Link href=""><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
+                    <Link href="">
+                        <Image
+                            src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+                            width={20}
+                            height={20}
+                            alt= "close"
+                        />
+                    </Link>
                 </div>
             </div>
 

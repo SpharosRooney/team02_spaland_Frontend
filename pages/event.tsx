@@ -59,13 +59,13 @@ const Event = () => {
       >
         {
           eventSubNavData && eventSubNavData.map((item) => (
-            <SwiperSlide>
+            <SwiperSlide key={item.id}>
               <section className="special_section_image">
-                <ImageSizeReturn imgUrl={item.imgUrl} imgAlt={item.imgAlt} />
+                <ImageSizeReturn key={item.id} imgUrl={item.imgUrl} imgAlt={item.imgAlt} />
               </section>
               <section className="special_section_product">
                 <div className="special-recommand-product-list">
-                  <EventProductListCard productTitle={item.name} />
+                  <EventProductListCard key={item.id} productTitle={item.name} />
                 </div>
               </section>
             </SwiperSlide>

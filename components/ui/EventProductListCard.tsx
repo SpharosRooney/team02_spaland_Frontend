@@ -22,7 +22,7 @@ export default function EventProductListCard(props: { productTitle: string }) {
         <>
             {
                 productData &&  productData.map ( (item) =>
-                    <div className="recommand-product-item">
+                    <div className="recommand-product-item" key={item.id}>
                         <div className="special-recommand-product-item__img">
                             <Image src={item.titleImg} alt={item.description} width={170} height={170} />
                         </div>

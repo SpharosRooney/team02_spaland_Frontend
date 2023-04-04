@@ -5,7 +5,7 @@ import { headerNavMenus, headerIcons, categoryList } from "../datas/starbucksSta
 import { ProductListCardType } from "@/types/fetchDataType";
 import Config from "@/configs/config.export";
 
-export default function receivegift() {
+export default function Receivegift() {
 
 
     const [itemlist, setitemlist] = useState<ProductListCardType[]>();
@@ -35,7 +35,12 @@ export default function receivegift() {
                 itemlist && itemlist.map(item => (
                     <>
                     <p>{item.title}</p>
-                    <img src = {item.imgUrl}/>
+                    <Image
+                        src= {item.imgUrl}
+                        width={20}
+                        height={20}
+                        alt= "item"
+                    />
                     </>
                     )
                 )}

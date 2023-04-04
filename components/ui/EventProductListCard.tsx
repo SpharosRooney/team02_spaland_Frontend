@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ProductListCardType } from '@/types/fetchDataType'
+import { eventProductListCardType } from '@/types/fetchDataType'
 import Image from 'next/image'
 import Config from '@/configs/config.export';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import axios from 'axios';
 export default function EventProductListCard(props: { productTitle: string }) {
 
     const { baseUrl } = Config();
-    const [productData, setProductData] = useState<ProductListCardType[]>()
+    const [productData, setProductData] = useState<eventProductListCardType[]>()
 
     useEffect(() => {
         axios(`${baseUrl}/api/v1/product/get?event=${props.productTitle}`)

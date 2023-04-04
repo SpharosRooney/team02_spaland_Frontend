@@ -20,23 +20,12 @@ section#category2 details summary{
     padding: 0px;
 }
 
-.searchresult-product-item2 {
-    width: 200px;
-    height: 300px;
-    margin: 0px 14px;
-    padding: 0px;
-    margin-left: 35px;
-}
+
 
 .searchresult-product-item__img img{
     width: 100%;
     height: 50%;
 
-}
-
-.searchresult-product-item__img img{
-    width: 161px;
-    height: 156px;
 }
 
 .recommand-product-item__info .item-title {

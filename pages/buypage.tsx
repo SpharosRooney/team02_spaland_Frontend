@@ -1,73 +1,101 @@
+import Image from 'next/image'
 import React from 'react'
 
 export default function buypage() {
-  return (
-    <div className="container">
-        <section id="buy">
-            <div className='purchase'>
-                <p><b>결제하기</b></p>
-            </div>
-            <div className='ship-info'>
-                <p><b>배송 정보</b></p>
-            </div>
-            <div className="address-box">
-                <span>등록된 배송지가 없습니다.<p>배송지를 등록해주세요.</p></span>
-                <a href="address"><input type="button" className="address-btn" value="배송지 등록"/></a>
-            </div>
-            <div className="item-information-box">
-                <button>
-                    <div className="item-information-btn">
-                        <div><span><b>상품내역</b></span></div>
-                        <div className='item-thum'><img src="assets/images/icons/down.png"/></div>
-                    </div>
-                </button>
-                <div className="item-information-btn">
-                    <div className='info-btn'><img src="https://shop-phinf.pstatic.net/20230213_282/1676250820294ccH77_JPEG/77386648106178298_1928937226.jpg?type=m510" alt="23 SS 체리 콕시클 라벤더 콜드컵 591ml"
-                    /></div>
-                    <div className='item-info-subject'><span><b>23 SS 체리 콕시클 라벤더 콜드컵 591ml</b></span></div>
+    return (
+        <div className="container">
+            <section id="buy">
+                <div className='purchase'>
+                    <p><b>결제하기</b></p>
                 </div>
-            </div>
-        </section>
-
-        <section id="buy2">
-            <div className="item-coupon-box">
-                <button>
-                    <div className="item-coupon-btn">
-                        <div><span><b>쿠폰 및 할인</b></span></div>
-                        <div><img src="assets/images/icons/down.png" width={20} height={20}/></div>
-                    </div>
-                </button>
-            </div>
-        </section>
-
-        <section id="buy2">
-            <div className="item-coupon-box">
-                <div className='mobile'><b>모바일 상품권</b></div>
-                <nav>
-                    <a href="giftcard.html"><ul>
-                        <li >사용하기</li>
-                        <li><img src="assets/images/icons/next.png"/></li>
-                    </ul></a>
-                </nav>
-            </div>
-        </section>
-
-        <section id="recommand-md">
-            <div className='buy-recommand-md'>
-                <div className='buy-type'>
-                    <p><b>결제 수단</b></p>
+                <div className='ship-info'>
+                    <p><b>배송 정보</b></p>
                 </div>
+                <div className="address-box">
+                    <span>등록된 배송지가 없습니다.<p>배송지를 등록해주세요.</p></span>
+                    <a href="address"><input type="button" className="address-btn" value="배송지 등록" /></a>
+                </div>
+                {/* <div className="item-information-box"> */}
+                    <button>
+                        <div className="item-information-btn">
+                            <div className="item-span-b"><span><b>상품내역</b></span></div>
+                            <div className='item-thum'>
+                                <Image
+                                    src="/assets/images/icons/down.png"
+                                    width={20}
+                                    height={20}
+                                    alt="down"
+                                />
+                            </div>
+                        </div>
+                    </button>
+                    <div>
+                        <div className='info-btn'>
+                            <Image
+                                src="https://shop-phinf.pstatic.net/20230213_282/1676250820294ccH77_JPEG/77386648106178298_1928937226.jpg?type=m510"
+                                width={20}
+                                height={20}
+                                alt="23 SS 체리 콕시클 라벤더 콜드컵 591ml"
+                            />
+                            <div className='item-info-subject'><span><b>23 SS 체리 콕시클 라벤더 콜드컵 591ml</b></span></div>
+                        </div>
+                    </div>
+                {/* </div> */}
+            </section>
+
+            <section id="buy2">
                 <div className="item-coupon-box">
-                    <div>
-                        <input type="radio" name="starbuks-card" value="스타벅스 카드"/> 스타벅스 카드
+                    <button>
+                        <div className="item-coupon-btn">
+                            <div><span><b>쿠폰 및 할인</b></span></div>
+                            <div>
+                                <Image
+                                    src="/assets/images/icons/down.png"
+                                    width={20}
+                                    height={20}
+                                    alt="down"
+                                />
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <section id="buy2">
+                <div className="item-coupon-box">
+                    <div className='mobile'><b>모바일 상품권</b></div>
+                    <nav>
+                        <a href="giftcard.html"><ul>
+                            <li >사용하기</li>
+                            <li>
+                                <Image
+                                    src="/assets/images/icons/next.png"
+                                    width={20}
+                                    height={20}
+                                    alt="next"
+                                />
+                            </li>
+                        </ul></a>
+                    </nav>
+                </div>
+            </section>
+
+            <section id="recommand-md">
+                <div className='buy-recommand-md'>
+                    <div className='buy-type'>
+                        <p><b>결제 수단</b></p>
                     </div>
-                    <div>
-                        <input type="radio" name="starbuks-card" value="스타벅스 카드"/> 신용카드
+                    <div className="item-coupon-box">
+                        <div>
+                            <input type="radio" name="starbuks-card" value="스타벅스 카드" /> 스타벅스 카드
+                        </div>
+                        <div>
+                            <input type="radio" name="starbuks-card" value="스타벅스 카드" /> 신용카드
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        {/* <section id="buy2">
+            </section>
+            {/* <section id="buy2">
             <div className="item-coupon-box">
                 <div><p>결제 수단</p></div>
                 <div>스타벅스 카드</div>
@@ -161,6 +189,6 @@ export default function buypage() {
             </div>
         </footer>
   */}
-    </div> 
-  )
+        </div>
+    )
 }

@@ -1,5 +1,5 @@
 import Config from '@/configs/config.export';
-import { ProductListCardType } from '@/types/fetchDataType';
+import { eventProductListCardType } from '@/types/fetchDataType';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 export default function BestProductListCard(props: { categoryLarge: string, sort: string }) {
 
     const { baseUrl } = Config()
-    const [productData, setProductData] = useState<ProductListCardType[]>()
+    const [productData, setProductData] = useState<eventProductListCardType[]>()
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/product/get?categoryLarge=${props.categoryLarge}&sort=${props.sort}`)

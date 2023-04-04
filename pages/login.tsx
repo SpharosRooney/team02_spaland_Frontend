@@ -9,9 +9,10 @@ import { useRouter } from 'next/router';
 import LoginFooterButton from '@/components/footer/LoginFooterButton';
 import { LoginRes } from '@/types/UserRequest/Response';
 import Config from '@/configs/config.export';
+import Image from 'next/image';
 
 
-export default function login() {
+export default function Login() {
 
     const router = useRouter();
     // const Base_URL = Config().baseUrl;
@@ -101,7 +102,14 @@ export default function login() {
             <div className="signupmodalBox">
                 <header className="signup-header">
                     <div className="signup-header-cancel">
-                        <Link href={"/"}><img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" /></Link>
+                        <Link href={"/"}>
+                        <Image
+                                src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+                                width={20}
+                                height={20}
+                                alt= "close"
+                            />
+                        </Link>
                     </div>
                     <div className="login-header-bot">
                         <p>로그인</p>
@@ -109,7 +117,12 @@ export default function login() {
                 </header>
 
                 <section className="login-logo">
-                    <img src="https://www.starbucks.co.kr/common/img/common/logo.png" />
+                    <Image
+                        src="https://www.starbucks.co.kr/common/img/common/logo.png"
+                        width={20}
+                        height={20}
+                        alt= "logo"
+                    />
                 </section>
 
                 <section className="login-notice">
@@ -163,24 +176,4 @@ export default function login() {
             </div>
         </>
     )
-
-                        // 서버에서 보내온 쿠키 사용하기
-                        // const cookie = res.headers['set-cookie'];
-                        // console.log(cookie);
-                        // document.cookie = cookie;
-                        // console.log(document.cookie);
-                        // const token = cookie.split('=')[1];
-                        // console.log(token);
-                        // axios.defaults.headers.common[
-
-
-                        // 서버에서 보내온 쿠키 저장하기
-                        // const cookie = res.headers['set-cookie'];
-                        // console.log(cookie);
-                        // document.cookie = cookie;
-                        // console.log(document.cookie);
-                        // const token = cookie.split('=')[1];
-                        // console.log(token);
-                        // axios.defaults.headers.common[
-
 }

@@ -1,19 +1,19 @@
 import Config from '@/configs/config.export';
-import { ProductListCardType } from '@/types/fetchDataType';
+import {eventProductListCardType } from '@/types/fetchDataType';
 import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 
-export default function BestProductListCard(props: { categoryLarge: string, sort: string }) {
+export default function BestProductListCard(props: { categoryLarge: string }) {
 
     const { baseUrl } = Config()
-    const [productData, setProductData] = useState<ProductListCardType[]>()
+    const [productData, setProductData] = useState<eventProductListCardType[]>()
 
     useEffect(() => {
-        axios.get(`${baseUrl}/api/v1/product/get?categoryLarge=${props.categoryLarge}&sort=${props.sort}`)
+        axios.get(`${baseUrl}/api/v1/product/get?categoryLarge=${props.categoryLarge}&sort=추천순`)
             .then(res => res.data.data)
             .then(data => setProductData(data))
-    }, [props.categoryLarge, props.sort])
+    }, [props.categoryLarge])
 
     return (
         <>

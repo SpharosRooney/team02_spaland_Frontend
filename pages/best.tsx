@@ -76,7 +76,7 @@ export default function best() {
                             <SwiperSlide>
                                 <section className="best-product">
                                     <div className="best-product-list">
-                                        <BestProductListCard categoryLarge={best.name} sort={best.name} />
+                                        <BestProductListCard categoryLarge={best.name} />
                                     </div>
                                 </section>
                             </SwiperSlide>

@@ -45,11 +45,12 @@
 //     );
 // }
 
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import styled from 'styled-components'
 import myStyle from '../components/footer/FooterTeacherButton.module.css'
 import Sheet from 'react-modal-sheet';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -74,10 +75,29 @@ export default function ProductOrderSection() {
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [count, setCount] = useState<number>(1)
+    const [succcess, setSuccess] = useState<boolean>(false)
 
 
     const handleOpen = () => {
         setIsOpen(!isOpen)
+    }
+
+    const onClieckCount = (count: number) => {
+        if(count === 0) {
+            // Swal.fire({
+            //     title: '최소 주문 수량은 1개 입니다.',
+            //     icon: 'warning',
+            //     position: 'top',
+            //     showConfirmButton: false,
+            //     timmer: 2000,
+            //     timerProgressBar: true,
+            //     color:'#067040'
+                
+            // })
+
+        }else if (count > 3) {
+
+        }
     }
 
 
@@ -134,8 +154,8 @@ export default function ProductOrderSection() {
                                 <div className="submit-box">
                                     <div className="cart-footer-bot" style={{alignItems:'center'}}>
                                         <img src = '/assets/images/icons/shopping-cart.svg' alt="cart" width={'20px'} height={'20px'} />
-                                        <button className="cart-gift"><Link href='giftcard'>선물하기 </Link></button>
-                                        <button className="cart-buy"><Link href='buypage'>구매하기</Link></button>
+                                        <button className="cart-gift"><Link href='/giftcard'>선물하기 </Link></button>
+                                        <button className="cart-buy"><Link href='/buypage'>구매하기</Link></button>
                                     </div>
                                 </div>
                             </footer>
@@ -145,4 +165,23 @@ export default function ProductOrderSection() {
             </Sheet>
         </>
     );
-} 
+}
+
+const SucceesViewModal = (props: {isOpen:boolean, setIsOpen:Dispatch<SetStateAction<boolean>>}) => {
+    
+    if(!props.isOpen) return null;
+
+    return (
+        <>
+
+        </>
+    );
+}
+
+const SuccessModalWrap = styled.div`
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 999;

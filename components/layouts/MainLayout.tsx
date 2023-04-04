@@ -330,14 +330,24 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                       icon.name === 'cart' ?
                         <li key={icon.id}>
                           <Link href={icon.link}>
-                            <img src={icon.icon} />
+                            <Image
+                              src={icon.icon}
+                              width={20}
+                              height={20}
+                              alt= "cart"
+                            />
                           </Link>
                         </li>
                         :
                         icon.name === 'search' ?
                           <li key={icon.id}>
                             <Link href={icon.link}>
-                              <img src={icon.icon} />
+                              <Image
+                                src={icon.icon}
+                                width={20}
+                                height={20}
+                                alt= "search"
+                              />
                             </Link>
                           </li>
                           : ""

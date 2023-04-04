@@ -7,7 +7,14 @@ export default function CommonHeader(props:{subject:string}) {
         <header>
             <div className="header-top">
                 <div className="menu-icon">
-                    <Link href="menu"><img src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png" alt="" /></Link>
+                    <Link href="menu">
+                            <Image
+                              src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png"
+                              width={20}
+                              height={20}
+                              alt= "left"
+                            />
+                        </Link>
                 </div>
                 <h1><Link href="index">온라인 스토어</Link></h1>
                 <div className="right-menu-icon">

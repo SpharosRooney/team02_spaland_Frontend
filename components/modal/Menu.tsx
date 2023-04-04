@@ -51,7 +51,12 @@ function Menu(props: {isMenuModalOpen:boolean, setIsMenuModalOpen:Function}) {
             <div className="menu-box">
                 <header className="menu-header">
                     <div className="menu-header-top" onClick={handleClose}>
-                        <img src="https://cdn-icons-png.flaticon.com/512/864/864393.png" />
+                        <Image
+                            src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+                            width={20}
+                            height={20}
+                            alt= "close"
+                        />
                     </div>
                     <div className="menu-header-bottom">
                         <a>Welcome!</a>

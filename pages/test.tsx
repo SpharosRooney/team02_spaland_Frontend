@@ -45,11 +45,12 @@
 //     );
 // }
 
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import styled from 'styled-components'
 import myStyle from '../components/footer/FooterTeacherButton.module.css'
 import Sheet from 'react-modal-sheet';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 
 const OrderToggleButton = styled.div`
   width: 40px;
@@ -80,9 +81,25 @@ export default function ProductOrderSection() {
         setIsOpen(!isOpen)
     }
 
+    if (count === 0) {
+        Swal.fire({
+            toast: true,
+            title: '최소 주문 수량은 1개 입니다.',
+            position: 'top',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            color: 'rgb(0, 155, 57)',
+        })
+    }
+
 
     return (
         <>
+        <SuccessViewModal
+            isModalOpen={isOpen}
+            setIsModalOpen={setIsOpen}
+        />
             <div className={isOpen ? myStyle.productOrderSectionOpen : myStyle.productOrderSection}>
                 {
                     !isOpen ? (<><OrderToggleButton onClick={handleOpen} /><OrderButton onClick={handleOpen}>주문하기</OrderButton></>)
@@ -119,7 +136,7 @@ export default function ProductOrderSection() {
                                     <p>23 SS 체리 튤립 로맨틱 워터보틀 384ml</p>
                                     <div style={{ display: 'flex' }}>
                                         <div style={{ width: '50%', backgroundColor: '#f7f7f7' }}>
-                                            <button style={{ borderRadius: '30px' }} onClick={() => setCount(count - 1)}>-</button>
+                                            <button disabled={count === 1 ? true : false} style={{ borderRadius: '30px'}} onClick={() => setCount(count - 1)}>-</button>
                                             <span>{count}</span>
                                             <button style={{ borderRadius: '30px' }} onClick={() => setCount(count + 1)}>+</button>
                                         </div>
@@ -130,10 +147,12 @@ export default function ProductOrderSection() {
                             <div style={{ padding: '1rem', marginRight: '1rem' }}>
                                 <p style={{ textAlign: 'end' }}><span>합계</span>33,000<span>원</span></p>
                             </div>
-                            <footer className="cart-footer" style={{ height: '10%' }}>
+                            <footer className="cart-footer" >
                                 <div className="submit-box">
                                     <div className="cart-footer-bot" style={{alignItems:'center'}}>
+                                        <div>
                                         <img src = '/assets/images/icons/shopping-cart.svg' alt="cart" width={'20px'} height={'20px'} />
+                                        </div>
                                         <button className="cart-gift"><Link href='giftcard'>선물하기 </Link></button>
                                         <button className="cart-buy"><Link href='buypage'>구매하기</Link></button>
                                     </div>
@@ -146,3 +165,25 @@ export default function ProductOrderSection() {
         </>
     );
 } 
+
+const SuccessViewModal = (props:{isModalOpen:boolean, setIsModalOpen:Dispatch<SetStateAction<boolean>>}) => {
+    
+    if(!props.isModalOpen){
+        return null
+    }
+
+    return (
+        <>
+        <SuccessModalWarp></SuccessModalWarp>
+        </>
+    )
+}
+
+const SuccessModalWarp = styled.div`
+    position: fixed;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    `

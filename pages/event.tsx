@@ -37,11 +37,14 @@ const Event = () => {
   //   );
   // }
 
-  // useEffect(() => {
-  //   getImageSize().then((res) => {
-  //     setImageSize(res);
-  //   });
-  // }, []);
+  
+
+
+    // useEffect(() => {
+    //   getImageSize().then((res) => {
+    //     setImageSize(res);
+    //   });
+    // }, []);
 
 
 

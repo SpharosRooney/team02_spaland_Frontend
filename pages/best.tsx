@@ -68,6 +68,7 @@ export default function Best() {
                 onSlideChangeTransitionStart={() => (scrollTo(0, 0))}
                 onSwiper={setSwiper}
                 style={{ marginTop: '107px' }}
+                autoHeight={true}
             >
                 {
                     bestsubnav && bestsubnav.map((best) => (

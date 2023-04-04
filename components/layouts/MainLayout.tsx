@@ -1,13 +1,11 @@
-import { bottomNavMenuType, subNavMenuType } from '@/types/navMenuType'
+import { bottomNavMenuType } from '@/types/navMenuType'
 import Link from 'next/link'
-import Image from "next/image"
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie';
 
-import { filterMenuType, filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
-import { headerNavMenus, headerIcons } from "@/datas/starbucksStaticDatas";
-import { headerMenu } from '@/types/starbucksTypes'
+import { filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
+import { headerIcons } from "@/datas/starbucksStaticDatas";
 
 //recoil
 import { useRecoilValue } from "recoil";

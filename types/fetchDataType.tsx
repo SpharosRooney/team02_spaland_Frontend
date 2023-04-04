@@ -1,10 +1,10 @@
-export interface mainEventListType {
+export interface mainEventListType{
     id: number;
     title: string;
     eventId: number;
 }
 
-export interface BestListType {
+export interface BestListType{
     id: number;
     title: string;
 }
@@ -31,7 +31,7 @@ export interface eventProductListType {
 
 export interface bestProductListType {
     id: number;
-    bestId: number;
+    bestId:number;
     productId: number;
 }
 
@@ -41,35 +41,13 @@ export interface tagListCardType {
     tagId: number;
 }
 
-
-export interface eventProductListCardType {
-    id: number;
-    name: string;
-    discription: string;
-    price: number;
-    inventory: number;
-    titleImg: string;
-    productImageList: Array<string>;
-    frozen: number;
-}
-
-
-export interface eventProductType {
+export interface ProductDetailType{
     id: number;
     name: string;
     description: string;
     price: number;
     inventory: number;
     titleImg: string;
-    productImageList: Array<productImageListType>;
-    frozen: number;
-    salesQuantity: number;
-}
-
-export interface productImageListType {
-    id: number;
-    imgUrl: string;
-    imgAlt: string;
     productImageList: [
         {
             id: number;
@@ -79,16 +57,4 @@ export interface productImageListType {
     ],
     frozen: number;
     salesQuantity: number;
-}
-
-export interface eventListType {
-    id: number;
-    name: string;
-    description: string;
-    imgUrl: string;
-    imgAlt: string;
-    startDate: string;
-    endDate: string;
-    discountRate: number;
-    isDisplay: boolean;
 }

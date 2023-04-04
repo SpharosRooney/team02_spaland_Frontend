@@ -7,8 +7,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import "swiper/css";
 import "swiper/css/pagination";
-import axios from 'axios';
 import Config from '@/configs/config.export';
+import axios from 'axios';
 
 export default function best() {
 
@@ -18,10 +18,11 @@ export default function best() {
     const {baseUrl} = Config();
 
     useEffect(() => {
-        axios.get(`${baseUrl}/api/v1/categoryLarge/all`)
+        axios(`${baseUrl}/api/v1/categoryLarge/all`)
             .then(res => res.data.data)
             .then(data => setBestSubNav(data))
     }, [])
+    console.log('bestsubnav', bestsubnav)
 
     useEffect(()=> {
         axios.get(``)

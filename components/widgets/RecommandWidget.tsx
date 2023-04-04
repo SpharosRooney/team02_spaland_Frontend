@@ -9,15 +9,13 @@ import axios from 'axios'
 export default function RecommandWidget(props: { title: string }) {
 
     const [eventItemList, setEventItemList] = useState<eventListType[]>()
-
     const { baseUrl } = Config();
 
-    const encodedTitle = encodeURIComponent(props.title);
-    // console.log('props.title', props.title)
     useEffect(() => {
-        axios(`${baseUrl}/api/v1/product/get?event=${encodedTitle}`)
+        axios(`${baseUrl}/api/v1/product/get?event=${props.title}`)
             .then(res => setEventItemList(res.data.data))
     }, [])
+    console.log(`${props.title}`,eventItemList)
 
     return (
         <section id="recommand-md">

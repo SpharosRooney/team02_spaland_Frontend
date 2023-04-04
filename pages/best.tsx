@@ -7,18 +7,25 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import "swiper/css";
 import "swiper/css/pagination";
+import axios from 'axios';
+import Config from '@/configs/config.export';
 
 export default function best() {
 
     const [swiper, setSwiper] = useState<SwiperCore>();
     const [bestsubnav, setBestSubNav] = useState<subNavMenuType[]>();
     const [slideindex, setSlideIndex] = useState<number>(0)
+    const {baseUrl} = Config();
 
     useEffect(() => {
-        fetch(`http://localhost:3001/bestsubnav`)
-            .then(res => res.json())
+        axios.get(`${baseUrl}/api/v1/categoryLarge/all`)
+            .then(res => res.data.data)
             .then(data => setBestSubNav(data))
     }, [])
+
+    useEffect(()=> {
+        axios.get(``)
+    })
 
     return (
         <>

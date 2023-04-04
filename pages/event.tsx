@@ -12,19 +12,21 @@ import "swiper/css/pagination";
 import { relative } from 'path';
 import ProductListCard from '@/components/ui/ProductListCard';
 import EventProductListCard from '@/components/ui/EventProductListCard';
+import axios from 'axios';
+import Config from '@/configs/config.export';
 const Event = () => {
 
+  const {baseUrl} = Config();
   const [productData, setProductData] = useState<ProductListCardType>()
   const [slideindex, setSlideIndex] = useState<number>(0)
-  const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>()
+  const [eventSubNavData, setsubNavBottomData] = useState<subNavMenuType[]>([])
   const [isNotice, setIsNotice] = useState<boolean>(false)
 
   const [swiper, setSwiper] = useState<SwiperCore>();
 
   useEffect(() => {
-    fetch('http://10.10.10.51:8080/api/v1/event/all')
-      .then(res => res.json())
-      .then(data => setsubNavBottomData(data))
+    axios.get(`${baseUrl}/api/v1/event/all`)
+    .then(res => setsubNavBottomData(res.data.data))
   }, [slideindex])
   console.log('asd',eventSubNavData)
 

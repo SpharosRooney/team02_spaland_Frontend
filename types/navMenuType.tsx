@@ -22,3 +22,14 @@ export interface subNavMenuType {
     discountRate : number;
     isDisplay : boolean;
 }
+
+export interface bestsubMenuType {
+    id: number;
+    name : string;
+    description : string;
+    price : number;
+    inventory : number;
+    titleImg : string;
+    frozen : number;
+    salesQuantity : number;
+}

@@ -41,6 +41,57 @@ export interface tagListCardType {
     tagId: number;
 }
 
+export interface eventProductListCardType {
+    id: number;
+    name: string;
+    discription: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    productImageList: Array<string>;
+    frozen: number;
+}
+
+
+export interface eventProductType {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    inventory: number;
+    titleImg: string;
+    productImageList: Array<productImageListType>;
+    frozen: number;
+    salesQuantity: number;
+}
+
+export interface productImageListType {
+    id: number;
+    imgUrl: string;
+    imgAlt: string;
+    productImageList: [
+        {
+            id: number;
+            imgUrl: string;
+            imgAlt: string;
+        }
+    ],
+    frozen: number;
+    salesQuantity: number;
+}
+
+export interface eventListType {
+    id: number;
+    name: string;
+    description: string;
+    imgUrl: string;
+    imgAlt: string;
+    startDate: string;
+    endDate: string;
+    discountRate: number;
+    isDisplay: boolean;
+}
+
 export interface ProductDetailType{
     id: number;
     name: string;
@@ -58,3 +109,4 @@ export interface ProductDetailType{
     frozen: number;
     salesQuantity: number;
 }
+

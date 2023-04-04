@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import LoginFooterButton from '@/components/footer/LoginFooterButton';
 import { LoginRes } from '@/types/UserRequest/Response';
+import Config from '@/configs/config.export';
 
 
 export default function login() {
@@ -15,6 +16,7 @@ export default function login() {
     const router = useRouter();
     // const Base_URL = Config().baseUrl;
     const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
+    const { baseUrl } = Config();
 
     const [inputData, setInputData] = useState<inputUserType>({
         userEmail: "",
@@ -33,7 +35,7 @@ export default function login() {
 
     //로그인 확인용
     const handleSubmit = (event: any) => {
-        axios.defaults.baseURL = 'http://localhost:3000';
+        // axios.defaults.baseURL = 'http://localhost:3000';
 
         event.preventDefault();
         console.log(inputData);
@@ -49,7 +51,7 @@ export default function login() {
             return;
         }
         else {
-            axios.post('http://localhost:8080/api/v1/users/login', {
+            axios.post(`${baseUrl}/api/v1/users/login`, {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
             },{withCredentials:false}).then((res) => {                

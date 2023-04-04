@@ -10,10 +10,12 @@ import StButton from '@/components/ui/StButton';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Config from '@/configs/config.export';
 
 export default function signup() {
 
   const router = useRouter();
+  const { baseUrl } = Config();
 
   const [stepId, setStepId] = useState<number>(1)
   const [inputData, setInputData] = useState<inputRegisterType>({
@@ -129,7 +131,7 @@ export default function signup() {
         })
         return;
       } else {
-        axios.post('http://localhost:8080/api/v1/users/signup', {
+        axios.post(`${baseUrl}/api/v1/users/signup`, {
           userName: inputData.userName,
           userphone: inputData.phone,
           userEmail: inputData.userEmail,

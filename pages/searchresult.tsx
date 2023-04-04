@@ -4,29 +4,23 @@ import { useRouter } from 'next/router';
 import { seacrchKeyword } from '@/types/search/searchKeywords';
 import { ProductDetailType } from '@/types/fetchDataType';
 import SearchProductCategory from '@/components/widgets/SearchProductCategory';
+import Config from '@/configs/config.export';
 
 const SearchResult = () => {
     const router = useRouter();
     const query = router.query.query || '';
     const [searchresults, setSearchResults] = useState<seacrchKeyword[]>([]);
-    //     keyword : "",
-    //     categoryLarge : "",
-    //     categoryMiddle : "",
-    //     option : "",
-    //     productSeason : "",
-    //     price : "",
-    // });
+    const { baseUrl } = Config();
+
     console.log(searchresults)
     // const [allmenu, setAllmenu] = useState<ProductDetailType[]>([]);
 
     useEffect(() => {
         const fetchSearchResults = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/product/get?query=${query}`);
+                const response = await axios.get(`${baseUrl}/api/v1/product/get?query=${query}`);
                 const products = response.data;
                 setSearchResults(products);
-                
-                
             } catch (error) {
                 console.error(error);
             }

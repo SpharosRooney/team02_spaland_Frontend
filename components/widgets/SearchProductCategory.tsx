@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { seacrchKeyword } from "@/types/search/searchKeywords";
 import axios from "axios";
 import SearchFilterMenuList from "../ui/SearchFilterMenuList";
+import Config from "@/configs/config.export";
 
 export default function SearchProductCategory() {
     const router = useRouter();
@@ -15,6 +16,7 @@ export default function SearchProductCategory() {
     const [menuList3, setMenuList3] = useState<MenuDataType[]>([]);
     const query = router.query.query || '';
     const [searchresults, setSearchResults] = useState<seacrchKeyword[]>([]);
+    const { baseUrl } = Config();
 
     useEffect(() => {
         console.log("필터링데이터", filterData);
@@ -50,7 +52,7 @@ export default function SearchProductCategory() {
     useEffect(() => {
         const fetchSearchResults = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/product/get?query=${query}`);
+                const response = await axios.get(`${baseUrl}/api/v1/product/get?query=${query}`);
                 const products = response.data;
                 setSearchResults(products);
                 

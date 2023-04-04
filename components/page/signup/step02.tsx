@@ -56,7 +56,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
         confirmKeyErr: ""
     });
 
-    const baseUrl = Config().baseUrl;
+    const baseUrl = Config();
 
     useEffect(() => {
         console.log(new Date())
@@ -121,7 +121,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             return;
         }
 
-        axios.post('http://localhost:8080/api/v1/email/confirm', {
+        axios.post(`${baseUrl}/api/v1/email/confirm`, {
             userEmail: inputData.userEmail,
         })
             .then((res) => {
@@ -163,7 +163,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     const handleConfirmKey = () => {
         console.log(confirmKey)
         //서버에 키값 확인
-        axios.post('http://localhost:8080/api/v1/email/checkcode', {
+        axios.post(`${baseUrl}/api/v1/email/checkcode`, {
             userEmail: inputData.userEmail,
             confirmKey: inputData.confirmKey
         })

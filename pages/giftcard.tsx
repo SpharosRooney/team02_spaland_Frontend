@@ -1,5 +1,6 @@
 import FooterButton from '@/components/footer/FooterButton'
 import ModalHeader from '@/components/header/ModalTopHeader'
+import Image from 'next/image'
 import React from 'react'
 
 export default function giftcard() {
@@ -21,7 +22,14 @@ export default function giftcard() {
                     <div className="e-gift-in-box"><span>제휴사 쿠폰</span></div>
                     <nav>
                         <ul>
-                            <li><img src="../images/icons/GreenPlus.png" /></li>
+                            <li>
+                                <Image
+                                    src="/assets/images/icons/GreenPlus.png"
+                                    width={20}
+                                    height={20}
+                                    alt= "GreenPlus"
+                                />
+                            </li>
                             <li>추가</li>
                         </ul>
                     </nav>

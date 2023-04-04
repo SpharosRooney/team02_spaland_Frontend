@@ -11,7 +11,7 @@ import Config from '@/configs/config.export';
 import axios from 'axios';
 import BestProductListCard from '@/components/ui/BestProductListCard';
 
-export default function best() {
+export default function Best() {
 
     const [swiper, setSwiper] = useState<SwiperCore>();
     const [bestsubnav, setBestSubNav] = useState<subNavMenuType[]>();
@@ -22,7 +22,7 @@ export default function best() {
         axios(`${baseUrl}/api/v1/categoryLarge/all`)
             .then(res => res.data.data)
             .then(data => setBestSubNav(data))
-    }, [slideindex])
+    }, [bestsubnav])
     console.log('bestsubnav', bestsubnav)
 
     // useEffect(()=> {

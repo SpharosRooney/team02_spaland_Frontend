@@ -1,6 +1,7 @@
 import ModalTopHeader from '@/components/header/ModalTopHeader'
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function address() {
     return (
@@ -49,8 +50,14 @@ export default function address() {
                         <div className="address-border-color4">
                             <input className="address-checkbox" type="checkbox" />
                             <p style={{ fontSize: "15px", position: "absolute", left: "70px" }}>배송지 정보 수집 및 이용 동의[필수]</p>
-                            <Link href="/collection"><img src="assets/images/icons/next.png"
-                                style={{ width: "20px", height: "20px" }} /></Link>
+                            <Link href="/collection">
+                                <Image
+                                    src="/assets/images/icons/next.png"
+                                    width={20}
+                                    height={20}
+                                    alt= "next"
+                                />
+                            </Link>
                         </div>
                     </div>
                 </div>

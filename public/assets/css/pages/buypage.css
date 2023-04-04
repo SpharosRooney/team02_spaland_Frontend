@@ -20,6 +20,10 @@ section#buy .ship-info p{
     height: 50px;
 }
 
+section#buy button {
+    width: 100%;
+}
+
 section#buy .address-box{
     text-align: center;
     height: 130px;
@@ -29,9 +33,21 @@ section#buy .address-box span{
     font-size: 13px;
 }
 
-.item-thum img{
-    width: 20px;
-    height: 20px;
+.item-thum{
+    width: 10%;
+}
+
+.item-span-b{
+    width: 20%;
+}
+
+.info-btn {
+    height : 100px;
+    background-color: rgb(240, 237, 237);
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .info-btn img{
@@ -52,21 +68,17 @@ section#buy .address-box .address-btn {
     background: none;
 }
 
-section#buy .item-information-box{
-    background-color: rgb(240, 237, 237);
-    height: 120px;
-}
-
 section#buy .item-information-box button{
     width: 100%;
     font-size: 15px;
     border: none;
 }
 
-section#buy .item-information-box .item-information-btn{
+.item-information-btn{
     display: flex;
     justify-content: space-between;
-    margin: 2%;
+    margin: 0;
+    width: 100%;
 }
 
 section#buy .item-information-box .item-information-btn .down-icon img{

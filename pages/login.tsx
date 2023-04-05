@@ -66,9 +66,9 @@ export default function Login() {
                 const userNickname = res.data;
                 
                 const accessToken = res.headers.authorization;
-                axios.defaults.headers.common[
-                    "Authorization"
-                ] = `Bearer ${accessToken}`;
+                // axios.defaults.headers.common[
+                //     "Authorization"
+                // ] = `Bearer ${accessToken}`;
 
 
                 // https로 바꾸면 사용하기로 함.(refreshToken)
@@ -81,13 +81,13 @@ export default function Login() {
                 
                 localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 localStorage.setItem("accessToken", accessToken); // 로컬은 무엇을 넣든 다 문자열로 저장됨.
-                
+                router.back();
 
                 Swal.fire({
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 })
-                router.push("/");
+                
                 return res;
             })
                 .catch(err => {

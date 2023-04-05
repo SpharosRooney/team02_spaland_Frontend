@@ -44,7 +44,9 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [filterList, setFilterList] = useState<filterType[]>([])
   const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
-  const { baseUrl } = Config();
+  const { baseUrl } = Config(); 
+
+  console.log(isLogin)
 
 
   //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
@@ -173,63 +175,86 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       try {
         await axios.get(`${baseUrl}/api/v1/users/logout`, {
           headers: {
-            Authorization: `${isLogin.accessToken}`
+            Authorization: `Bearer ${isLogin.accessToken}`
+          }
+        }).then(res => {
+          console.log(res)
+          res.status === 200 && 
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userNickname");
+          setIsLogin({
+            userNickname: "",
+            accessToken: "",
+            isLogin: false
+          });
+          Swal.fire({
+            toast: true,
+            text: "로그아웃 되었습니다.",
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            color: "#067040",
+          })
+        });
+        
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "로그아웃에 실패하였습니다.",
+          customClass: {
+            confirmButton: 'swal-confirm-button'
           }
         });
-        setIsLogin({
-          userNickname: "",
-          accessToken: "",
-          isLogin: false
-        });
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("userNickname");
-        let timerInterval: string | number | NodeJS.Timer | undefined;
-        Swal.fire({
-          html: '로그아웃 중...',
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-          willClose: () => { 
-            clearInterval(Number(timerInterval));
-          },
-        }).then(() => {
-          // logout after the timer ends
-          setIsLogin({
-            userNickname: "",
-            accessToken: "",
-            isLogin: false,
-          });
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("userNickname");
-          location.reload();
-        });
-      } catch (error : any) {
-        // 고치기 나중에
-        if (error.response && error.response.status === 401) {
-          // 엑세스 토큰이 만료된 경우 자동으로 로그아웃 처리
-          setIsLogin({
-            userNickname: "",
-            accessToken: "",
-            isLogin: false,
-          });
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("userNickname");
-          location.reload();
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "로그아웃에 실패하였습니다.",
-            customClass: {
-              confirmButton: 'swal-confirm-button'
-            }
-          });
-        }
       }
     }
-  }
+        let timerInterval: string | number | NodeJS.Timer | undefined;
+      //   Swal.fire({
+      //     html: '로그아웃 중...',
+      //     timer: 1000,
+      //     timerProgressBar: true,
+      //     didOpen: () => {
+      //       Swal.showLoading();
+      //     },
+      //     willClose: () => { 
+      //       clearInterval(Number(timerInterval));
+      //     },
+      //   }).then(() => {
+      //     // logout after the timer ends
+      //     setIsLogin({
+      //       userNickname: "",
+      //       accessToken: "",
+      //       isLogin: false,
+      //     });
+      //     localStorage.removeItem("accessToken");
+      //     localStorage.removeItem("userNickname");
+      //     location.reload();
+      //   });
+      // } catch (error : any) {
+      //   // 고치기 나중에
+      //   if (error.response && error.response.status === 401) {
+      //     // 엑세스 토큰이 만료된 경우 자동으로 로그아웃 처리
+      //     setIsLogin({
+      //       userNickname: "",
+      //       accessToken: "",
+      //       isLogin: false,
+      //     });
+      //     localStorage.removeItem("accessToken");
+      //     localStorage.removeItem("userNickname");
+      //     location.reload();
+      //   } else {
+      //     Swal.fire({
+      //       icon: "error",
+      //       title: "Oops...",
+      //       text: "로그아웃에 실패하였습니다.",
+      //       customClass: {
+      //         confirmButton: 'swal-confirm-button'
+      //       }
+      //     });
+      //   }
+      // }
+    }
 
   // useEffect(() => {
   //   console.log("filterList", filterList)

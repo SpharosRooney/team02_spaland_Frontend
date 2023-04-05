@@ -5,6 +5,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Countdown from 'react-countdown';
 import { SignupErrType } from '@/types/signup/signErrType';
+import { error } from 'console';
 
 interface ChildProps {
     inputData: inputRegisterType;
@@ -56,7 +57,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
         confirmKeyErr: ""
     });
 
-    const baseUrl = Config();
+    const {baseUrl} = Config();
 
     useEffect(() => {
         console.log(new Date())
@@ -137,27 +138,17 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                         }
                     })
                     setConfirmTime(Date.now() + 180000)
-                } else if (res.data === false) {
-                    setConfirmView(false)
-                    setDuplicateView(false)
-                    setInputData({
-                        ...inputData,
-                        userEmail: "",
-                    })
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: '이미 가입되어 있는 이메일입니다.',
-                        customClass: {
-                            confirmButton: 'swal-confirm-button'
-                        }
-                    })
-                    setErrMsg({ ...errMsg, emailErr: ""});
-                    return;
                 }
             })
             .catch((err) => {
-                console.log(err)
+                 
+                 Swal.fire({
+                    icon: 'error',
+                    text: err.response.data.message,
+                    customClass: {
+                        confirmButton: 'swal-confirm-button'
+                    }
+                 })
             })
     }
     const handleConfirmKey = () => {

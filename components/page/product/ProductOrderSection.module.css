@@ -72,6 +72,10 @@
   height: auto;
 }
 
+.QtyCount span {
+  font-size: 1.2rem;
+}
+
 .disabled {  
   opacity: 0.3;
   cursor: not-allowed;

@@ -9,37 +9,37 @@ export default function CartItem(props: { data: cartListType }) {
 
     const [cartList, setCartList] = useRecoilState<cartType>(cartListState)
 
-    const handleCheck = () => {
-        if (props.data.bigCategoryId === 1) {
-            setCartList(
-                {
-                    ...cartList,
-                    cartListFreeze: cartList.cartListFreeze.map((item: cartListType) => {
-                        if (item.cartId === props.data.cartId) {
-                            return { ...item, check: !item.check }
-                        }
-                        return item
-                    })
-                })
-        } else {
-            setCartList(
-                {
-                    ...cartList,
-                    cartList: cartList.cartList.map((item: cartListType) => {
-                        if (item.cartId === props.data.cartId) {
-                            return { ...item, check: !item.check }
-                        }
-                        return item
-                    })
-                })
-        }
-    }
+    // const handleCheck = () => {
+    //     if (props.data.bigCategoryId === 1) {
+    //         setCartList(
+    //             {
+    //                 ...cartList,
+    //                 cartListFreeze: cartList.cartListFreeze.map((item: cartListType) => {
+    //                     if (item.cartId === props.data.cartId) {
+    //                         return { ...item, check: !item.check }
+    //                     }
+    //                     return item
+    //                 })
+    //             })
+    //     } else {
+    //         setCartList(
+    //             {
+    //                 ...cartList,
+    //                 cartList: cartList.cartList.map((item: cartListType) => {
+    //                     if (item.cartId === props.data.cartId) {
+    //                         return { ...item, check: !item.check }
+    //                     }
+    //                     return item
+    //                 })
+    //             })
+    //     }
+    // }
 
     return (
         <section className="cart-product">
             <div className="checkbox-border">
                 <div className="checkbox-border-left">
-                    <input checked={props.data.check ? true : false} className={props.data.check ? 'checkboxOn' : 'checkbox'} type='checkbox'  onClick={handleCheck}/>
+                    {/* <input checked={props.data.check ? true : false} className={props.data.check ? 'checkboxOn' : 'checkbox'} type='checkbox'  onClick={handleCheck}/> */}
                     <Image
                         src="assets/images/products/01.png"
                         width={20}

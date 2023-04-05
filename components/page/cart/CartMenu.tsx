@@ -2,6 +2,7 @@ import { cartType } from '@/types/cart/cartListType'
 import { cartListState } from '@/state/cartListState'
 import React, { useEffect, useState } from 'react'
 import { useRecoilState, useResetRecoilState } from 'recoil'
+import Swal from 'sweetalert2'
 
 export default function CartMenu() {
 
@@ -35,6 +36,29 @@ export default function CartMenu() {
 
     const resetState = useResetRecoilState(cartListState)
 
+    const swalWithCustumButton = Swal.mixin({
+        customClass: {
+            actions: 'my-actions',
+            cancelButton: 'order-1',
+            confirmButton: 'order-2 right-gap',
+        }
+    })
+
+    const checkCleanAll = () => {
+        swalWithCustumButton.fire({
+            text: '장바구니에 담긴 모든 상품을 삭제하시겠어요?',
+            showCancelButton: true,
+            confirmButtonColor: '#00a862',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resetState()
+            }
+        })
+    }
+
     return (
         // <section id="cart-header">
         //     <p className="title">장바구니</p>
@@ -59,7 +83,7 @@ export default function CartMenu() {
                         <input type="checkbox" onClick={()=>handleAllCheck(listAllCheck)} id="menu-cb" /><span>전체 선택</span>
                     </div>
                     <div className="header-bottom-check-right">
-                        <span className='selec-del'>선택삭제</span> <span>|</span> <span onClick={()=>resetState()}>전체삭제</span>
+                        <span className='selec-del'>선택삭제</span> <span>|</span> <span onClick={checkCleanAll}>전체삭제</span>
                     </div>
                 </div>
             </div>

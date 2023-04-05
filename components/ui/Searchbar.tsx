@@ -1,28 +1,26 @@
-import Config from "@/configs/config.export";
-import { Keyword } from "@/types/search/searchKeywords";
 import axios from "axios";
 import Image from "next/image";
 import React, { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-
+import Config from "@/configs/config.export";
+import { Keyword } from "@/types/search/searchKeywords";
 
 const SearchBar = () => {
-
     const router = useRouter();
     const [keyword, setKeyword] = useState<Keyword>({
         id: Date.now(),
         keyword: "",
     });
-    const { baseUrl } = Config();
 
+    const { baseUrl } = Config();
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         try {
-            await axios.get(`${baseUrl}/api/v1/product/get?keyword=${keyword.keyword}`);
+            await axios.get(`${baseUrl}/api/v1/product/get?query=${keyword.keyword}`);
             // 검색 결과 페이지로 이동
+
             if(keyword.keyword === ""){
                 Swal.fire({
                     title: '검색어를 입력해주세요.',
@@ -31,21 +29,19 @@ const SearchBar = () => {
                     confirmButtonColor: '#f5a623',
                 })
             } else {
-                router.push(`/searchresult?keyword=${keyword.keyword}`);
-
+                window.location.href = `/searchresult?query=${keyword.keyword}`;
                 // 검색어를 localStorage에 저장
                 const keywords = JSON.parse(localStorage.getItem('keyword') || '[]');
                 keywords.unshift(keyword);
                 localStorage.setItem('keyword', JSON.stringify(keywords));
-            }
-        } catch (error) {
+        }} catch (error) {
             console.error(error);
         }
     };
 
     const handleClose = () => {
         // 검색창 닫기
-        router.push("/");
+        window.location.href = '/';
     }
 
     return (
@@ -64,15 +60,15 @@ const SearchBar = () => {
                                 })
                             }
                         />
-                            <button type="submit">
-                                <Image
-                                    src="/assets/images/icons/search.svg"
-                                    width={20}
-                                    height={20}
-                                    alt= "search"
-                                />
-                            </button>
-                </div>
+                        <button type="submit">
+                            <Image
+                                src="/assets/images/icons/search.svg"
+                                width={20}
+                                height={20}
+                                alt= "search"
+                            />
+                        </button>
+                    </div>
                     <nav className="search-close">
                         <Image
                             src="/assets/images/icons/close.png"
@@ -87,5 +83,4 @@ const SearchBar = () => {
         </header>
     );
 }
-
 export default SearchBar;

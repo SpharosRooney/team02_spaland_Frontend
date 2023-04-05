@@ -21,6 +21,7 @@ import ProductCategory from '../widgets/ProductCategory'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
 import Image from 'next/image';
+import { error } from 'console';
 
 //import{ bottomNavData } from 'assets/../datas/navData'
 //import SignupModal from '../modals/SignupModal'
@@ -157,104 +158,150 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   //   }
   // }
 
-  const logout = async () => {
-    const confirmed = window.confirm('로그아웃 하시겠습니까?');
-    if (!isLogin.accessToken) {
-      // 로그인하지 않은 상태에서 로그아웃 버튼을 클릭한 경우
-      Swal.fire({
-        icon: "warning",
-        title: "로그인 상태가 아닙니다",
-        text: "로그인 후 다시 시도해주세요",
-        customClass: {
-          confirmButton: 'swal-confirm-button'
-        }
-      });
-      return;
-    }
-    if (confirmed) {
-      try {
-        await axios.get(`${baseUrl}/api/v1/users/logout`, {
-          headers: {
-            Authorization: `Bearer ${isLogin.accessToken}`
-          }
-        }).then(res => {
-          console.log(res)
-          res.status === 200 && 
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("userNickname");
-          setIsLogin({
-            userNickname: "",
-            accessToken: "",
-            isLogin: false
-          });
-          Swal.fire({
-            toast: true,
-            text: "로그아웃 되었습니다.",
-            position: "top",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            color: "#067040",
-          })
-        });
+  // const logout = async () => {
+  //   const confirmed = window.confirm('로그아웃 하시겠습니까?');
+  //   if (confirmed) {
+  //     try {
+  //       await axios.get(`${baseUrl}/api/v1/users/logout`, {
+  //         headers: {
+  //           Authorization: `Bearer ${isLogin.accessToken}`
+  //         }
+  //       }).then(res => {
+  //         console.log(res)
+  //         res.status === 200 && 
+  //         localStorage.removeItem("accessToken");
+  //         localStorage.removeItem("userNickname");
+  //         setIsLogin({
+  //           userNickname: "",
+  //           accessToken: "",
+  //           isLogin: false
+  //         });
+  //         Swal.fire({
+  //           toast: true,
+  //           text: "로그아웃 되었습니다.",
+  //           position: "top",
+  //           showConfirmButton: false,
+  //           timer: 2000,
+  //           timerProgressBar: true,
+  //           color: "#067040",
+  //         })
+  //       });
         
-      } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "로그아웃에 실패하였습니다.",
-          customClass: {
-            confirmButton: 'swal-confirm-button'
-          }
-        });
+  //     } catch (error) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Oops...",
+  //         text: "로그아웃에 실패하였습니다.",
+  //         customClass: {
+  //           confirmButton: 'swal-confirm-button'
+  //         }
+  //       });
+  //     }
+  //   }
+  //       let timerInterval: string | number | NodeJS.Timer | undefined;
+  //     //   Swal.fire({
+  //     //     html: '로그아웃 중...',
+  //     //     timer: 1000,
+  //     //     timerProgressBar: true,
+  //     //     didOpen: () => {
+  //     //       Swal.showLoading();
+  //     //     },
+  //     //     willClose: () => { 
+  //     //       clearInterval(Number(timerInterval));
+  //     //     },
+  //     //   }).then(() => {
+  //     //     // logout after the timer ends
+  //     //     setIsLogin({
+  //     //       userNickname: "",
+  //     //       accessToken: "",
+  //     //       isLogin: false,
+  //     //     });
+  //     //     localStorage.removeItem("accessToken");
+  //     //     localStorage.removeItem("userNickname");
+  //     //     location.reload();
+  //     //   });
+  //     // } catch (error : any) {
+  //     //   // 고치기 나중에
+  //     //   if (error.response && error.response.status === 401) {
+  //     //     // 엑세스 토큰이 만료된 경우 자동으로 로그아웃 처리
+  //     //     setIsLogin({
+  //     //       userNickname: "",
+  //     //       accessToken: "",
+  //     //       isLogin: false,
+  //     //     });
+  //     //     localStorage.removeItem("accessToken");
+  //     //     localStorage.removeItem("userNickname");
+  //     //     location.reload();
+  //     //   } else {
+  //     //     Swal.fire({
+  //     //       icon: "error",
+  //     //       title: "Oops...",
+  //     //       text: "로그아웃에 실패하였습니다.",
+  //     //       customClass: {
+  //     //         confirmButton: 'swal-confirm-button'
+  //     //       }
+  //     //     });
+  //     //   }
+  //     // }
+  //   }
+
+  const logout = async () => {
+    Swal.fire({
+      title: '로그아웃 하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#067040',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '로그아웃',
+      cancelButtonText: '취소'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.get(`${baseUrl}/api/v1/users/logout`, {
+            headers: {
+              Authorization: `Bearer ${isLogin.accessToken}`
+            }
+          }).then(res => {
+            console.log(res)
+            res.status === 200 && 
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("userNickname");
+            setIsLogin({
+              userNickname: "",
+              accessToken: "",
+              isLogin: false
+            });
+            Swal.fire({
+              toast: true,
+              text: "로그아웃 되었습니다.",
+              position: "top",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              color: "#067040",
+            })
+          });
+        } catch (error: any) {
+          Swal.fire({
+              toast: true,
+              text: "로그아웃 되었습니다.",
+              position: "top",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              color: "#067040",
+            })
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("userNickname");
+            setIsLogin({
+              userNickname: "",
+              accessToken: "",
+              isLogin: false
+            });
+        }
       }
-    }
-        let timerInterval: string | number | NodeJS.Timer | undefined;
-      //   Swal.fire({
-      //     html: '로그아웃 중...',
-      //     timer: 1000,
-      //     timerProgressBar: true,
-      //     didOpen: () => {
-      //       Swal.showLoading();
-      //     },
-      //     willClose: () => { 
-      //       clearInterval(Number(timerInterval));
-      //     },
-      //   }).then(() => {
-      //     // logout after the timer ends
-      //     setIsLogin({
-      //       userNickname: "",
-      //       accessToken: "",
-      //       isLogin: false,
-      //     });
-      //     localStorage.removeItem("accessToken");
-      //     localStorage.removeItem("userNickname");
-      //     location.reload();
-      //   });
-      // } catch (error : any) {
-      //   // 고치기 나중에
-      //   if (error.response && error.response.status === 401) {
-      //     // 엑세스 토큰이 만료된 경우 자동으로 로그아웃 처리
-      //     setIsLogin({
-      //       userNickname: "",
-      //       accessToken: "",
-      //       isLogin: false,
-      //     });
-      //     localStorage.removeItem("accessToken");
-      //     localStorage.removeItem("userNickname");
-      //     location.reload();
-      //   } else {
-      //     Swal.fire({
-      //       icon: "error",
-      //       title: "Oops...",
-      //       text: "로그아웃에 실패하였습니다.",
-      //       customClass: {
-      //         confirmButton: 'swal-confirm-button'
-      //       }
-      //     });
-      //   }
-      // }
-    }
+    });
+  };
 
   // useEffect(() => {
   //   console.log("filterList", filterList)

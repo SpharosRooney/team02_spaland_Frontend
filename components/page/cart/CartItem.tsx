@@ -10,7 +10,7 @@ export default function CartItem(props: { data: cartListType }) {
     const [cartList, setCartList] = useRecoilState<cartType>(cartListState)
 
     const handleCheck = () => {
-        if (props.data.bigCategoryId === 1) {
+        if (props.data.cartId === 1) {
             setCartList(
                 {
                     ...cartList,

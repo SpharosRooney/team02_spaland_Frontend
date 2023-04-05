@@ -1,13 +1,17 @@
 import { Keyword } from '@/types/search/searchKeywords';
 import axios from 'axios';
 import Image from 'next/image';
-import React, { useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 
 const History = () => {
-  const [keywords, setKeywords] = useState<Keyword[]>(JSON.parse(
-    typeof window !== 'undefined' && window.localStorage.getItem('keyword') || '[]'
-  ));
+  const [keywords, setKeywords] = useState<Keyword[]>([]);
+
+  useEffect(() => {
+    const storedKeywords = window.localStorage.getItem('keyword');
+    if (storedKeywords) {
+      setKeywords(JSON.parse(storedKeywords));
+    }
+  }, []);
 
   const handleRemoveKeyword = (id: number) => {
     const updatedKeywords = keywords.filter((keyword) => keyword.id !== id);
@@ -21,7 +25,6 @@ const History = () => {
   };
   
   // const handleresult = async () => {
-
   //   axios.get(`http://localhost:8080/api/v1/product/get?query=${keywords.keyword}`)
   //     // 검색 결과 페이지로 이동
   //     window.location.href = `/searchresult?query=${keywords.keyword}`;
@@ -37,7 +40,7 @@ const History = () => {
                 <p>최근 검색어</p>
               </div>
               <div className="search-words-box2">
-                {keywords.sort((a: Keyword, b: Keyword) => a.id - b.id).map((key) => (
+                {keywords.length > 0 && keywords.sort((a: Keyword, b: Keyword) => a.id - b.id).map((key) => (
                   <div className="search-words" key={key.id}>
                     <div className="search-word">
                       <p>{key.keyword}</p>

@@ -18,7 +18,7 @@ export default function ProductCategory() {
         filterData.forEach((item) => {
             queryUrl += `&${item.key}=${item.value}`;
         });
-        router.push(`/listview?category=${router.query.category}${queryUrl}`);
+        router.push(`/searchresult?category=${router.query.category}${queryUrl}`);
         // console.log(menuList);
     }, [filterData]);
 

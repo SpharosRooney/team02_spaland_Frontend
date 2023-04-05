@@ -95,6 +95,17 @@ export interface eventListType {
     isDisplay: boolean;
 }
 
+export interface CategoryListType {
+    keyword: string;
+    categoryLarge: string;
+    categoryMiddle: string;
+    option: string;
+    season: string;
+    price: string;
+    sort: string;
+    event: string;
+}
+
 export interface ProductDetailType {
     id: number;
     name: string;
@@ -111,4 +122,10 @@ export interface ProductDetailType {
     ],
     frozen: number;
     salesQuantity: number;
+}
+
+export interface CategoryLarge{
+    id: number;
+    name: string;
+    titleImg: string;
 }

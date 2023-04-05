@@ -79,7 +79,7 @@ section#menu-section {
     display: flex;
     justify-content: space-around;
     padding-top: 15px;
-
+    flex-wrap: wrap;
 }
 
 .menu-product-item {
@@ -101,7 +101,7 @@ section#menu-section {
 
 .menu-footer {
     background-color: #d3d3d338;
-    height: 18.5rem;
+    height: 40%;
 }
 
 .menu-footer-top a{

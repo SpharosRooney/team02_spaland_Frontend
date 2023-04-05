@@ -24,8 +24,6 @@ export default function Best() {
             .then(data => setBestSubNav(data))
     }, [baseUrl])
 
-    console.log('bestsubnav', bestsubnav)
-
     return (
         <>
             <div className='header-top' />

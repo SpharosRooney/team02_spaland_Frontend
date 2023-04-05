@@ -11,15 +11,17 @@ import CartList from '@/components/page/cart/CartList'
 import { userLoginState } from '@/state/user/atom/userLoginState'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
+import Config from '@/configs/config.export'
 
 
 
 export default function Cart() {
 
     const router = useRouter();
-    const { isLogin } = useRecoilValue(userLoginState)
+    const {baseUrl} = Config();
+    const { isLogin, accessToken } = useRecoilValue(userLoginState)
 
-    const [cartList, setCartList] = useState();
+    const [cartList, setCartList] = useState<cartListType[]>();
 
     if( !isLogin) {
         Swal.fire({
@@ -34,6 +36,18 @@ export default function Cart() {
             
         return null;
     }
+
+    useEffect(() => {
+        axios.get(`${baseUrl}/api/v1/cart?isDelete=false`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+            .then(res => {
+                console.log(res)
+                setCartList(res.data.data)
+            })
+    },[])
     
     return (
         <>

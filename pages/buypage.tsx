@@ -1,7 +1,68 @@
+import FooterButton from '@/components/footer/FooterButton'
+import Separator from '@/components/ui/Separator'
+import { RequestPayParams, RequestPayResponse } from '@/types/productPayment/paymentFilterType'
 import Image from 'next/image'
+import Link from 'next/link'
+import Script from 'next/script'
 import React from 'react'
 
 export default function Buypage() {
+
+    const onClickPayment = () => {
+
+        if (!window.IMP) return;
+
+        /* 1. 가맹점 식별하기 */
+        const IMP = window.IMP;
+        IMP.init("imp31284226"); // 가맹점 식별코드
+        
+
+        /* 2. 결제 데이터 정의하기 */
+        const data: RequestPayParams = {
+            pg: "html5_inicis.{INIpayTest}", // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고"
+            pay_method: "card", // 결제수단
+            merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
+            amount: 1, // 결제금액
+            name: "천만원", // 주문명
+            buyer_name: "노홍기", // 구매자 이름
+            buyer_tel: "01077416096", // 구매자 전화번호
+            buyer_email: "example@example", // 구매자 이메일
+            buyer_addr: "신사동 661-16", // 구매자 주소
+            buyer_postcode: "06018", // 구매자 우편번호
+        };
+
+        /* 3. 콜백 함수 정의하기 */
+        function callback(response: RequestPayResponse) {
+            const { success, error_msg } = response;
+            if (success) {
+                alert("결제 성공");
+                console.log(data.name);
+                console.log("이 부분으로 데이터를 API로 전송할 예정입니다.");
+                /*
+                <history에 필수.>
+                상품 ID => 클릭시 넘어가도록
+                상품 이름
+                주문 유형 : 내돈 내산 or 선물
+                (선물일 경우) : 편지 내용
+                주문 날짜
+                (취소한 경우) 취소 날짜
+                주문 상태
+                결제 종류
+                상품 금액
+                개수
+                주문 번호
+                */
+            } else {
+                console.log(10000000);
+                alert(`결제 실패: ${error_msg}`);
+            }
+        }
+
+        /* 4. 결제 창 호출하기 */
+        IMP.request_pay(data, callback);
+    };
+
+
     return (
         <div className="container">
             <section id="buy">
@@ -16,30 +77,30 @@ export default function Buypage() {
                     <a href="address"><input type="button" className="address-btn" value="배송지 등록" /></a>
                 </div>
                 {/* <div className="item-information-box"> */}
-                    <button>
-                        <div className="item-information-btn">
-                            <div className="item-span-b"><span><b>상품내역</b></span></div>
-                            <div className='item-thum'>
-                                <Image
-                                    src="/assets/images/icons/down.png"
-                                    width={20}
-                                    height={20}
-                                    alt="down"
-                                />
-                            </div>
-                        </div>
-                    </button>
-                    <div>
-                        <div className='info-btn'>
+                <button>
+                    <div className="item-information-btn">
+                        <div className="item-span-b"><span><b>상품내역</b></span></div>
+                        <div className='item-thum'>
                             <Image
-                                src="https://shop-phinf.pstatic.net/20230213_282/1676250820294ccH77_JPEG/77386648106178298_1928937226.jpg?type=m510"
+                                src="/assets/images/icons/down.png"
                                 width={20}
                                 height={20}
-                                alt="23 SS 체리 콕시클 라벤더 콜드컵 591ml"
+                                alt="down"
                             />
-                            <div className='item-info-subject'><span><b>23 SS 체리 콕시클 라벤더 콜드컵 591ml</b></span></div>
                         </div>
                     </div>
+                </button>
+                <div>
+                    <div className='info-btn'>
+                        <Image
+                            src="https://shop-phinf.pstatic.net/20230213_282/1676250820294ccH77_JPEG/77386648106178298_1928937226.jpg?type=m510"
+                            width={20}
+                            height={20}
+                            alt="23 SS 체리 콕시클 라벤더 콜드컵 591ml"
+                        />
+                        <div className='item-info-subject'><span><b>23 SS 체리 콕시클 라벤더 콜드컵 591ml</b></span></div>
+                    </div>
+                </div>
                 {/* </div> */}
             </section>
 
@@ -65,7 +126,7 @@ export default function Buypage() {
                 <div className="item-coupon-box">
                     <div className='mobile'><b>모바일 상품권</b></div>
                     <nav>
-                        <a href="giftcard.html"><ul>
+                        <Link href="/giftcard"><ul>
                             <li >사용하기</li>
                             <li>
                                 <Image
@@ -75,7 +136,7 @@ export default function Buypage() {
                                     alt="next"
                                 />
                             </li>
-                        </ul></a>
+                        </ul></Link>
                     </nav>
                 </div>
             </section>
@@ -95,6 +156,49 @@ export default function Buypage() {
                     </div>
                 </div>
             </section>
+            <section className='payment-info'>
+                <p>결제 정보</p>
+                <div>
+                    <p>주문 금액</p>
+                    <p>29,000원</p>
+                </div>
+                <div>
+                    <p>상품 금액</p>
+                    <p>26,000원</p>
+                </div>
+                <Separator color='lightgray' />
+                <div>
+                    <p>할인 금액 </p>
+                    <p>0원</p>
+                </div>
+                <div>
+                    <p>상품 할인 </p>
+                    <p>0원</p>
+                </div>
+                <Separator color='lightgray' />
+                <div>
+                    <p>결제 금액 </p>
+                    <p>29,000원</p>
+                </div>
+                <div>
+                    <p>모바일 상품권 </p>
+                    <p>0원</p>
+                </div>
+                <Separator color='lightgray' />
+                <div>
+                    <p>최종 결제 금액</p>
+                    <p>29,000원</p>
+                </div>
+                <section className='order-agree'>
+                    <p>위 주문 내용을 확인하였으며, 결제에 동의합니다.</p>
+                    <p>(전자상거래법 8조 2항)</p>
+                </section>
+            </section>
+            <Script src="https://code.jquery.com/jquery-1.12.4.min.js" strategy="beforeInteractive" />
+            <Script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" strategy="beforeInteractive" />
+            <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+            <button style={{zIndex:"1"}} onClick={() => onClickPayment()}><FooterButton inputvalue='29,000원 결제하기' /> </button>
+
             {/* <section id="buy2">
             <div className="item-coupon-box">
                 <div><p>결제 수단</p></div>

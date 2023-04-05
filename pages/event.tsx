@@ -22,7 +22,7 @@ export default function Event()  {
     axios(`${baseUrl}/api/v1/event/all`)
       .then((res) => res.data)
       .then(data => setsubNavBottomData(data.data))
-  }, [])
+  }, [baseUrl])
   console.log('asd', eventSubNavData)
 
   return (

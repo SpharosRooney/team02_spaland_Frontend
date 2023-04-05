@@ -6,9 +6,7 @@ import React from 'react'
 export default function giftcard() {
     return (
         <>
-            <ModalHeader
-                subject='모바일 상품권'
-            />
+            <ModalHeader subject='모바일 상품권'/>
             <section id="top">
                 <div className="e-gift-box">
                     <span>e-Gift Item</span>
@@ -70,9 +68,7 @@ export default function giftcard() {
                     <p>•음료 가격인상 전 발행된 상품권을 사용 후 취소/반품 시, 사유 발생 주체와 무관하게 선물 사용 금액 기준으로 사용 취소/환불됩니다.</p>
                 </div>
             </section>
-            <FooterButton
-                inputvalue='확인'
-            />
+            <FooterButton inputvalue='확인'/>
         </>
     )
 }

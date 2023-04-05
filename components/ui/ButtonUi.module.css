@@ -1,0 +1,34 @@
+.primary {
+    padding: 1rem 0;
+    background-color: #067040;
+    color: #fff;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    width: 100%;
+}
+
+.secondary {
+    padding: 1rem 0;
+    background-color: #fff;
+    color: #067040;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-radius: 50px;
+    border: 1px solid #067040;
+    width: 100%;
+}
+
+.large {
+    width: 100%;
+}
+
+.medium {
+    width: 45%;
+}
+
+.small {
+    width: 30%;
+}

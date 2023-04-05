@@ -18,7 +18,6 @@ export default function ProductListCard(props: { productId: number }) {
         axios(`${baseUrl}/api/v1/product/get/${props.productId}`)
             .then(res => res.data)
             .then(data => setProductData(data.data))
-            .then(()=>console.log(productData))
     }, [props.productId])
 
 

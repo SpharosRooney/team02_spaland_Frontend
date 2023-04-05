@@ -22,9 +22,7 @@ export default function Best() {
         axios(`${baseUrl}/api/v1/categoryLarge/all`)
             .then(res => res.data.data)
             .then(data => setBestSubNav(data))
-    }, [])
-
-    console.log('bestsubnav', bestsubnav)
+    }, [baseUrl])
 
     return (
         <>

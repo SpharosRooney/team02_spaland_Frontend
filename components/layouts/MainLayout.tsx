@@ -42,9 +42,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
 
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [sizeList, setSizeList] = useState<sizeType[]>();
-
-  const [subCategory, setSubCategory] = useState<smallCategoryType[]>();
   const [filterList, setFilterList] = useState<filterType[]>([])
   const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
   const { baseUrl } = Config();
@@ -86,11 +83,11 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [isactive, setIsactive] = useState<boolean>(false)
 
-  useEffect(() => {
-    fetch('http://localhost:3001/nav')
-      .then(res => res.json())
-      .then(data => setNavBottomData(data))
-  }, [])
+  // useEffect(() => {
+  //   fetch('http://localhost:3001/nav')
+  //     .then(res => res.json())
+  //     .then(data => setNavBottomData(data))
+  // }, [])
 
 
 
@@ -233,28 +230,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       }
     }
   }
-
-  
-
-  useEffect(() => {
-    axios.get(`http://localhost:3001/size`)
-      .then((res) => {
-        setSizeList(res.data)
-      }).catch((err) => {
-        console.log(err)
-      })
-  }, [])
-
-  useEffect(() => {
-    console.log(query.category)
-    axios.get(`http://localhost:3001/smallCategory?bigCategory=${query.category}`)
-      .then((res) => {
-        console.log(res.data)
-        setSubCategory(res.data)
-      }).catch((err) => {
-        console.log(err)
-      })
-  }, [query.category])
 
   // useEffect(() => {
   //   console.log("filterList", filterList)

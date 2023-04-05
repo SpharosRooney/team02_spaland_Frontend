@@ -19,6 +19,7 @@ export default function Products() {
     console.log(query)
     const [productData, setProductData] = useState<eventProductType>()
 
+
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/product/get/${query.productId}`)
             .then(res => {
@@ -30,6 +31,7 @@ export default function Products() {
     console.log('123', query)
     console.log('asd', productData)
 
+    
     return (
         <>
             {
@@ -39,7 +41,7 @@ export default function Products() {
                             <div className="event-banner">
                                 <div className="event-banner__item">
                                     <div className="event-banner__item__img">
-                                        <ImageSizeReturn imgUrl={productData.titleImg} imgAlt={productData.description}/>
+                                        <ImageSizeReturn imgUrl={productData.titleImg} imgAlt={productData.description} />
                                     </div>
                                 </div>
                             </div>
@@ -49,20 +51,19 @@ export default function Products() {
                                 <div className="item-info">
                                     <div>
                                         <p className="item-info-1"><b>{productData.name} </b>
-                                        {
-                                            productData.isNew && <span className="item-new"> New</span>
-                                        }
-                                        <span className="item-new"> New</span>
+                                            {
+                                                productData.isNew && <span className="item-new"> New</span>
+                                            }
                                         </p>
                                     </div>
                                     <div>
                                         <button className="openBtn">
-                                        <Image
-                                            src="/assets/images/icons/share.svg"
-                                            width={20}
-                                            height={20}
-                                            alt= "share"
-                                        />
+                                            <Image
+                                                src="/assets/images/icons/share.svg"
+                                                width={20}
+                                                height={20}
+                                                alt="share"
+                                            />
                                         </button>
                                     </div>
                                 </div>

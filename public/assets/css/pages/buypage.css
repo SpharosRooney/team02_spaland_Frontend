@@ -176,6 +176,10 @@ section#buy2 .item-coupon-box{
     height: 80px;
 }
 
+.item-coupon-box div input {
+    accent-color:#09a963
+}
+
 .buypage-footer {
     display: flex;
     justify-content: space-around;
@@ -227,3 +231,24 @@ section#buy2 .item-coupon-box nav ul img{
     width:20px;
     height: 20px;
 }
+
+.payment-info {
+    margin-bottom: 105px;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-info div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-agree {
+    background-color: #d3d3d3;
+}
+
+.order-agree :first-child {
+    margin-bottom: 0;
+}
+

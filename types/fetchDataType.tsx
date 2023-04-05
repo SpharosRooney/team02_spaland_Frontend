@@ -106,6 +106,11 @@ export interface CategoryListType {
     event: string;
 }
 
+export interface SortListType {
+    id: number;
+    name: string;
+}
+
 export interface ProductDetailType {
     id: number;
     name: string;

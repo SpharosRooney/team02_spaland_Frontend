@@ -138,7 +138,7 @@ export default function Login() {
                                 className="id"
                                 type="email"
                                 name='userEmail'
-                                maxLength={20}
+                                maxLength={40}
                                 placeholder="이메일"
                                 onChange={handleOnChange} />
                             <label htmlFor="id">이메일</label>

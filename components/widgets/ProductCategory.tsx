@@ -20,7 +20,7 @@ export default function ProductCategory() {
         });
         router.push(`/searchresult?category=${router.query.category}${queryUrl}`);
         // console.log(menuList);
-    }, [filterData]);
+    }, [filterData, router]);
 
     useEffect(() => {
         setMenuList(

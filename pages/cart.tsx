@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import CartHeader from '@/components/page/cart/CartHeader'
 import CartFooter from '@/components/page/cart/CartFooter'
 import CartInfo from '@/components/page/cart/CartInfo'
@@ -8,24 +8,29 @@ import { cartListState } from '@/state/cartListState'
 import { cartType, cartListType } from '@/types/cart/cartListType'
 import axios from 'axios'
 import CartList from '@/components/page/cart/CartList'
+import { userLoginState } from '@/state/user/atom/userLoginState'
+import { useRouter } from 'next/router'
 
 
 
 export default function Cart() {
-    const setCartList = useSetRecoilState<cartType>(cartListState);
+    // const setCartList = useSetRecoilState<cartType>(cartListState);
 
-    useEffect(() => {
-        axios.get(`http://localhost:3001/cartListByUser`)
-            .then((res) => {
-                console.log('cart',res.data)
-                setCartList({
-                    cartListFreeze: res.data.filter((item: cartListType) => item.bigCategoryId === 1),
-                    cartList: res.data.filter((item: cartListType) => item.bigCategoryId !== 1)
-                })
-            }).catch((err) => {
-                console.log(err)
-            })
-    }, [])
+    // useEffect(() => {
+    //     axios.get(`http://localhost:3001/cartListByUser`)
+    //         .then((res) => {
+    //             console.log('cart',res.data)
+    //             setCartList({
+    //                 cartListFreeze: res.data.filter((item: cartListType) => item.bigCategoryId === 1),
+    //                 cartList: res.data.filter((item: cartListType) => item.bigCategoryId !== 1)
+    //             })
+    //         }).catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
+    const router = useRouter();
+    
+    
     
     return (
         <>

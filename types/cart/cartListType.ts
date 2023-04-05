@@ -1,8 +1,11 @@
 export interface cartListType {
     cartId: number;
     productId: number;
-    bigCategoryId: number;
-    count: number;
+    titleImg: string;
+    price: number;
+    name: string;
+    fronzen: boolean;
+    productAmount: number;
     check: boolean;
 }
 

@@ -57,9 +57,8 @@ export default function Login() {
                 password: inputData.password,
             },{withCredentials:false}).then((res) => {                
                 setLoginData({
-                    userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                    userNickname: res.data,
                     accessToken: res.headers.authorization,
-                    // refreshToken:res.headers.cookie.refreshToken,
                     isLogin: true
                 });
                 
@@ -69,15 +68,6 @@ export default function Login() {
                 // axios.defaults.headers.common[
                 //     "Authorization"
                 // ] = `Bearer ${accessToken}`;
-
-
-                // https로 바꾸면 사용하기로 함.(refreshToken)
-                // const refreshToken = res.headers.cookie;
-
-
-                // axios.defaults.headers.common[
-                //     "Authorization"
-                // ] = `${refreshToken}`;
                 
                 localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
                 localStorage.setItem("accessToken", accessToken); // 로컬은 무엇을 넣든 다 문자열로 저장됨.
@@ -164,7 +154,7 @@ export default function Login() {
                         <ul>
                             <li><Link href={"/"}>아이디 찾기</Link></li>
                             <li><Link href={"/"}>비밀번호 찾기</Link></li>
-                            <li><Link href={"/signup"}>회원가입</Link></li>
+                            <li className="last"><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
                     <footer className="login-footer">

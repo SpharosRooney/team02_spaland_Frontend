@@ -5,7 +5,6 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <link rel="stylesheet" href="/assets/css/style.css" />
         <meta name="description" content="StarBucks Clone Site" />
         <meta name="keywords" content="StarBucks, Clone, Site" />
         <meta name="author" content="SpaLand" />

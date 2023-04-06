@@ -4,8 +4,9 @@ import type { AppProps } from 'next/app'
 import { ReactElement, ReactNode } from 'react'
 import { RecoilRoot, atom } from 'recoil'
 import { CookiesProvider } from 'react-cookie'
-import Searchbar from '@/components/ui/Searchbar'
 import Head from 'next/head'
+import "public/assets/css/style.css";
+
 // import { BrowserRouter } from 'react-router-dom'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {

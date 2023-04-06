@@ -20,30 +20,27 @@ export default function Cart() {
 
     const [cartList, setCartList] = useState<cartListType[]>();
 
-    if (!isLogin) {
-        Swal.fire({
-            icon: 'error',
-            text: '로그인이 필요한 서비스 입니다.',
-            customClass: {
-                confirmButton: 'swal-confirm-button'
-            }
-        }).then(
-            res => res.isConfirmed && router.push('/login')
-        )
-    }
-
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/cart?isDelete=false`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         }).then(res => {
-                console.log(res)
                 setCartList(res.data.data)
             })
-    }, [accessToken, baseUrl])
-
-    console.log('cartlist',cartList)
+            if (!isLogin) {
+                Swal.fire({
+                    icon: 'error',
+                    text: '로그인이 필요한 서비스 입니다.',
+                    customClass: {
+                        confirmButton: 'swal-confirm-button'
+                    }
+                }).then(
+                    res => res.isConfirmed && router.push('/login')
+                )
+                
+            }
+        }, [accessToken, baseUrl, isLogin, router])
 
     return (
         <>

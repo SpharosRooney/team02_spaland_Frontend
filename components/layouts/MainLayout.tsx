@@ -80,7 +80,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
         isLogin: true
       })
     }
-  }, [])
+  }, [isLogin.isLogin, setIsLogin])
 
   const [isactive, setIsactive] = useState<boolean>(false)
 
@@ -88,7 +88,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     fetch(`${baseUrl}/api/v1/naviMenu/all`)
       .then(res => res.json())
       .then(data => setNavBottomData(data.data))
-  }, [])
+  }, [baseUrl])
 
 
 

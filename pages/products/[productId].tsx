@@ -19,15 +19,17 @@ export default function Products() {
 
     const [productData, setProductData] = useState<eventProductType>()
 
-    const getFetch = async () => {
-        const res = await axios.get(`${baseUrl}/api/v1/product/get/${query.productId}`)
-        console.log(res.data)
-        setProductData(res.data.data)
-    }
+    
 
     useEffect(() => {
-        if(query.productId) getFetch()
-    }, [query])
+        const getFetch = async () => {
+            const res = await axios.get(`${baseUrl}/api/v1/product/get/${query.productId}`)
+            console.log(res.data)
+            setProductData(res.data.data)
+        }
+
+        getFetch()
+    }, [query.productId, baseUrl])
 
     return (
         <>

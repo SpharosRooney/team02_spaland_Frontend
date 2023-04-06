@@ -13,7 +13,7 @@ export default function BestProductListCard(props: { categoryLarge: string }) {
         axios.get(`${baseUrl}/api/v1/product/get?categoryLarge=${props.categoryLarge}&sort=추천순`)
             .then(res => res.data.data)
             .then(data => setProductData(data))
-    }, [props.categoryLarge])
+    }, [props.categoryLarge, baseUrl])
 
     console.log('123', productData)
 

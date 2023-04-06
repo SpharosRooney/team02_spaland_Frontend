@@ -41,7 +41,7 @@ export default function Cart() {
                 console.log(res)
                 setCartList(res.data.data)
             })
-    }, [])
+    }, [accessToken, baseUrl])
 
     console.log('cartlist',cartList)
 

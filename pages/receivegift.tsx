@@ -15,7 +15,7 @@ export default function Receivegift() {
         fetch(`${baseUrl}/v1/api/giftbox/1`)
             .then(res => res.json())
             .then(data => setitemlist(data))
-    }, [])
+    }, [baseUrl])
     console.log('item',itemlist)
 
     return (

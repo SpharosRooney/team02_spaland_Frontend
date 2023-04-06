@@ -1,4 +1,3 @@
-import Config from '@/configs/config.export';
 import { userLoginState } from '@/state/user/atom/userLoginState'
 import { LoginRes } from '@/types/UserRequest/Response';
 import Image from 'next/image'
@@ -8,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 
-export default function mypage() {
+export default function Mypage() {
     const router = useRouter();
     const { isLogin } = useRecoilValue(userLoginState)
 

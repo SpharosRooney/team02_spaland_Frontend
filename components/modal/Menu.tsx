@@ -21,13 +21,13 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                 console.log(res.data)
             })
             .catch((error) => console.error(error));
-    }, []);
+    }, [baseUrl]);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/categoryLarge/all`)
             .then((response) => response.data)
             .then((data) => setMenuCategory(data.data))
-    }, []);
+    }, [baseUrl]);
 
     const handleClose = () => {
         props.setIsMenuModalOpen(false)

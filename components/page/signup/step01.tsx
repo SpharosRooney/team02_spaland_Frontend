@@ -1,5 +1,5 @@
 import { inputRegisterType, privateAgreeType } from '@/types/UserInformation/Information'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import TotalCheckBox from '@/components/ui/TotalCheckBox'
 import CheckBox from '@/components/ui/CheckBox'
 import StButton from '@/components/ui/StButton'
@@ -18,11 +18,29 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
         { id: 2, name: 'SNS', checked: false },
     ])
 
-    useEffect(() => {
-        setInputData({ ...inputData, privateAgree: agreeArray })
-    }, [agreeArray])
+    // useEffect(() => {
+    //     setInputData({ ...inputData, privateAgree: agreeArray })
+    // }, [agreeArray])
 
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const { name, checked } = e.target;
+    //     console.log('e.target name checked',e.target,name, checked)
+    //     if (name === 'isAllAgree') {
+    //         setAgreeArray({
+    //             isAgree: checked,
+    //             isUseConfirm: checked,
+    //             isAdvertisionConfirm: checked,
+    //         })
+    //     }
+    //     else {
+    //         setAgreeArray({
+    //             ...agreeArray,
+    //             [name]: checked
+    //         })
+    //     }
+    // }
+
+    const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
         console.log('e.target name checked',e.target,name, checked)
         if (name === 'isAllAgree') {
@@ -38,7 +56,11 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
                 [name]: checked
             })
         }
-    }
+    }, [agreeArray])
+
+    useEffect(() => {
+        setInputData((prevInputData) => ({ ...prevInputData, privateAgree: agreeArray }))
+    }, [agreeArray, setInputData])
 
     return (
         <>

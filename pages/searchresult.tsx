@@ -31,13 +31,13 @@ const SearchResult = (props : {sort:string}) => {
         if (query) {
             fetchSearchResults();
         }
-    }, [query]);
+    }, [query, baseUrl]);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/sort/all`)
             .then(res => res.data.data)
             .then(data => setProductSort(data))
-    }, [props.sort]);
+    }, [props.sort, baseUrl]);
     
 
     // console.log(productsort)

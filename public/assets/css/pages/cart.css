@@ -6,6 +6,7 @@
 
 .cart-header {
     position: relative;
+    border-bottom: none;
 }
 
 .cart-header .header-top {
@@ -27,7 +28,7 @@
 .cart-header .header-bottom .header-bottom-check {
     display: flex;
     justify-content: space-between;
-    margin: 0 4% 4% 5%;
+    margin: 3% 4% 2% 5%;
 }
 
 .cart-header .header-bottom .header-bottom-check .header-bottom-check-left {

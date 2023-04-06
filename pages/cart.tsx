@@ -30,6 +30,7 @@ export default function Cart() {
         }).then(
             res => res.isConfirmed && router.push('/login')
         )
+        return;
     }
 
     useEffect(() => {
@@ -38,12 +39,12 @@ export default function Cart() {
                 Authorization: `Bearer ${accessToken}`
             }
         }).then(res => {
-                console.log(res)
-                setCartList(res.data.data)
-            })
+            console.log(res)
+            setCartList(res.data.data)
+        })
     }, [])
 
-    console.log('cartlist',cartList)
+    console.log('cartlist', cartList)
 
     return (
         <>
@@ -54,10 +55,16 @@ export default function Cart() {
 
             <CartHeader />
             <CartMenu />
-            <CartList />
-            <CartInfo />
-            <CartFooter />
-
+            {cartList ? (
+                <>
+                    <CartList data={cartList} />
+                    <CartFooter data={cartList} />
+                </>
+            ) :
+                <section className="empty-cart">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2838/2838895.png" />
+                    <p>장바구니가 비어있습니다.</p>
+                </section>}
         </>
     )
 }

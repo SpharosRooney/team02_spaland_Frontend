@@ -1,16 +1,12 @@
 import Config from '@/configs/config.export';
-import { menuModalState } from '@/state/atom/menuModalState';
-import { CategoryLarge, CategoryListType, ProductDetailType } from '@/types/fetchDataType';
-import { subNavMenuType } from '@/types/navMenuType';
+import { CategoryLarge } from '@/types/fetchDataType';
 import axios from 'axios';
-import { AppPropsType } from 'next/dist/shared/lib/utils';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function }) {
     const router = useRouter();
-    const [allmenunav, setAllMenuNav] = useState();
     const [menucategory, setMenuCategory] = useState<CategoryLarge[]>([]);
     const { baseUrl } = Config();
 
@@ -43,11 +39,13 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
     };
 
     const handlePushClose = () => {
-        router.push(`/searchresult`);
+        const All = "all"
+        router.push(`/allsearchresult`);
         props.setIsMenuModalOpen(false);
     };
 
     if (!props.isMenuModalOpen) return <></>;
+
     return (
         <>
             <div className="menu-box">

@@ -1,7 +1,5 @@
 import Image from "next/image";
-import React, { ChangeEvent, EventHandler, useEffect, useState } from "react";
-import Link from "next/link";
-import { headerNavMenus, headerIcons, categoryList } from "../datas/starbucksStaticDatas";
+import React, { useEffect, useState } from "react";
 import { ProductListCardType } from "@/types/fetchDataType";
 import Config from "@/configs/config.export";
 

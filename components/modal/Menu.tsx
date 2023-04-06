@@ -1,6 +1,7 @@
 import Config from '@/configs/config.export';
 import { menuModalState } from '@/state/atom/menuModalState';
 import { CategoryLarge, CategoryListType, ProductDetailType } from '@/types/fetchDataType';
+import { subNavMenuType } from '@/types/navMenuType';
 import axios from 'axios';
 import { AppPropsType } from 'next/dist/shared/lib/utils';
 import Image from 'next/image';
@@ -9,19 +10,9 @@ import React, { useEffect, useState } from 'react';
 
 function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function }) {
     const router = useRouter();
-    const [allmenu, setAllmenu] = useState<CategoryListType[]>([]);
+    const [allmenunav, setAllMenuNav] = useState();
     const [menucategory, setMenuCategory] = useState<CategoryLarge[]>([]);
     const { baseUrl } = Config();
-
-    useEffect(() => {
-        axios.get(`${baseUrl}/api/v1/product/get`)
-            .then((res) =>{
-                const data = res.data.data;
-                setAllmenu(data);
-                console.log(res.data)
-            })
-            .catch((error) => console.error(error));
-    }, [baseUrl]);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/categoryLarge/all`)
@@ -43,38 +34,17 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
         props.setIsMenuModalOpen(false)
     };
 
-    const handlepush = (name:string) => {
-        axios
-            .get(`${baseUrl}/api/v1/product/get?categoryLarge=${name}`)
-            .then((res) => {
-                console.log(`${baseUrl}/api/v1/product/get?categoryLarge=${res.data.data}`)
-                
-                const data = res.data.data.categoryLarge;
-                window.location.href = `/searchresult?categoryLarge=${data}`;
-                props.setIsMenuModalOpen(false)
-            })
-            .catch((error) => console.error(error));
+    const handlepush = (index: number) => {
+        router.push({
+            pathname: `/searchresult`,
+            query: { categoryLarge: menucategory[index].name }, // 검색어(query)를 포함
+        });
+        props.setIsMenuModalOpen(false)
     };
 
-    const handlePushClose = async () => {
-        try {
-            const response = await axios.get(`${baseUrl}/api/v1/product/get/all`);
-            const products = response.data.data;
-            // 전체 상품 정보를 가져온 후, 새로운 페이지로 이동
-
-            router.push(`/searchresult?query=${products}`);
-            // router.push({
-            //     pathname: `/searchresult`,
-            //     query: { query: products }, // 검색어(query)를 포함
-            // });
-
-            props.setIsMenuModalOpen(false);
-        } catch (error) {
-            console.error(error);
-        }
-
-        // router.push("/searchresult");
-        // props.setIsMenuModalOpen(false);
+    const handlePushClose = () => {
+        router.push(`/searchresult`);
+        props.setIsMenuModalOpen(false);
     };
 
     if (!props.isMenuModalOpen) return <></>;
@@ -99,23 +69,24 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                 </header>
 
                 <section className="menu-section">
-                    <section className="menu-section-top">
-                        <div onClick={handlePushClose}>
-                            <a href="">전체 상품 보기 {">"}</a>
-                        </div>
-                    </section>
+                        <section className="menu-section-top">
+                            <div onClick={handlePushClose}>
+                                전체 상품 보기 {">"}
+                            </div>
+                        </section>
                     <section className="menu-section-mid">
                         <div className="menu-product-list">
-                            {menucategory.map((menu) => (
+                            {menucategory.map((menu, index) => (
                                 <>
                                     <div className="menu-product-item" key={menu.id}>
                                         <div className="product-img">
                                             <Image
+                                                key={menu.id}
                                                 src={menu.titleImg}
-                                                width={170}
-                                                height={170}
+                                                width={150}
+                                                height={150}
                                                 alt={menu.name}
-                                                // onClick={handlepush}
+                                                onClick={() => handlepush(index)}
                                             />
                                         </div>
                                         <div className="product-info">

@@ -8,6 +8,7 @@ import Head from 'next/head'
 import "public/assets/css/style.css";
 
 // import { BrowserRouter } from 'react-router-dom'
+// import SearchResult from './searchresult'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -21,7 +22,7 @@ export const selectedTable = atom({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <CookiesProvider>
-      {/* <BrowserRouter> */}
+      
         <RecoilRoot>
           <MainLayout>
             <Head>
@@ -31,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </MainLayout>
           {/* <Searchbar/> */}
         </RecoilRoot>
-      {/* </BrowserRouter> */}
+      
     </CookiesProvider>
   )
 }

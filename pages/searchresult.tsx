@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { seacrchKeyword } from '@/types/search/searchKeywords';
-import { CategoryListType, ProductDetailType, SortListType } from '@/types/fetchDataType';
-import SearchProductCategory from '@/components/widgets/SearchProductCategory';
+import { eventProductType } from '@/types/fetchDataType';
 import Config from '@/configs/config.export';
 import Image from 'next/image';
-import ProductCategory from '@/components/widgets/ProductCategory';
+import { subNavMenuType } from '@/types/navMenuType';
+import { useLocation } from 'react-router-dom';
 
-const SearchResult = (props : {sort:string}) => {
+const SearchResult = () => {
     const router = useRouter();
-    const query = router.query.query || '';
-    const [searchresults, setSearchResults] = useState<seacrchKeyword[]>([]);
+    const { query } = useRouter();
+    const keyword = router.query.query || '';
+    const [searchresults, setSearchResults] = useState<eventProductType[]>([]);
     const { baseUrl } = Config();
-    const [productsort, setProductSort] = useState<SortListType[]>([]);
+    const [productData, setProductData] = useState<eventProductType[]>();
+    const [allproductData, setAllProductData] = useState<eventProductType[]>();
 
     useEffect(() => {
         const fetchSearchResults = () => {
-            axios.get(`${baseUrl}/api/v1/product/get?keyword=${query}`)
+            axios.get(`${baseUrl}/api/v1/product/get?keyword=${keyword}`, { timeout: 10000 })
                 .then((res) => {
+                    console.log(res.data.data);
                     const data = res.data.data;
                     setSearchResults(data);
                     console.log(data)
@@ -28,53 +30,56 @@ const SearchResult = (props : {sort:string}) => {
                 })
         };
 
-        if (query) {
+        if (keyword) {
             fetchSearchResults();
         }
-    }, [query, baseUrl]);
+    }, [keyword, baseUrl]);
 
     useEffect(() => {
-        axios.get(`${baseUrl}/api/v1/sort/all`)
-            .then(res => res.data.data)
-            .then(data => setProductSort(data))
-    }, [props.sort, baseUrl]);
-    
+        axios(`${baseUrl}/api/v1/product/get?categoryLarge=${query.categoryLarge}`)
+            .then(res => {
+                console.log(res.data.data);
+                setProductData(res.data.data)
+            })
+    }, [baseUrl, query.categoryLarge])
 
-    // console.log(productsort)
+    const handleProductClick = (id: number) => {
+        router.push(`/products/${id}`)
+    }
+
+    useEffect(() => {
+        if (router.pathname === '/searchresult') {
+            axios(`${baseUrl}/api/v1/product/get/all`)
+                .then(res => {
+                    console.log(res.data.data);
+                    setAllProductData(res.data.data)
+                })
+        }
+    }, [baseUrl, router.pathname])
+
     return (
         <>
-            {query.length > 0 ? (
+            {keyword.length !== 0 ? (
                 <>
                     <header />
                     <div className="header-top" />
                     <div className="header-bottom">
                         <div className="ft-top">
-                            <p className="ft-information">&quot;{query}&quot;의 검색결과</p>
-                            {/* <ProductCategory /> */}
+                            <p className="ft-information">&quot;{keyword}&quot;의 검색결과</p>
                         </div>
                     </div>
-                    {/* {productsort && productsort.map((res) => (
-                        <div key={res.id} style={{ display: 'flex', justifyContent: "end" }}>
-                            <select style={{ display: "flex", }}>
-                                <option value={res.id}>{res.name}</option>
-                            </select>
-                        </div>
-                    ))} */}
-                    {/* {productsort.map(key => (
-                        <div key={key.id}>{key.name}</div>
-                    ))} */}
                     <div className="searchresult-product-list">
                         {Array.isArray(searchresults) && searchresults.map((res) => (
-                            <div className="searchresult-product-item" key={res.id}>
+                            <div className="searchresult-product-item" onClick={() => handleProductClick(res.id)} key={res.id}>
                                 <div className="searchresult-product-item__img">
                                     <Image
-                                        src={res.titleImg} width={170}
-                                        height={170}
+                                        src={res.titleImg} width={150}
+                                        height={150}
                                         alt={res.description}
                                     />
                                 </div>
                                 <div className="recommand-product-item__info">
-                                    <p className="item-new">new</p>
+                                    <p className="item-new">{res.isNew}</p>
                                     <p className="item-title">{res.name}</p>
                                     <p className="item-price">{res.price}원</p>
                                 </div>
@@ -83,42 +88,55 @@ const SearchResult = (props : {sort:string}) => {
                     </div>
                 </>
             ) : (
+                <></>
+            )
+            }
+            {productData &&
                 <>
-                {/* <header />
-                <div className="header-top"/>
-                    <ProductCategory />
-                        <div style={{display:'flex', justifyContent:"end"}}>
-                        <select style={{display:"flex",}}>
-                            <option value="1">신상품순</option>
-                            <option value="2">추천순</option>
-                            <option value="3">낮은가격순</option>
-                            <option value="4">높은가격순</option>
-                        </select>
-                        </div>
-                                <div className="searchresult-product-list">
-                                    {Array.isArray(allmenu) && allmenu.map((res) => (
-                                        <div className="searchresult-product-item" key={res.id}>
-                                            <div className="searchresult-product-item__img">
-                                            <Image
-                                                src={res.titleImg}
-                                                width={170}
-                                                height={170}
-                                                alt= {res.description}
-                                            />
-                                            </div>
-                                            <div className="recommand-product-item__info">
-                                                <p className="item-new">new</p>
-                                                <p className="item-title">{res.name}</p>
-                                                <p className="item-price">{res.price}원</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div> */}
-                                </>
-            )}
+                    <div className="searchresult-product-list2">
+                        {productData && productData.map((product) => (
+                            <div className="searchresult-product-item" onClick={() => handleProductClick(product.id)} key={product.id}>
+                                <div className="searchresult-product-item__img">
+                                    <Image
+                                        src={product.titleImg} width={150}
+                                        height={150}
+                                        alt={product.description}
+                                    />
+                                </div>
+                                <div className="recommand-product-item__info">
+                                    <p className="item-new">{product.isNew}</p>
+                                    <p className="item-title">{product.name}</p>
+                                    <p className="item-price">{product.price}원</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            }
+            {allproductData &&
+                <>
+                    <div className="searchresult-product-list">
+                        {allproductData && allproductData.map((product) => (
+                            <div className="searchresult-product-item" onClick={() => handleProductClick(product.id)} key={product.id}>
+                                <div className="searchresult-product-item__img">
+                                    <Image
+                                        src={product.titleImg} width={150}
+                                        height={150}
+                                        alt={product.description}
+                                    />
+                                </div>
+                                <div className="recommand-product-item__info">
+                                    <p className="item-new">{product.isNew}</p>
+                                    <p className="item-title">{product.name}</p>
+                                    <p className="item-price">{product.price}원</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
+            }
         </>
     );
 }
 
 export default SearchResult;
-

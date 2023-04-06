@@ -159,8 +159,10 @@ export default function Signup() {
                   confirmButton: 'swal-confirm-button',
                   cancelButton: 'swal-cancel-button'
                 }
-              }).then(function () {
+              }).then(function () 
+              {if(res.data.success){
                 setStepId(stepId + 1)
+              }
               })
               return;
             }

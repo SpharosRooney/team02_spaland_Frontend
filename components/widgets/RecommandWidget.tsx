@@ -14,7 +14,7 @@ export default function RecommandWidget(props: { title: string }) {
     useEffect(() => {
         axios(`${baseUrl}/api/v1/product/get?event=${props.title}`)
             .then(res => setEventItemList(res.data.data))
-    }, [])
+    }, [baseUrl, props.title])
     console.log(`${props.title}`,eventItemList)
 
     return (

@@ -21,13 +21,13 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                 console.log(res.data)
             })
             .catch((error) => console.error(error));
-    }, []);
+    }, [baseUrl]);
 
     useEffect(() => {
         axios.get(`${baseUrl}/api/v1/categoryLarge/all`)
             .then((response) => response.data)
             .then((data) => setMenuCategory(data.data))
-    }, []);
+    }, [baseUrl]);
 
     const handleClose = () => {
         props.setIsMenuModalOpen(false)
@@ -86,7 +86,7 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                         <Image
                             src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
                             width={20}
-                            height={20}
+                            height={15}
                             alt="close"
                         />
                     </div>
@@ -115,7 +115,7 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                                                 width={170}
                                                 height={170}
                                                 alt={menu.name}
-                                                onClick={() => handlepush}
+                                                // onClick={handlepush}
                                             />
                                         </div>
                                         <div className="product-info">

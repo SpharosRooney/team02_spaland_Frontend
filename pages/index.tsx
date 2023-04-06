@@ -17,16 +17,10 @@ const Home: NextPageWithLayout = () => {
     axios(`${baseUrl}/api/v1/event/all`)
       .then(res => res.data.data)
       .then(data => setEventListData(data))
-  }, [])
+  }, [baseUrl])
 
   return (
     <>
-      <Head>
-        <meta name="description" content="StarBucks Clone Site" />
-        <meta name="keywords" content="StarBucks, Clone, Site" />
-        <meta name="author" content="SpaLand" />
-        <title>StarBucks Clone Site</title>
-      </Head>
       <Homebanner/>
       {
         eventListData && eventListData.map(event => (

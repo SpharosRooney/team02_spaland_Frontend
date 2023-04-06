@@ -17,7 +17,7 @@ export default function EventProductListCard(props: { productTitle: string }) {
         axios(`${baseUrl}/api/v1/product/get?event=${props.productTitle}`)
             .then(res => res.data.data)
             .then(data => setProductData(data))
-    }, [props.productTitle])
+    }, [props.productTitle, baseUrl])
 
     console.log('123', productData)
     return (

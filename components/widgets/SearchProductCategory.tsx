@@ -26,7 +26,7 @@ export default function SearchProductCategory() {
         });
         router.push(`/searchresult?category=${router.query.category}${queryUrl}`);
         // console.log(menuList);
-    }, [filterData]);
+    }, [filterData, router]);
 
     useEffect(() => {
         setMenuList(
@@ -65,7 +65,7 @@ export default function SearchProductCategory() {
         if (query) {
             fetchSearchResults();
         }
-    }, [query]);
+    }, [query, baseUrl]);
 
 
     return (

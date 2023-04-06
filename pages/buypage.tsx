@@ -194,9 +194,6 @@ export default function Buypage() {
                     <p>(전자상거래법 8조 2항)</p>
                 </section>
             </section>
-            <Script src="https://code.jquery.com/jquery-1.12.4.min.js" strategy="beforeInteractive" />
-            <Script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" strategy="beforeInteractive" />
-            <Script src="https://cdn.iamport.kr/v1/iamport.js"></Script>
             <button style={{zIndex:"1"}} onClick={() => onClickPayment()}><FooterButton inputvalue='29,000원 결제하기' /> </button>
 
             {/* <section id="buy2">

@@ -2,16 +2,12 @@ import { bottomNavMenuType } from '@/types/navMenuType'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useCookies } from 'react-cookie';
 
-import { filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
+import { filterType } from "@/types/header/filterType";
 import { headerIcons } from "@/datas/starbucksStaticDatas";
 
 //recoil
-import { useRecoilValue } from "recoil";
 import { useRecoilState } from 'recoil'
-import { cartState } from "../../state/cartState";
-
 
 import { LoginRes } from '@/types/UserRequest/Response'
 import { userLoginState } from '@/state/user/atom/userLoginState'
@@ -21,24 +17,14 @@ import ProductCategory from '../widgets/ProductCategory'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
 import Image from 'next/image';
-import { error } from 'console';
-
-//import{ bottomNavData } from 'assets/../datas/navData'
-//import SignupModal from '../modals/SignupModal'
 
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
-  // const setIsMenuModalOpen = useSetRecoilState(menuModalState);
-  const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
   console.log()
-
-  const { pathname, query } = useRouter();
-  const productPath = pathname.split("/")[1];
-  const cartCnt = useRecoilValue(cartState)
 
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
 
@@ -53,22 +39,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
   //비교 해야할 값이 숫자면 Number()로 감싸주기
 
-  // 각자의 백엔드 카테고리 url을 적기.
-  // useEffect(() => {
-  //   axios.get("카테고리-url")
-  //   .then((res) =>{
-  //     let myData: MenuDataType[] = []
-  //     res.data.data.subCategories.forEach((item : headerMenu) => {
-  //       myData.push({
-  //         id: item.id,
-  //         name: item.name,
-  //         key:"category"
-  //       })
-  //     })
-  //     setFilterData(myData)
-  //   })
-  // },[])
-
   useEffect(() => {
     const myLogin = localStorage.getItem("accessToken");
 
@@ -81,8 +51,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       })
     }
   }, [isLogin.isLogin, setIsLogin])
-
-  const [isactive, setIsactive] = useState<boolean>(false)
 
   useEffect(() => {
     axios(`${baseUrl}/api/v1/naviMenu/all`)
@@ -150,21 +118,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       }
     });
   };
-
-  // useEffect(() => {
-  //   console.log("filterList", filterList)
-  //   let url = ''
-
-  //   filterList.map((filter) => (
-  //     filter.checked ? url += `&${filter.name}=${filter.value}` : ''
-  //   ))
-  //   router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
-  // }, [filterList])
-
-  // const handleFilter = (name: String) => {
-  //   setFilterList([])
-  //   router.push(`/listview?category=${name}`)
-  // }
 
   const handleSubFilter = (event: ChangeEvent<HTMLInputElement>) => {
     let checker = filterList.find((filter) => filter.value === event.target.value)
@@ -257,7 +210,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <nav>
                     <ul>
                       {
-                        navBottomData.map(item => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
+                        navBottomData.map(item => (  
                           <li
                             key={item.id}
                             className={router.pathname === item.link ? "active" : ""}

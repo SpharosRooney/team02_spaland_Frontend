@@ -1,5 +1,4 @@
 import { Keyword } from '@/types/search/searchKeywords';
-import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -23,12 +22,6 @@ const History = () => {
     setKeywords([]);
     localStorage.removeItem('keyword');
   };
-  
-  // const handleresult = async () => {
-  //   axios.get(`http://localhost:8080/api/v1/product/get?query=${keywords.keyword}`)
-  //     // 검색 결과 페이지로 이동
-  //     window.location.href = `/searchresult?query=${keywords.keyword}`;
-  // }
 
   return (
     <>

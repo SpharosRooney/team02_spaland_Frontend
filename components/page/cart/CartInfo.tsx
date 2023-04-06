@@ -11,6 +11,17 @@ export default function CartInfo() {
         
     
     return (
+        <>
+        <section className="cart-result">
+                <div className="cart-result-detail">
+                    <p className="cart-result-detail-price">상품 1건 55,000원 + 배송비 0원=총 55,000원</p>
+                    <p className="cart-result-detail-tax">무료배송</p>
+                </div>
+                <a href="">
+                    <p className="cart-result-detail-more">더 담으러 가기</p>
+                </a>
+            </section>
+
         <section id="total-cart-price">
             <div>
                 <div className="title-total-price">
@@ -42,5 +53,6 @@ export default function CartInfo() {
                 </div>
             </div>
         </section>
+        </>
     )
 }

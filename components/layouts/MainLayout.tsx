@@ -85,10 +85,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   const [isactive, setIsactive] = useState<boolean>(false)
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/v1/naviMenu/all`)
-      .then(res => res.json())
-      .then(data => setNavBottomData(data.data))
-  }, [baseUrl])
+    axios(`${baseUrl}/api/v1/naviMenu/all`)
+      .then(res => res.data.data)
+      .then(data => setNavBottomData(data))
+  }, [])
 
 
 
@@ -111,8 +111,8 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             }
           }).then(res => {
             console.log(res)
-            res.status === 200 && 
-            localStorage.removeItem("accessToken");
+            res.status === 200 &&
+              localStorage.removeItem("accessToken");
             localStorage.removeItem("userNickname");
             setIsLogin({
               userNickname: "",
@@ -131,21 +131,21 @@ export default function MainLayout(props: { children: React.ReactNode }) {
           });
         } catch (error: any) {
           Swal.fire({
-              toast: true,
-              text: "로그아웃 되었습니다.",
-              position: "top",
-              showConfirmButton: false,
-              timer: 2000,
-              timerProgressBar: true,
-              color: "#067040",
-            })
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("userNickname");
-            setIsLogin({
-              userNickname: "",
-              accessToken: "",
-              isLogin: false
-            });
+            toast: true,
+            text: "로그아웃 되었습니다.",
+            position: "top",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            color: "#067040",
+          })
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("userNickname");
+          setIsLogin({
+            userNickname: "",
+            accessToken: "",
+            isLogin: false
+          });
         }
       }
     });

@@ -1,29 +1,30 @@
-import { userLoginState } from '@/state/user/atom/userLoginState'
-import { LoginRes } from '@/types/UserRequest/Response';
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router';
-import { useRecoilState, useRecoilValue } from 'recoil'
+import Link from 'next/link';
+import React, { useEffect } from 'react'
+import Image from 'next/image';
+import router from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { userLoginState } from '@/state/user/atom/userLoginState';
 import Swal from 'sweetalert2';
-import { useEffect } from 'react';
 
 export default function Mypage() {
-    const router = useRouter();
-    const { isLogin } = useRecoilValue(userLoginState)
+    
+    const {isLogin} = useRecoilValue(userLoginState);
+    
+    useEffect(() => {
+        if (!isLogin) {
+            Swal.fire({
+                icon: 'error',
+                text: '로그인이 필요한 서비스 입니다.',
+                customClass: {
+                    confirmButton: 'swal-confirm-button'
+                }
+            }).then(
+                res => res.isConfirmed && router.push('/login')
+            )
+            return;
+        }
+    }, [])
 
-    if( !isLogin) {
-        Swal.fire({
-            icon: 'error',
-            text: '로그인이 필요한 서비스 입니다.',
-            customClass: {
-                confirmButton: 'swal-confirm-button'
-            }
-        }).then(
-            res=> res.isConfirmed && router.push('/login')
-        )
-            
-        return null;
-    }
 
     return (
         <div className="container">
@@ -42,7 +43,7 @@ export default function Mypage() {
                             src="/assets/images/icons/right-arrow.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow"
+                            alt="right-arrow"
                         />
                         <div className="product-step">
                             <p className="product-count">0</p>
@@ -52,7 +53,7 @@ export default function Mypage() {
                             src="/assets/images/icons/right-arrow.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow"
+                            alt="right-arrow"
                         />
                         <div className="product-step">
                             <p className="product-count">0</p>
@@ -62,7 +63,7 @@ export default function Mypage() {
                             src="/assets/images/icons/right-arrow.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow"
+                            alt="right-arrow"
                         />
                         <div className="product-step">
                             <p className="product-count">0</p>
@@ -75,40 +76,40 @@ export default function Mypage() {
                 <div className="service">
                     <p className="service-subject">서비스</p>
 
-                    <Link href='orderlist'>                    
-                    <div className="service-button">
-                        <Image
-                            src="/assets/images/icons/order.png"
-                            width={20}
-                            height={20}
-                            alt= "order"
-                        />
-                        <p>주문 내역</p>
-                        <Image
-                            src="/assets/images/icons/right-arrow-black.png"
-                            width={20}
-                            height={20}
-                            alt= "right-arrow-black"
-                        />
-                    </div>
+                    <Link href='/orderlist'>
+                        <div className="service-button">
+                            <Image
+                                src="/assets/images/icons/order.png"
+                                width={20}
+                                height={20}
+                                alt="order"
+                            />
+                            <p>주문 내역</p>
+                            <Image
+                                src="/assets/images/icons/right-arrow-black.png"
+                                width={20}
+                                height={20}
+                                alt="right-arrow-black"
+                            />
+                        </div>
                     </Link>
 
-                    <Link href='receivegift'>             
-                    <div className="service-button">
-                        <Image
-                            src="https://cdn-icons-png.flaticon.com/512/548/548427.png"
-                            width={20}
-                            height={20}
-                            alt= "service"
-                        />
-                        <p>선물함</p>
-                        <Image
-                            src="/assets/images/icons/right-arrow-black.png"
-                            width={20}
-                            height={20}
-                            alt= "right-arrow-black"
-                        />
-                    </div>
+                    <Link href='/receivegift'>
+                        <div className="service-button">
+                            <Image
+                                src="https://cdn-icons-png.flaticon.com/512/548/548427.png"
+                                width={20}
+                                height={20}
+                                alt="service"
+                            />
+                            <p>선물함</p>
+                            <Image
+                                src="/assets/images/icons/right-arrow-black.png"
+                                width={20}
+                                height={20}
+                                alt="right-arrow-black"
+                            />
+                        </div>
                     </Link>
 
                     <div className="service-button">
@@ -116,14 +117,14 @@ export default function Mypage() {
                             src="https://cdn-icons-png.flaticon.com/512/2438/2438167.png"
                             width={20}
                             height={20}
-                            alt= "coupon"
+                            alt="coupon"
                         />
                         <p>쿠폰</p>
                         <Image
                             src="/assets/images/icons/right-arrow-black.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow-black"
+                            alt="right-arrow-black"
                         />
                     </div>
 
@@ -132,14 +133,14 @@ export default function Mypage() {
                             src="https://cdn-icons-png.flaticon.com/512/8866/8866851.png"
                             width={20}
                             height={20}
-                            alt= "shipping address"
+                            alt="shipping address"
                         />
                         <p>배송지관리</p>
                         <Image
                             src="/assets/images/icons/right-arrow-black.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow-black"
+                            alt="right-arrow-black"
                         />
                     </div>
 
@@ -148,14 +149,14 @@ export default function Mypage() {
                             src="https://cdn-icons-png.flaticon.com/512/3602/3602145.png"
                             width={20}
                             height={20}
-                            alt= "알림"
+                            alt="알림"
                         />
                         <p>입고 알림 내역</p>
                         <Image
                             src="/assets/images/icons/right-arrow-black.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow-black"
+                            alt="right-arrow-black"
                         />
                     </div>
                 </div>
@@ -167,18 +168,18 @@ export default function Mypage() {
                             src="https://cdn-icons-png.flaticon.com/512/664/664477.png"
                             width={20}
                             height={20}
-                            alt= "배송지 정보 수집 및 이용 동의"
+                            alt="배송지 정보 수집 및 이용 동의"
                         />
                         <p>배송지 정보 수집 및 이용 동의</p>
                         <Image
                             src="/assets/images/icons/right-arrow-black.png"
                             width={20}
                             height={20}
-                            alt= "right-arrow-black"
+                            alt="right-arrow-black"
                         />
                     </div>
                 </div>
             </section>
-        </div>        
+        </div>
     )
 }

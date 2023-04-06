@@ -1,12 +1,12 @@
 export interface cartListType {
-    cartId: number;
+    id: number;
     productId: number;
     titleImg: string;
     price: number;
     name: string;
-    fronzen: boolean;
+    fronzen: number;
     productAmount: number;
-    check: boolean;
+    checkbox: boolean;
 }
 
 export interface cartType {

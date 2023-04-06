@@ -8,27 +8,31 @@ export default function CartHeader() {
         <header className="cart-header">
             <div className="header-top">
                 <div className="menu-icon">
-                    <div onClick={()=>router.back()}>
+                    <div onClick={() => router.back()}>
                         <Image
                             src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png"
                             width={20}
                             height={20}
-                            alt= "left"
+                            alt="left"
                         />
                     </div>
                 </div>
-                <h1><Link href="index">온라인 스토어</Link></h1>
+                <h1><Link href="/">온라인 스토어</Link></h1>
                 <div className="right-menu-icon">
                     <Link href="/">
                         <Image
                             src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
                             width={20}
                             height={20}
-                            alt= "close"
+                            alt="close"
                         />
                     </Link>
                 </div>
             </div>
+                <div className="header-bottom-subject">
+                    <p>장바구니</p>
+                </div>
+            
         </header>
     )
 }

@@ -60,6 +60,7 @@ export default function ProductOrderSection(props: Props) {
   };
 
   const onClickPurchase = () => {
+    router.push(`/buypage`);
     console.log("구매하기");
   };
 
@@ -71,7 +72,6 @@ export default function ProductOrderSection(props: Props) {
         productId: props.productId,
           productAmount: countOf,
       }, {
-          
           headers: {
             Authorization: `Bearer ${isLogin.accessToken}`
           }
@@ -84,7 +84,6 @@ export default function ProductOrderSection(props: Props) {
               timer: 2000,
               timerProgressBar: true,
               color: "#067040",
-                
             });
             setSuccessModal(true);
             setIsOpen(false);

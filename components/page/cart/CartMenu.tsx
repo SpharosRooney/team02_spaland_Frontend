@@ -9,17 +9,17 @@ export default function CartMenu() {
     const [cartList, setCartList] = useRecoilState<cartType>(cartListState)
     const [listAllCheck, setListAllCheck] = useState(false)
 
-    useEffect(() => {
-        let check = true
-        let freezeCheck = true
-        cartList.cartList.find(item => item.check === false) ? check = false : check = true
-        cartList.cartListFreeze.find(item => item.check === false) ? freezeCheck = false : freezeCheck = true
-        if (check && freezeCheck) {
-            setListAllCheck(true)
-        } else {
-            setListAllCheck(false)
-        }
-    }, [cartList])
+    // useEffect(() => {
+    //     let check = true
+    //     let freezeCheck = true
+    //     cartList.cartList.find(item => item.check === false) ? check = false : check = true
+    //     cartList.cartListFreeze.find(item => item.check === false) ? freezeCheck = false : freezeCheck = true
+    //     if (check && freezeCheck) {
+    //         setListAllCheck(true)
+    //     } else {
+    //         setListAllCheck(false)
+    //     }
+    // }, [cartList])
 
     const handleAllCheck = (check: boolean) => {
         setListAllCheck(!check)
@@ -34,7 +34,9 @@ export default function CartMenu() {
         })
     }
 
-    const resetState = useResetRecoilState(cartListState)
+    // const resetCart = () => {
+    //     setCartList({
+            
 
     const swalWithCustumButton = Swal.mixin({
         customClass: {
@@ -54,7 +56,7 @@ export default function CartMenu() {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
-                resetState()
+                // resetState()
             }
         })
     }
@@ -75,9 +77,6 @@ export default function CartMenu() {
         // </section>
         <header className="cart-header">
             <div className="header-bottom">
-                <div className="header-bottom-subject">
-                    <p>장바구니</p>
-                </div>
                 <div className="header-bottom-check">
                     <div className="header-bottom-check-left">
                         <input type="checkbox" onClick={()=>handleAllCheck(listAllCheck)} id="menu-cb" /><span>전체 선택</span>

@@ -196,7 +196,7 @@ export default function Buypage() {
             </section>
             <Script src="https://code.jquery.com/jquery-1.12.4.min.js" strategy="beforeInteractive" />
             <Script src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js" strategy="beforeInteractive" />
-            <script src="https://cdn.iamport.kr/v1/iamport.js" async></script>
+            <Script src="https://cdn.iamport.kr/v1/iamport.js"></Script>
             <button style={{zIndex:"1"}} onClick={() => onClickPayment()}><FooterButton inputvalue='29,000원 결제하기' /> </button>
 
             {/* <section id="buy2">

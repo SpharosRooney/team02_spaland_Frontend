@@ -42,12 +42,12 @@ export default function CartList() {
 
     return (
         <section id="cart-list">
-            {/* <div className="select">
+            <div className="select">
                 <div className="select-items">
                     <div className={listAllCheck ? 'sbCheckBoxOn' : 'sbCheckBox'} onClick={() => handleCartListAllCheck(listAllCheck)}></div>
                     <p className='cart-select-btn'>일반상품</p>
                 </div>
-            </div> */}
+            </div>
 
             {
                 cartItems.cartList.length > 0 ? (
@@ -69,32 +69,33 @@ export default function CartList() {
                 ) : null
             }
 
-            {cartItems.cartListFreeze.length > 0 ? (
-                <>
-                    {/* <div className="select">
+            {
+                cartItems.cartListFreeze.length > 0 ? (
+                    <>
+                        {/* <div className="select">
                         <div className="select-items">
                             <div className={listFreezeAllCheck ? 'sbCheckBoxOn' : 'sbCheckBox'} onClick={() => handleFreezeCartListAllCheck(listFreezeAllCheck)}></div>
                             <p className='cart-select-btn'>냉동상품</p>
                         </div>
                     </div> */}
-                    <div>
-                        <div className="cart-product-category">
-                            <div className="cart-product-category-detail">
-                                <input checked={listFreezeAllCheck ? true : false} type="checkbox" id="section-cb" onClick={() => handleFreezeCartListAllCheck(listFreezeAllCheck)} /><span>냉동 상품</span>
+                        <div>
+                            <div className="cart-product-category">
+                                <div className="cart-product-category-detail">
+                                    <input checked={listFreezeAllCheck ? true : false} type="checkbox" id="section-cb" onClick={() => handleFreezeCartListAllCheck(listFreezeAllCheck)} /><span>냉동 상품</span>
+                                </div>
                             </div>
+                            {
+                                cartItems.cartListFreeze.map((item: cartListType) => (
+                                    <CartItem
+                                        key={item.cartId}
+                                        data={item}
+                                    />
+                                ))
+                            }
                         </div>
-                        {
-                            cartItems.cartListFreeze.map((item: cartListType) => (
-                                <CartItem
-                                    key={item.cartId}
-                                    data={item}
-                                />
-                            ))
-                        }
-                    </div>
-                </>
-            )
-                : null
+                    </>
+                )
+                    : null
             }
 
         </section>

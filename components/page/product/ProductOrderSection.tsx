@@ -171,7 +171,7 @@ export default function ProductOrderSection(props: Props) {
               onClick={onClickCart}
             />
             <ButtonUi type="button" text="선물하기" link="/" size="medium" colorType="secondary" />
-            <ButtonUi type="button" text="구매하기" handler={onClickPurchase} size="medium" colorType="secondary" />
+            <ButtonUi type="button" text="구매하기" handler={onClickPurchase} size="medium" colorType="primary" />
           </div>
         )}
       </div>
@@ -210,7 +210,7 @@ export default function ProductOrderSection(props: Props) {
                             alt='-Button'
                           />
                         </div>
-                        {countOf}
+                        <span>{countOf}</span>
                         <div>
                         <Image
                             src="/assets/images/icons/add.png"

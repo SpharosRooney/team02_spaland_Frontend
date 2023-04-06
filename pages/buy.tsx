@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 export interface RequestPayAdditionalParams {
     digital?: boolean;
     vbank_due?: string;
@@ -132,8 +134,7 @@ export default function test() {
 
     return (
         <>
-            {/* <script src="https://cdn.iamport.kr/v1/iamport.js"></script> */}
-            <script src="https://cdn.iamport.kr/v1/iamport.js" async></script>
+            <Script src="https://cdn.iamport.kr/v1/iamport.js"></Script>
             <div style={{ marginTop: "200px" }}></div>
             <button onClick={onClickPayment}>결제하기</button>
         </>

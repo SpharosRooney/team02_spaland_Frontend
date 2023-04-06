@@ -403,3 +403,28 @@
     border: 1px solid #00a862;
     border-radius: 3px;
 }
+
+.my-actions {
+    margin:0 2em; 
+    justify-content:flex-end !important;  
+    width: 100% !important;
+} 
+.order-1 {
+    order:1; 
+    border-radius: 20px !important;
+    width: 90px !important;
+    color: #00a862 !important;
+    background-color: white !important;
+    border: 1px solid #00a862 !important;
+}
+.order-2 {
+    order:2;
+    border-radius: 20px !important;
+    width: 90px !important;
+    background-color: #00a862 !important;
+    border:none !important;
+}
+
+.right-gap {
+    margin-right: 2em !important; 
+}

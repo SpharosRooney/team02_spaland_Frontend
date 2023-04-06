@@ -22,11 +22,10 @@ export default function Signup() {
   const { isLogin } = useRecoilValue(userLoginState)
 
 
-  if(isLogin) {
+  if (isLogin) {
     router.push('/');
-        
-    return null;
-}
+
+  }
 
   const [stepId, setStepId] = useState<number>(1)
   const [inputData, setInputData] = useState<inputRegisterType>({
@@ -126,7 +125,7 @@ export default function Signup() {
         Swal.fire({
           icon: 'warning',
           text: '닉네임을 입력하지 않았습니다. 닉네임을 입력 해주세요.',
-          cancelButtonText:'닉네임 정하기',
+          cancelButtonText: '닉네임 정하기',
           customClass: {
             cancelButton: 'swal-cancel-button'
           }
@@ -154,13 +153,13 @@ export default function Signup() {
               Swal.fire({
                 icon: 'warning',
                 text: `닉네임을 ${inputData.userNickname}으로 정하시겠습니까?`,
-                cancelButtonText:'다시 정하기',
+                cancelButtonText: '다시 정하기',
                 showCancelButton: true,
                 customClass: {
                   confirmButton: 'swal-confirm-button',
                   cancelButton: 'swal-cancel-button'
                 }
-              }).then(function() {
+              }).then(function () {
                 setStepId(stepId + 1)
               })
               return;
@@ -190,12 +189,12 @@ export default function Signup() {
       <header className="signup-header">
         <div className="signup-header-cancel">
           <Link href={"/"}>
-          <Image
-            src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
-            width={20}
-            height={20}
-            alt= "next"
-          />
+            <Image
+              src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
+              width={20}
+              height={20}
+              alt="next"
+            />
           </Link>
         </div>
       </header>

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import router from 'next/router'
 import React from 'react'
 
 export default function CartHeader() {
@@ -7,14 +8,14 @@ export default function CartHeader() {
         <header className="cart-header">
             <div className="header-top">
                 <div className="menu-icon">
-                    <Link href="/">
+                    <div onClick={()=>router.back()}>
                         <Image
                             src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png"
                             width={20}
                             height={20}
                             alt= "left"
                         />
-                    </Link>
+                    </div>
                 </div>
                 <h1><Link href="index">온라인 스토어</Link></h1>
                 <div className="right-menu-icon">
@@ -28,19 +29,6 @@ export default function CartHeader() {
                     </Link>
                 </div>
             </div>
-            {/* <div className="header-bottom">
-                <div className="header-bottom-subject">
-                    <p>장바구니</p>
-                </div>
-                <div className="header-bottom-check">
-                    <div className="header-bottom-check-left">
-                        <input type="checkbox" id="menu-cb" /><span>전체 선택</span>
-                    </div>
-                    <div className="header-bottom-check-right">
-                        <span>선택삭제</span> <span>|</span> <span>전체삭제</span>
-                    </div>
-                </div>
-            </div> */}
         </header>
     )
 }

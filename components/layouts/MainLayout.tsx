@@ -29,7 +29,7 @@ import { error } from 'console';
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
-  const [isMenuModalOpen,setIsMenuModalOpen] = useState<boolean>(false);
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
   // const setIsMenuModalOpen = useSetRecoilState(menuModalState);
   const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [filterList, setFilterList] = useState<filterType[]>([])
   const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
-  const { baseUrl } = Config(); 
+  const { baseUrl } = Config();
 
   console.log(isLogin)
 
@@ -72,7 +72,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   useEffect(() => {
     const myLogin = localStorage.getItem("accessToken");
 
-    if(myLogin && !isLogin.isLogin){
+    if (myLogin && !isLogin.isLogin) {
       console.log("로그인 되어있음")
       setIsLogin({
         userNickname: localStorage.getItem("userNickname") || "",
@@ -178,20 +178,20 @@ export default function MainLayout(props: { children: React.ReactNode }) {
 
   return (
     <>
-    <Menu
-      isMenuModalOpen={isMenuModalOpen}
-      setIsMenuModalOpen={setIsMenuModalOpen}
-    />
+      <Menu
+        isMenuModalOpen={isMenuModalOpen}
+        setIsMenuModalOpen={setIsMenuModalOpen}
+      />
       <div className="container">
         <header>
           <div className="header-top">
-            <div className="menu-icon" onClick={()=> setIsMenuModalOpen(true)}>
-            <Image
-              src="/assets/images/icons/menu.svg"
-              width={20}
-              height={20}
-              alt= "menu"
-            />
+            <div className="menu-icon" onClick={() => setIsMenuModalOpen(true)}>
+              <Image
+                src="/assets/images/icons/menu.svg"
+                width={20}
+                height={20}
+                alt="menu"
+              />
             </div>
             <h1><Link href="/">온라인 스토어</Link></h1>
             <nav>
@@ -206,7 +206,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                               src="/assets/images/icons/logout.png"
                               width={20}
                               height={20}
-                              alt= "logout"
+                              alt="logout"
                               onClick={logout}
                             />
                           )
@@ -216,7 +216,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                               src={icon.icon}
                               width={20}
                               height={20}
-                              alt= "login"
+                              alt="login"
                             />
                           </Link>)
                         }
@@ -229,7 +229,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                               src={icon.icon}
                               width={20}
                               height={20}
-                              alt= "cart"
+                              alt="cart"
                             />
                           </Link>
                         </li>
@@ -241,7 +241,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                                 src={icon.icon}
                                 width={20}
                                 height={20}
-                                alt= "search"
+                                alt="search"
                               />
                             </Link>
                           </li>

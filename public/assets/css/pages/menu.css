@@ -77,7 +77,7 @@ section#menu-section {
 
 .menu-product-list {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     padding-top: 15px;
     flex-wrap: wrap;
 }

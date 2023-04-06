@@ -1,7 +1,31 @@
+import Config from '@/configs/config.export';
+import { userLoginState } from '@/state/user/atom/userLoginState'
+import { LoginRes } from '@/types/UserRequest/Response';
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router';
+import { useRecoilState, useRecoilValue } from 'recoil'
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 
 export default function mypage() {
+    const router = useRouter();
+    const { isLogin } = useRecoilValue(userLoginState)
+
+    if( !isLogin) {
+        Swal.fire({
+            icon: 'error',
+            text: '로그인이 필요한 서비스 입니다.',
+            customClass: {
+                confirmButton: 'swal-confirm-button'
+            }
+        }).then(
+            res=> res.isConfirmed && router.push('/login')
+        )
+            
+        return null;
+    }
+
     return (
         <div className="container">
             <section className="tracking">
@@ -156,6 +180,6 @@ export default function mypage() {
                     </div>
                 </div>
             </section>
-        </div>
+        </div>        
     )
 }

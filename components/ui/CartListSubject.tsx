@@ -5,7 +5,7 @@ export default function CartListSubject(props: { title: string }) {
         <div>
             <div className="cart-product-category">
                 <div className="cart-product-category-detail">
-                    <input type="checkbox" id="section-cb" /><span>{props.title}</span>
+                    <input checked={true} type="checkbox" id="section-cb" /><span>{props.title}</span>
                 </div>
             </div>
         </div>

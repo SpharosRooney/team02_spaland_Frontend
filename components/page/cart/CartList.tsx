@@ -3,24 +3,54 @@ import { cartListType } from '@/types/cart/cartListType';
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem';
 import CartInfo from './CartInfo';
+import CartFooter from './CartFooter';
 
 export default function CartList(props: { data: cartListType[] }) {
 
     const [Items, setItems] = useState<cartListType[]>([])
     const [FrozenItems, setFrozenItems] = useState<cartListType[]>([])
 
+    const [itemAllPrice, setAllPrice] = useState<number>(0)
+    const [itemAllCount, setAllCount] = useState<number>(0)
+
+    const [frozenAllPrice, setAllfrozenPrice] = useState<number>(0)
+    const [frozenAllCount, setAllfrozenCount] = useState<number>(0)
+
     useEffect(() => {
+        let myItems: cartListType[] = []
+        let myFrozenItems: cartListType[] = []
         props.data.map(item => {
-            if (item.fronzen == 0) {
-                setItems(prev => [...prev, item])
+            if (item.frozen === 0) {
+                myItems.push(item)
             } else {
-                setFrozenItems(Fprev => [...Fprev, item])
+                myFrozenItems.push(item)
             }
         })
-    }, [])
+        setItems(myItems)
+        setFrozenItems(myFrozenItems)
+    }, [props.data])
 
-    console.log('Items', Items)
-    console.log('FrozenItems', FrozenItems)
+    useEffect(() => {
+        let price = 0
+        let amount = 0
+        Items.map(item => {
+            price += item.price * item.productAmount
+        })
+        amount = Items.length
+        setAllPrice(price)
+        setAllCount(amount)
+    }, [Items])
+
+    useEffect(() => {
+        let price = 0
+        let amount = 0
+        FrozenItems.map(item => {
+            price += item.price * item.productAmount
+        })
+        amount = FrozenItems.length
+        setAllfrozenPrice(price)
+        setAllfrozenCount(amount)
+    }, [FrozenItems])
 
     // const [cartItems, setCartItems] = useRecoilState(cartListState);
     // const [listAllCheck, setListAllCheck] = useState(false);
@@ -71,9 +101,10 @@ export default function CartList(props: { data: cartListType[] }) {
                                     />
                                 ))
                             }
-                            <CartInfo />
+                            <CartInfo price={itemAllPrice} count={itemAllCount} />
                         </>
-                    ) : null}
+                    ) : null
+                }
 
                 {
                     FrozenItems.length > 0 ? (
@@ -87,67 +118,13 @@ export default function CartList(props: { data: cartListType[] }) {
                                     />
                                 ))
                             }
-                            <CartInfo />
+                            <CartInfo price={frozenAllPrice} count={frozenAllCount} />
                         </>
-                    ) : null}
+                    ) : null
+                }
 
+            <CartFooter itemprice={itemAllPrice} frozenprice={frozenAllPrice} itemcount={props.data.length}/>
 
-                {/* <div className="select">
-                <div className="select-items">
-                    <div className={listAllCheck ? 'sbCheckBoxOn' : 'sbCheckBox'} onClick={() => handleCartListAllCheck(listAllCheck)}></div>
-                    <p className='cart-select-btn'>일반상품</p>
-                </div>
-            </div> */}
-
-                {/* {
-                cartItems.cartList.length > 0 ? (
-                    <div>
-                        <div className="cart-product-category">
-                            <div className="cart-product-category-detail">
-                                <input checked={listAllCheck ? true : false} type="checkbox" id="section-cb" onClick={() => handleCartListAllCheck(listAllCheck)} /><span>일반 상품</span>
-                            </div>
-                        </div>
-                        {
-                            cartItems.cartList.map((item: cartListType) => (
-                                <CartItem
-                                    key={item.cartId}
-                                    data={item}
-                                />
-                            ))
-                        }
-                    </div>
-                ) : null
-            } */}
-
-                {/* {
-                cartItems.cartListFreeze.length > 0 ? (
-                    <>
-                        <div className="select">
-                        <div className="select-items">
-                            <div className={listFreezeAllCheck ? 'sbCheckBoxOn' : 'sbCheckBox'} onClick={() => handleFreezeCartListAllCheck(listFreezeAllCheck)}></div>
-                            <p className='cart-select-btn'>냉동상품</p>
-                        </div>
-                    </div>
-                        <div>
-                            <div className="cart-product-category">
-                                <div className="cart-product-category-detail">
-                                    <input checked={listFreezeAllCheck ? true : false} type="checkbox" id="section-cb" onClick={() => handleFreezeCartListAllCheck(listFreezeAllCheck)} /><span>냉동 상품</span>
-                                </div>
-                            </div>
-                            {
-                                cartItems.cartListFreeze.map((item: cartListType) => (
-                                    <CartItem
-                                        key={item.cartId}
-                                        data={item}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </>
-                )
-                    : null
-            } */}
-                            
             </section>
         </>
     )

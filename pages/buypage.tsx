@@ -3,7 +3,6 @@ import Separator from '@/components/ui/Separator'
 import { RequestPayParams, RequestPayResponse } from '@/types/productPayment/paymentFilterType'
 import Image from 'next/image'
 import Link from 'next/link'
-import Script from 'next/script'
 import React from 'react'
 
 export default function Buypage() {

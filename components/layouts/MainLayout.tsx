@@ -2,15 +2,12 @@ import { bottomNavMenuType } from '@/types/navMenuType'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { useCookies } from 'react-cookie';
 
-import { filterType, sizeType, smallCategoryType } from "@/types/header/filterType";
+import { filterType } from "@/types/header/filterType";
 import { headerIcons } from "@/datas/starbucksStaticDatas";
 
 //recoil
-import { useRecoilValue } from "recoil";
 import { useRecoilState } from 'recoil'
-import { cartState } from "../../state/cartState";
 
 
 import { LoginRes } from '@/types/UserRequest/Response'
@@ -21,28 +18,16 @@ import ProductCategory from '../widgets/ProductCategory'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
 import Image from 'next/image';
-import { error } from 'console';
-
-//import{ bottomNavData } from 'assets/../datas/navData'
-//import SignupModal from '../modals/SignupModal'
-
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
   const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
-  // const setIsMenuModalOpen = useSetRecoilState(menuModalState);
-  const [cookies, removecookie] = useCookies(["id"]);
   const router = useRouter();
   console.log(router.pathname)
   console.log()
 
-  const { pathname, query } = useRouter();
-  const productPath = pathname.split("/")[1];
-  const cartCnt = useRecoilValue(cartState)
-
   const [navBottomData, setNavBottomData] = useState<bottomNavMenuType[]>()
 
-  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [filterList, setFilterList] = useState<filterType[]>([])
   const [isLogin, setIsLogin] = useRecoilState<LoginRes>(userLoginState);
   const { baseUrl } = Config();
@@ -70,7 +55,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   // },[])
 
   useEffect(() => {
-    const myLogin = localStorage.getItem("accessToken");
+    const myLogin = window.localStorage.getItem("accessToken");
 
     if (myLogin && !isLogin.isLogin) {
       console.log("로그인 되어있음")
@@ -90,9 +75,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       .then(data => setNavBottomData(data))
   }, [])
 
-
-
-  //logout handler 추가
   const logout = async () => {
     Swal.fire({
       title: '로그아웃 하시겠습니까?',
@@ -151,21 +133,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     });
   };
 
-  // useEffect(() => {
-  //   console.log("filterList", filterList)
-  //   let url = ''
-
-  //   filterList.map((filter) => (
-  //     filter.checked ? url += `&${filter.name}=${filter.value}` : ''
-  //   ))
-  //   router.push(`/listview?category=${query.category}${url}`, undefined, { shallow: true })
-  // }, [filterList])
-
-  // const handleFilter = (name: String) => {
-  //   setFilterList([])
-  //   router.push(`/listview?category=${name}`)
-  // }
-
   const handleSubFilter = (event: ChangeEvent<HTMLInputElement>) => {
     let checker = filterList.find((filter) => filter.value === event.target.value)
     if (checker?.checked === true && event.target.checked === false) {
@@ -197,10 +164,10 @@ export default function MainLayout(props: { children: React.ReactNode }) {
             <nav>
               <ul>
                 {
-                  headerIcons.map((icon) => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
+                  headerIcons.map((icon) => (
                     icon.name === 'mypage' ?
                       <li key={icon.id}>
-                        {isLogin.isLogin ? // boolean으로 처리하려면 변수명을 IS"" 추가한다.
+                        {isLogin.isLogin ?
                           (
                             <Image
                               src="/assets/images/icons/logout.png"
@@ -257,7 +224,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <nav>
                     <ul>
                       {
-                        navBottomData.map(item => (  // && 있으면 해라 라는 뜻 그러면 안정적으로 받아들임
+                        navBottomData.map(item => (
                           <li
                             key={item.id}
                             className={router.pathname === item.link ? "active" : ""}

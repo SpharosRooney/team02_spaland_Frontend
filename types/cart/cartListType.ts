@@ -4,7 +4,7 @@ export interface cartListType {
     titleImg: string;
     price: number;
     name: string;
-    fronzen: number;
+    frozen: number;
     productAmount: number;
     checkbox: boolean;
 }

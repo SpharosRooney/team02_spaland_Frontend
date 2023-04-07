@@ -216,7 +216,7 @@ section#buy2 .item-coupon-box nav{
 
 section#buy2 .item-coupon-box nav ul{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     padding: 0px;
     margin: 0px;

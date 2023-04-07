@@ -50,7 +50,7 @@ function Menu(props: { isMenuModalOpen: boolean, setIsMenuModalOpen: Function })
                 console.log(`${baseUrl}/api/v1/product/get?categoryLarge=${res.data.data}`)
                 
                 const data = res.data.data.categoryLarge;
-                window.location.href = `/searchresult?categoryLarge=${data}`;
+                router.push(`/searchresult?categoryLarge=${data}`) ;
                 props.setIsMenuModalOpen(false)
             })
             .catch((error) => console.error(error));

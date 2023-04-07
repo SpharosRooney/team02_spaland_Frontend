@@ -29,7 +29,7 @@ const SearchBar = () => {
                     confirmButtonColor: '#f5a623',
                 })
             } else {
-                window.location.href = `/searchresult?query=${keyword.keyword}`;
+                router.push(`searchresult?query=${keyword.keyword}`);
                 // 검색어를 localStorage에 저장
                 const keywords = JSON.parse(localStorage.getItem('keyword') || '[]');
                 keywords.unshift(keyword);
@@ -41,7 +41,7 @@ const SearchBar = () => {
 
     const handleClose = () => {
         // 검색창 닫기
-        window.location.href = '/';
+        router.push('/')
     }
 
     return (

@@ -1,12 +1,11 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import React, { ChangeEvent, useState } from 'react'
+import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { userLoginState, userIsLoginState } from '@/state/user/atom/userLoginState';
+import { userLoginState } from '@/state/user/atom/userLoginState';
 import { inputUserType } from '@/types/UserInformation/Information'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import LoginFooterButton from '@/components/footer/LoginFooterButton';
 import { LoginRes } from '@/types/UserRequest/Response';
 import Config from '@/configs/config.export';
 import Image from 'next/image';
@@ -57,9 +56,8 @@ export default function Login() {
                 password: inputData.password,
             },{withCredentials:false}).then((res) => {                
                 setLoginData({
-                    userNickname: res.data, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                    userNickname: res.data,
                     accessToken: res.headers.authorization,
-                    // refreshToken:res.headers.cookie.refreshToken,
                     isLogin: true
                 });
                 
@@ -69,23 +67,14 @@ export default function Login() {
                 // axios.defaults.headers.common[
                 //     "Authorization"
                 // ] = `Bearer ${accessToken}`;
-
-
-                // https로 바꾸면 사용하기로 함.(refreshToken)
-                // const refreshToken = res.headers.cookie;
-
-
-                // axios.defaults.headers.common[
-                //     "Authorization"
-                // ] = `${refreshToken}`;
                 
-                localStorage.setItem("userNickname", userNickname); //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
-                localStorage.setItem("accessToken", accessToken); // 로컬은 무엇을 넣든 다 문자열로 저장됨.
+                localStorage.setItem("userNickname", userNickname); 
+                localStorage.setItem("accessToken", accessToken); 
                 router.back();
 
                 Swal.fire({
                     icon: "success",
-                    text: `${res.data}님 환영합니다~ ^^`, //res.data.userNickname 나중에 백 작업 다 되면 적어야 됨.
+                    text: `${res.data}님 환영합니다~ ^^`, 
                 })
                 
                 return res;
@@ -164,7 +153,7 @@ export default function Login() {
                         <ul>
                             <li><Link href={"/"}>아이디 찾기</Link></li>
                             <li><Link href={"/"}>비밀번호 찾기</Link></li>
-                            <li><Link href={"/signup"}>회원가입</Link></li>
+                            <li className="last"><Link href={"/signup"}>회원가입</Link></li>
                         </ul>
                     </section>
                     <footer className="login-footer">

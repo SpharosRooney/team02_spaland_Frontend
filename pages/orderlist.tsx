@@ -1,7 +1,6 @@
 import ModalBotHeader from '@/components/header/ModalBotHeader'
 import Accordion from '@/components/widgets/Accordion'
-import { ProductListCardType } from '@/types/fetchDataType'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 
 

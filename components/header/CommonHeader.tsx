@@ -9,10 +9,10 @@ export default function CommonHeader(props:{subject:string}) {
                 <div className="menu-icon">
                     <Link href="menu">
                             <Image
-                              src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png"
-                              width={20}
-                              height={20}
-                              alt= "left"
+                                src="https://cdn-icons-png.flaticon.com/128/9121/9121686.png"
+                                width={20}
+                                height={20}
+                                alt= "left"
                             />
                         </Link>
                 </div>

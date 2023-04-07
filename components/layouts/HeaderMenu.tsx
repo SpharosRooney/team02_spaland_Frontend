@@ -26,6 +26,6 @@ export default function HeaderMenu(props: { data?: any; handleFilter?: any; }) {
         //         </ul>
         //     </nav>
         // </div>
-        1
+        <></>
     )
 }

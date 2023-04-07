@@ -6,7 +6,9 @@ import Image from 'next/image'
 export default function Address() {
     return (
         <>
-        <ModalTopHeader subject='배송지 변경'/>
+        <Link href={"/buypage"}>
+            <ModalTopHeader subject='배송지 변경'/>
+        </Link>
         <div className="container">
             <section style={{ margin: "12% 0" }}>
                 <div style={{ padding: "10px", margin: "5px;" }}>

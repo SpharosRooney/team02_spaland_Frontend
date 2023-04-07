@@ -14,19 +14,22 @@ export default function EventProductListCard(props: { productTitle: string }) {
     const [productData, setProductData] = useState<eventProductType[]>()
 
     useEffect(() => {
-        axios(`${baseUrl}/api/v1/product/get?event=${props.productTitle}`)
+        axios(`${baseUrl}/api/v1/product/get?event=${props.productTitle}`, {timeout: 10000})
             .then(res => res.data.data)
             .then(data => setProductData(data))
     }, [props.productTitle, baseUrl])
 
-    console.log('123', productData)
+    const handleProductClick = (id: number) => {
+        router.push(`/products/${id}`)
+    }
+
     return (
         <>
             {
                 productData &&  productData.map ( (item) =>
-                    <div className="recommand-product-item" onClick={() => router.push(`/products/${item.id}`)} key={item.id}>
+                    <div className="recommand-product-item" onClick={() => handleProductClick(item.id)} key={item.id}>
                         <div className="special-recommand-product-item__img">
-                            <Image src={item.titleImg} alt={item.description} width={170} height={170} />
+                            <Image src={item.titleImg} alt={item.description} width={150} height={150} />
                         </div>
                         <div className="recommand-product-item__info">
                             {item.isNew ? <p className="item-new">New</p> : null}

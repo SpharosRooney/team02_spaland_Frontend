@@ -3,9 +3,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import TotalCheckBox from '@/components/ui/TotalCheckBox'
 import CheckBox from '@/components/ui/CheckBox'
 import RadioCheckBox from '@/components/ui/RadioCheckBox'
-import StButton from '@/components/ui/StButton'
 import Image from 'next/image'
-import Agreement from '@/pages/agreement'
 
 interface ChildProps {
     inputData: inputRegisterType;
@@ -14,11 +12,7 @@ interface ChildProps {
 
 const Step01 = ({ inputData, setInputData }: ChildProps) => {
 
-    const [agreeArray, setAgreeArray] = useState<privateAgreeType>({} as privateAgreeType)
-    const [addOption, setAddOption] = useState<object>([
-        { id: 1, name: 'E-mail', checked: false },
-        { id: 2, name: 'SNS', checked: false },
-    ])
+    const [agreeArray, setAgreeArray] = useState<privateAgreeType>({} as privateAgreeType);
 
     const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
@@ -103,11 +97,6 @@ const Step01 = ({ inputData, setInputData }: ChildProps) => {
                                 handler={handleInput}
                                 value={agreeArray.isSns}
                             />
-                            
-                            {/* <input type="checkbox" id="E-mail" />
-                            <p>E-mail</p>
-                            <input type="checkbox" />
-                            <p>SMS</p> */}
                         </div>
                     </div>
                 </section>

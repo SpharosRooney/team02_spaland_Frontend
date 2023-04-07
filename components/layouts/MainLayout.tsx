@@ -9,7 +9,6 @@ import { headerIcons } from "@/datas/starbucksStaticDatas";
 //recoil
 import { useRecoilState } from 'recoil'
 
-
 import { LoginRes } from '@/types/UserRequest/Response'
 import { userLoginState } from '@/state/user/atom/userLoginState'
 import axios from 'axios'
@@ -18,6 +17,7 @@ import ProductCategory from '../widgets/ProductCategory'
 import Menu from '../modal/Menu'
 import Config from '@/configs/config.export'
 import Image from 'next/image';
+
 
 export default function MainLayout(props: { children: React.ReactNode }) {
 
@@ -38,22 +38,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
   //[[...""]] => 파일명 : 데이터 값이 없어도 나타나게 함.
   //비교 해야할 값이 숫자면 Number()로 감싸주기
 
-  // 각자의 백엔드 카테고리 url을 적기.
-  // useEffect(() => {
-  //   axios.get("카테고리-url")
-  //   .then((res) =>{
-  //     let myData: MenuDataType[] = []
-  //     res.data.data.subCategories.forEach((item : headerMenu) => {
-  //       myData.push({
-  //         id: item.id,
-  //         name: item.name,
-  //         key:"category"
-  //       })
-  //     })
-  //     setFilterData(myData)
-  //   })
-  // },[])
-
   useEffect(() => {
     const myLogin = window.localStorage.getItem("accessToken");
 
@@ -66,8 +50,6 @@ export default function MainLayout(props: { children: React.ReactNode }) {
       })
     }
   }, [isLogin.isLogin, setIsLogin])
-
-  const [isactive, setIsactive] = useState<boolean>(false)
 
   useEffect(() => {
     axios(`${baseUrl}/api/v1/naviMenu/all`)
@@ -224,7 +206,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
                   <nav>
                     <ul>
                       {
-                        navBottomData.map(item => (
+                        navBottomData.map(item => (  
                           <li
                             key={item.id}
                             className={router.pathname === item.link ? "active" : ""}

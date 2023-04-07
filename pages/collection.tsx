@@ -36,13 +36,6 @@ export default function collection() {
                     ※ 위의 배송지 정보 수집•이용에 대한 동의를 거부할 권리가 있습니다. 그러나 동의를 거부할 경우 온라인 스토어 서비스 이용에 제한을 받을 수 있습니다.
                 </div>
             </section>
-            {/* <section id="collection2">
-                <div className="address-bg">
-                    <div className="address-mini-bg">
-                        <a href="address.html"><input type="button" value="확인" /></a>
-                    </div>
-                </div>
-            </section> */}
         <FooterButton inputvalue='확인'/>
         </>
     )

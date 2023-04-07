@@ -160,6 +160,7 @@ export default function Signup() {
                   cancelButton: 'swal-cancel-button'
                 }
               }).then(function () {
+                
                 setStepId(stepId + 1)
               })
               return;

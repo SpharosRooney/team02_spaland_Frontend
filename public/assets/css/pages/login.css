@@ -136,7 +136,7 @@ input:not(:placeholder-shown) {
 }
 
 .find-btn-wrap ul .last::after {
-    border-right: 0;
+    border-right: 0px;
 }
 
 .login-footer {

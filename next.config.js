@@ -10,6 +10,8 @@ const nextConfig = {
     "prod-starbucks-product-details.s3.ap-northeast-2.amazonaws.com",
     "sui.ssgcdn.com",
     "www.starbucks.co.kr",
+    "img.danawa.com",
+    "sitem.ssgcdn.com",
   ]
   }
 }

@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination'
 import { Autoplay, Pagination } from 'swiper';
-import Image from 'next/image';
 import ImageSizeReturn from '../ui/ImageSizeReturn';
 
 export default function Homebanner () {

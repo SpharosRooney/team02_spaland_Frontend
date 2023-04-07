@@ -69,7 +69,7 @@ export default function Login() {
                     icon: "success",
                     text: `${res.data}님 환영합니다~ ^^`, 
                 })
-                
+                console.log('qweoiqwoe',res)
                 return res;
             })
                 .catch(err => {

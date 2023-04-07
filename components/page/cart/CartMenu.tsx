@@ -29,7 +29,7 @@ export default function CartMenu() {
     }
 
     const resetCart = () => {
-        axios.put(`${baseUrl}/api/v1/cart`, {
+        axios.put(`${baseUrl}/api/v1/cart/deleteAll`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -71,7 +71,7 @@ export default function CartMenu() {
             <div className="header-bottom">
                 <div className="header-bottom-check">
                     <div className="header-bottom-check-left">
-                        <input checked={true} type="checkbox" onClick={() => handleAllCheck(listAllCheck)} id="menu-cb" /><span>전체 선택</span>
+                        <input checked={true} type="checkbox" onChange={() => handleAllCheck(listAllCheck)} id="menu-cb" /><span>전체 선택</span>
                     </div>
                     <div className="header-bottom-check-right">
                         <span className='selec-del'>선택삭제</span> <span>|</span> <span onClick={checkCleanAll}>전체삭제</span>

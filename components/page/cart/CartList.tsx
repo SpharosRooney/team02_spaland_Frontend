@@ -83,6 +83,8 @@ export default function CartList(props: { data: cartListType[], checker: boolean
                                     <CartItem
                                         key={item.id}
                                         data={item}
+                                        checker={props.checker}
+                                        setChecker={props.setChecker}
                                     />
                                 ))
                             }

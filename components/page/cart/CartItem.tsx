@@ -10,16 +10,19 @@ import { useRecoilValue } from 'recoil'
 export default function CartItem(props: { data: cartListType, checker: boolean, setChecker: React.Dispatch<React.SetStateAction<boolean>> }) {
 
     const { baseUrl } = Config();
-    const {accessToken} = useRecoilValue(userLoginState)
+    const { accessToken } = useRecoilValue(userLoginState)
+
     const handleCartListDelete = () => {
-        axios.put(`${baseUrl}/api/vi/cart`, {
-            cartId: props.data.id,
+        axios.delete(`${baseUrl}/api/v1/cart/delete/${props.data.id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
-            }
+            },
         }).then(res => {
-            console.log(res)  
-            props.setChecker(!props.checker)  
+            console.log('ㅁㄴ암ㄴㅇ',res)
+            console.log(props.data.id)
+            props.setChecker(!props.checker)
+        }).catch((error)=> {
+            console.log("에러확인",error)
         })
     }
 
@@ -28,7 +31,7 @@ export default function CartItem(props: { data: cartListType, checker: boolean, 
             <section className="cart-product">
                 <div className="checkbox-border">
                     <div className="checkbox-border-left">
-                        <input checked={props.data.checkbox ? true : false} className={props.data.checkbox ? 'checkboxOn' : 'checkbox'} type='checkbox' />
+                        <input checked={!props.checker} className={props.checker ? 'checkboxOn' : 'checkbox'} type='checkbox' />
                         <Image
                             src={props.data.titleImg}
                             width={100}

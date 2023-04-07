@@ -5,7 +5,7 @@ import CartItem from './CartItem';
 import CartInfo from './CartInfo';
 import CartFooter from './CartFooter';
 
-export default function CartList(props: { data: cartListType[] }) {
+export default function CartList(props: { data: cartListType[], checker: boolean, setChecker: React.Dispatch<React.SetStateAction<boolean>> }) {
 
     const [Items, setItems] = useState<cartListType[]>([])
     const [FrozenItems, setFrozenItems] = useState<cartListType[]>([])
@@ -64,6 +64,8 @@ export default function CartList(props: { data: cartListType[] }) {
                                     <CartItem
                                         key={item.id}
                                         data={item}
+                                        checker={props.checker}
+                                        setChecker={props.setChecker}
                                     />
                                 ))
                             }

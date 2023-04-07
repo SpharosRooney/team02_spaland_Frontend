@@ -1,9 +1,27 @@
+import Config from '@/configs/config.export'
+import { userLoginState } from '@/state/user/atom/userLoginState'
 import { cartListType } from '@/types/cart/cartListType'
+import axios from 'axios'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { useRecoilValue } from 'recoil'
 
-export default function CartItem(props: { data: cartListType }) {
+export default function CartItem(props: { data: cartListType, checker: boolean, setChecker: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const { baseUrl } = Config();
+    const {accessToken} = useRecoilValue(userLoginState)
+    const handleCartListDelete = () => {
+        axios.put(`${baseUrl}/api/vi/cart`, {
+            cartId: props.data.id,
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then(res => {
+            console.log(res)  
+            props.setChecker(!props.checker)  
+        })
+    }
 
     return (
         <>
@@ -22,7 +40,7 @@ export default function CartItem(props: { data: cartListType }) {
                         <p className="subject">{props.data.name}</p>
                         <p className="price">{(props.data.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}원</p>
                     </div>
-                    <div className="cancel-button">
+                    <div className="cancel-button" onClick={handleCartListDelete}>
                         <Image
                             src="https://cdn-icons-png.flaticon.com/512/864/864393.png"
                             width={30}
@@ -48,3 +66,4 @@ export default function CartItem(props: { data: cartListType }) {
         </>
     )
 }
+

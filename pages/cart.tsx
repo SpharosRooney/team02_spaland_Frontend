@@ -16,6 +16,7 @@ export default function Cart() {
     const router = useRouter();
     const { baseUrl } = Config();
     const { isLogin, accessToken } = useRecoilValue(userLoginState)
+    const [ checker, setChecker ] = useState<boolean>(false)
 
     const [cartList, setCartList] = useState<cartListType[]>();
 
@@ -38,10 +39,9 @@ export default function Cart() {
                 }
             }).then(res => {
                 setCartList(res.data.data)
-                console.log('가', res.data.data)
             })
         }
-    }, [isLogin])
+    }, [isLogin, checker])
 
     console.log('cartlist', cartList)
 
@@ -51,7 +51,7 @@ export default function Cart() {
             <CartMenu />
             {cartList && cartList.length > 0 ? (
                 <>
-                    <CartList data={cartList} />
+                    <CartList data={cartList} checker ={checker} setChecker={setChecker}/>
                 </>
             ) :
                 <section className="empty-cart">

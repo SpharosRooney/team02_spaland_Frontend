@@ -205,7 +205,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                         <input
                             type="date"
                             name="birthday"
-                            value="2023-03-22"
                             max="2023-03-31"
                             onChange={handleChange}
                         />

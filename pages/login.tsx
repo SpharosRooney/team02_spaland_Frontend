@@ -50,7 +50,8 @@ export default function Login() {
             axios.post(`${baseUrl}/api/v1/users/login`, {
                 userEmail: inputData.userEmail,
                 password: inputData.password,
-            },{withCredentials:false}).then((res) => {                
+            },{withCredentials:false})
+            .then((res) => {                
                 setLoginData({
                     userNickname: res.data,
                     accessToken: res.headers.authorization,
@@ -74,6 +75,14 @@ export default function Login() {
             })
                 .catch(err => {
                     console.log(err);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "이메일과 비밀번호를 확인해주세요!",
+                        customClass: {
+                            confirmButton: 'swal-confirm-button'
+                        }
+                    })
                 })
             return;
         }

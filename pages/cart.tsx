@@ -41,7 +41,7 @@ export default function Cart() {
                 setCartList(res.data.data)
             })
         }
-    }, [isLogin, checker])
+    }, [isLogin, checker, accessToken, baseUrl, router])
 
     console.log('cartlist', cartList)
 

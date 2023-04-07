@@ -3,7 +3,6 @@ import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ReactElement, ReactNode } from 'react'
 import { RecoilRoot, atom } from 'recoil'
-import { CookiesProvider } from 'react-cookie'
 import Head from 'next/head'
 import "public/assets/css/style.css";
 
@@ -18,8 +17,6 @@ export const selectedTable = atom({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <CookiesProvider>
-      
         <RecoilRoot>
           <MainLayout>
             <Head>
@@ -28,7 +25,5 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </MainLayout>
         </RecoilRoot>
-      
-    </CookiesProvider>
   )
 }

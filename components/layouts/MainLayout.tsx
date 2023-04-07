@@ -55,7 +55,7 @@ export default function MainLayout(props: { children: React.ReactNode }) {
     axios(`${baseUrl}/api/v1/naviMenu/all`)
       .then(res => res.data.data)
       .then(data => setNavBottomData(data))
-  }, [])
+  }, [baseUrl])
 
   const logout = async () => {
     Swal.fire({

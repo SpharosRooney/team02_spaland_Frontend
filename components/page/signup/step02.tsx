@@ -67,18 +67,28 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (name === 'confirmKey') setConfirmKey(value);
-        if (name === 'password' && value.length > 8 && passwordRegex.test(inputData.password)) {
-            if (!passwordRegex.test(value)) {
-                if (value.length > 20) {
-                    setErrMsg({ ...errMsg, passwordErr: "비밀번호는 20자리 이하로 해주세요." })
-                } else {
-                    setErrMsg({ ...errMsg, passwordErr: "비밀 번호는 숫자, 영문자, 특수문자(!@#$^*)를 포함한 8자리 이상이어야 합니다." })
+        if (name === 'confirmKey') {
+            setConfirmKey(value)};
+
+        if (name === 'userEmail' && !expression.test(value)) {
+            setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." })
+        } else if (name === 'userEmail' && expression.test(value)) {
+            setErrMsg({ ...errMsg, emailErr: "" })
+        }
+
+        if (name === 'password' && value.length > 8) {
+            if (name === 'password' && passwordRegex.test(inputData.password)) {
+                if (!passwordRegex.test(value)) {
+                    if (value.length > 20) {
+                        setErrMsg({ ...errMsg, passwordErr: "비밀번호는 20자리 이하로 해주세요." })
+                    } else {
+                        setErrMsg({ ...errMsg, passwordErr: "비밀 번호는 숫자, 영문자, 특수문자(!@#$^*)를 포함한 8자리 이상이어야 합니다." })
+                    }
                 }
+                return;
+            } else if (inputData.password === "") {
+                setErrMsg({ ...errMsg, passwordErr: "" })
             }
-            return;
-        } else if(inputData.password === ""){
-            setErrMsg({ ...errMsg, passwordErr: "" })
         }
 
         if (name === 'userEmail' && expression.test(value)) {
@@ -89,9 +99,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             ...inputData,
             [name]: value,
         })
-        if(inputData.password !== inputData.confirmPassword){
-            setErrMsg({ ...errMsg, confirmPasswordErr: "비밀번호가 일치하지 않습니다." })
-        } else {
+        if(inputData.password === inputData.confirmPassword){
             setErrMsg({ ...errMsg, confirmPasswordErr: "" })
         }
     }
@@ -180,19 +188,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                 setConfirmKey("")
             })
     }
-    // const handlenickname = () => {
-    //     console.log("닉네임 전송")
-    //     axios.post('url', {
-    //         userNickname: inputData.userNickname,
-    //     })
-    //         .then((res) => {
-    //             console.log(res)
-    //             alert('사용 가능합니다.')
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //             alert('중복되는 닉네임 입니다.')
-    //         })
     // }
 
     return (

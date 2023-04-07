@@ -27,7 +27,7 @@ export default function AllSearchResult() {
         <>
             {allproductData &&
                 <>
-                    <div className="searchresult-product-list">
+                    <div className="searchresult-product-list2">
                         {allproductData && allproductData.map((product) => (
                             <div className="searchresult-product-item" onClick={() => handleProductClick(product.id)} key={product.id}>
                                 <div className="searchresult-product-item__img">

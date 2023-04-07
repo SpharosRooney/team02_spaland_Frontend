@@ -10,7 +10,7 @@ import axios from 'axios';
 import Config from '@/configs/config.export';
 import { eventListType } from '@/types/fetchDataType';
 import ImageSizeReturn from '@/components/ui/ImageSizeReturn';
-export default function Event()  {
+export default function Event() {
 
   const { baseUrl } = Config();
 
@@ -34,13 +34,13 @@ export default function Event()  {
             <ul>
               {
                 eventSubNavData && eventSubNavData.map((nav) => (
-                  
-                    <li
-                      key={nav.id}
-                      className={slideindex === nav.id - 1 ? "active" : ""}
-                      onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
-                    >{nav.name}</li>
-                  
+
+                  <li
+                    key={nav.id}
+                    className={slideindex === nav.id - 1 ? "active" : ""}
+                    onClick={() => swiper ? swiper.slideTo(nav.id - 1) : ""}
+                  >{nav.name}</li>
+
                 ))
               }
             </ul>

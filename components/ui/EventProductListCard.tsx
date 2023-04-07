@@ -5,8 +5,6 @@ import Config from '@/configs/config.export';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-
-
 export default function EventProductListCard(props: { productTitle: string }) {
 
     const { baseUrl } = Config();

@@ -52,40 +52,6 @@ export default function CartList(props: { data: cartListType[] }) {
         setAllfrozenCount(amount)
     }, [FrozenItems])
 
-    // const [cartItems, setCartItems] = useRecoilState(cartListState);
-    // const [listAllCheck, setListAllCheck] = useState(false);
-    // const [listFreezeAllCheck, setListFreezeAllCheck] = useState(false);
-    // console.log('cartItems',cartItems)
-
-    // useEffect(() => {
-    //     let check = true
-    //     let freezeCheck = true
-    //     cartItems.cartList.find(item => item.check === false) ? check = false : check = true
-    //     cartItems.cartListFreeze.find(item => item.check === false) ? freezeCheck = false : freezeCheck = true
-    //     setListAllCheck(check)
-    //     setListFreezeAllCheck(freezeCheck)
-    // }, [cartItems])
-
-    // const handleCartListAllCheck = (check: boolean) => {
-    //     setListAllCheck(!check)
-    //     setCartItems({
-    //         ...cartItems,
-    //         cartList: cartItems.cartList.map((item: cartListType) => {
-    //             return { ...item, check: !check }
-    //         })
-    //     })
-    // }
-
-    // const handleFreezeCartListAllCheck = (check: boolean) => {
-    //     setListFreezeAllCheck(!check)
-    //     setCartItems({
-    //         ...cartItems,
-    //         cartListFreeze: cartItems.cartListFreeze.map((item: cartListType) => {
-    //             return { ...item, check: !check }
-    //         })
-    //     })
-    // }
-
     return (
         <>
             <section id="cart-list">

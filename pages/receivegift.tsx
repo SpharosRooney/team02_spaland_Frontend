@@ -8,13 +8,13 @@ export default function Receivegift() {
 
     const [itemlist, setitemlist] = useState<ProductListCardType[]>();
     const { baseUrl } = Config();
-    
+
     useEffect(() => {
         fetch(`${baseUrl}/v1/api/giftbox/1`)
             .then(res => res.json())
             .then(data => setitemlist(data))
     }, [baseUrl])
-    console.log('item',itemlist)
+    console.log('item', itemlist)
 
     return (
         <>
@@ -32,15 +32,15 @@ export default function Receivegift() {
             {
                 itemlist && itemlist.map(item => (
                     <>
-                    <p>{item.title}</p>
-                    <Image
-                        src= {item.imgUrl}
-                        width={20}
-                        height={20}
-                        alt= "item"
-                    />
+                        <p>{item.title}</p>
+                        <Image
+                            src={item.imgUrl}
+                            width={20}
+                            height={20}
+                            alt="item"
+                        />
                     </>
-                    )
+                )
                 )}
             <div>
 

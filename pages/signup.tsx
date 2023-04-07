@@ -1,6 +1,5 @@
 import { inputRegisterType } from '@/types/UserInformation/Information';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import Head from 'next/head';
 
 import Swal from 'sweetalert2';
 import Step01 from '@/components/page/signup/step01';

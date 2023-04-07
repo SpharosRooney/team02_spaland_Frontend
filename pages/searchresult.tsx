@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { eventProductType } from '@/types/fetchDataType';
 import Config from '@/configs/config.export';
 import Image from 'next/image';
-import ProductCategory from '@/components/widgets/ProductCategory';
 
 const SearchResult = () => {
     const router = useRouter();

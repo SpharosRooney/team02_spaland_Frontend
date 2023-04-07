@@ -98,35 +98,6 @@ export default function ProductOrderSection(props: Props) {
               });
             }
           });
-      // RequestCartInsert({
-      //   userId: isLogin.userId,
-      //   productId: props.productId,
-      //   count: countOf,
-      // })
-      //   .then((res) => {
-      //     Swal.fire({
-      //       toast: true,
-      //       text: "장바구니에 상품을 담았습니다.",
-      //       position: "top",
-      //       showConfirmButton: false,
-      //       timer: 2000,
-      //       timerProgressBar: true,
-      //       color: "#067040",
-              
-      //     });
-      //     setSuccessModal(true);
-      //     setIsOpen(false);
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //     if (err.data === "ERROR-BR-004") {
-      //       Swal.fire({
-      //         icon: "error",
-      //         title: "Error!",
-      //         text: "장바구니에 상품이 가득 찼습니다.",
-      //       });
-      //     }
-      //   });
     } else {
       Swal.fire({
         icon: "info",

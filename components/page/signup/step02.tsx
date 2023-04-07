@@ -5,7 +5,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Countdown from 'react-countdown';
 import { SignupErrType } from '@/types/signup/signErrType';
-import { error } from 'console';
 
 interface ChildProps {
     inputData: inputRegisterType;
@@ -39,16 +38,13 @@ const renderer = (props: {
 
 const Step02 = ({ inputData, setInputData }: ChildProps) => {
 
-    //countdown date = {Date.now() +}
     const [confirmTime, setConfirmTime] = useState<number>(1)
     const [confirmKey, setConfirmKey] = useState<string>("");
     const [confirmView, setConfirmView] = useState<boolean>(false);
     const [duplicateView, setDuplicateView] = useState<boolean>(false);
 
-    //create email regex code
     const expression: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/g;
     const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$^*])(?=.*[0-9]).{8,20}$/;
-    //최소 8자 이상, 최소 하나의 알파벳 문자가 포함, 최소 하나의 숫자, 특수문자가 포함.
 
     const [errMsg, setErrMsg] = useState<SignupErrType>({
         emailErr: "",
@@ -57,7 +53,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
         confirmKeyErr: ""
     });
 
-    const {baseUrl} = Config();
+    const { baseUrl } = Config();
 
     useEffect(() => {
         console.log(new Date())
@@ -68,7 +64,8 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (name === 'confirmKey') {
-            setConfirmKey(value)};
+            setConfirmKey(value)
+        };
 
         if (name === 'userEmail' && !expression.test(value)) {
             setErrMsg({ ...errMsg, emailErr: "이메일 형식이 올바르지 않습니다." })
@@ -91,15 +88,11 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             }
         }
 
-        if (name === 'userEmail' && expression.test(value)) {
-            // 이메일 중복확인
-            console.log('이메일 중복확인')
-        }
         setInputData({
             ...inputData,
             [name]: value,
         })
-        if(inputData.password === inputData.confirmPassword){
+        if (inputData.password === inputData.confirmPassword) {
             setErrMsg({ ...errMsg, confirmPasswordErr: "" })
         }
     }
@@ -119,7 +112,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
             return;
         }
         console.log("이메일 전송")
-        if(inputData.userEmail === ""){
+        if (inputData.userEmail === "") {
             Swal.fire({
                 icon: 'error',
                 text: '이메일을 입력해주세요.',
@@ -137,7 +130,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                 if (res.data === true) {
                     setConfirmView(true)
                     setDuplicateView(true)
-                    setErrMsg({ ...errMsg, emailErr: ""});
+                    setErrMsg({ ...errMsg, emailErr: "" });
                     Swal.fire({
                         icon: 'success',
                         text: `인증번호가 ${inputData.userEmail}로 전송되었습니다.`,
@@ -149,14 +142,14 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                 }
             })
             .catch((err) => {
-                 
-                 Swal.fire({
+
+                Swal.fire({
                     icon: 'error',
                     text: err.response.data.message,
                     customClass: {
                         confirmButton: 'swal-confirm-button'
                     }
-                 })
+                })
             })
     }
     const handleConfirmKey = () => {
@@ -173,7 +166,7 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                     ...inputData,
                     isUserConfirm: true,
                 });
-                setErrMsg({ ...errMsg, confirmKeyErr: ""})
+                setErrMsg({ ...errMsg, confirmKeyErr: "" })
                 Swal.fire({
                     icon: 'success',
                     text: '인증 완료되었습니다.',
@@ -226,7 +219,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             maxLength={11}
                             onChange={handleChange}
                         />
-                        {/* <button type="button" onClick={handlephone}>휴대폰 확인</button> */}
                     </div>
                     <div className="email-box">
                         <p>이메일 : </p>
@@ -301,7 +293,6 @@ const Step02 = ({ inputData, setInputData }: ChildProps) => {
                             onChange={handleChange}
                             maxLength={6}
                         />
-                        {/* <button type="button" onClick={handlenickname}>닉네임 확인</button> */}
                     </div>
                 </form>
                 <section id="nickname-notice-box">

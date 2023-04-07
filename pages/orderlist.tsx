@@ -2,9 +2,6 @@ import ModalBotHeader from '@/components/header/ModalBotHeader'
 import Accordion from '@/components/widgets/Accordion'
 import React from 'react'
 
-
-
-
 export default function orderlist() {
 
     return (

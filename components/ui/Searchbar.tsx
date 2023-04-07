@@ -19,7 +19,6 @@ const SearchBar = () => {
 
         try {
             await axios.get(`${baseUrl}/api/v1/product/get?query=${keyword.keyword}`);
-            // 검색 결과 페이지로 이동
 
             if(keyword.keyword === ""){
                 Swal.fire({
@@ -30,7 +29,6 @@ const SearchBar = () => {
                 })
             } else {
                 router.push(`searchresult?query=${keyword.keyword}`);
-                // 검색어를 localStorage에 저장
                 const keywords = JSON.parse(localStorage.getItem('keyword') || '[]');
                 keywords.unshift(keyword);
                 localStorage.setItem('keyword', JSON.stringify(keywords));
@@ -40,7 +38,6 @@ const SearchBar = () => {
     };
 
     const handleClose = () => {
-        // 검색창 닫기
         router.push('/')
     }
 

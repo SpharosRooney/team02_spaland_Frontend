@@ -14,7 +14,6 @@ import Image from 'next/image';
 export default function Login() {
 
     const router = useRouter();
-    // const Base_URL = Config().baseUrl;
     const [loginData, setLoginData] = useRecoilState<LoginRes>(userLoginState);
     const { baseUrl } = Config();
 
@@ -33,10 +32,7 @@ export default function Login() {
         setInputData({ ...inputData, [name]: value });
     };
 
-    //로그인 확인용
     const handleSubmit = (event: any) => {
-        // axios.defaults.baseURL = 'http://localhost:3000';
-
         event.preventDefault();
         console.log(inputData);
         if (inputData.userEmail === "" || inputData.password === "") {
@@ -64,9 +60,6 @@ export default function Login() {
                 const userNickname = res.data;
                 
                 const accessToken = res.headers.authorization;
-                // axios.defaults.headers.common[
-                //     "Authorization"
-                // ] = `Bearer ${accessToken}`;
                 
                 localStorage.setItem("userNickname", userNickname); 
                 localStorage.setItem("accessToken", accessToken); 

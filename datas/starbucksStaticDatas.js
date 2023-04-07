@@ -1,7 +1,3 @@
-// import searchIcon from '/assets/images/icons/search.svg';
-// import cartIcon from '/assets/images/icons/shopping-cart.svg';
-// import userIcon from '/assets/images/icons/user.svg';
-
 export const headerNavMenus = [
   {
     id: 1,

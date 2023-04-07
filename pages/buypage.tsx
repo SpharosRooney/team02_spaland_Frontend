@@ -14,7 +14,7 @@ export default function Buypage() {
         /* 1. 가맹점 식별하기 */
         const IMP = window.IMP;
         IMP.init("imp31284226"); // 가맹점 식별코드
-        
+
 
         /* 2. 결제 데이터 정의하기 */
         const data: RequestPayParams = {
@@ -75,7 +75,6 @@ export default function Buypage() {
                     <span>등록된 배송지가 없습니다.<p>배송지를 등록해주세요.</p></span>
                     <a href="address"><input type="button" className="address-btn" value="배송지 등록" /></a>
                 </div>
-                {/* <div className="item-information-box"> */}
                 <button>
                     <div className="item-information-btn">
                         <div className="item-span-b"><span><b>상품내역</b></span></div>
@@ -100,7 +99,6 @@ export default function Buypage() {
                         <div className='item-info-subject'><span><b>23 SS 체리 콕시클 라벤더 콜드컵 591ml</b></span></div>
                     </div>
                 </div>
-                {/* </div> */}
             </section>
 
             <section id="buy2">
@@ -193,102 +191,7 @@ export default function Buypage() {
                     <p>(전자상거래법 8조 2항)</p>
                 </section>
             </section>
-            <button style={{zIndex:"1"}} onClick={() => onClickPayment()}><FooterButton inputvalue='29,000원 결제하기' /> </button>
-
-            {/* <section id="buy2">
-            <div className="item-coupon-box">
-                <div><p>결제 수단</p></div>
-                <div>스타벅스 카드</div>
-                <div>신용카드</div>
-            </div>  
-        </section>
-        <section id="recommand-md">
-            <div style="border-bottom-style: solid;
-            border-width: 1px;
-            border-bottom-color: lightgray;">
-                <p style="font-size: 20px;"><b>결제 정보</b></p>
-                <div style="height: 30px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 18px;"><b>주문 금액</b></p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 20px;"><b>55,000원</b></p>
-                    </div>
-                </div>
-                <div className="item-coupon-box" style="height: 70px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 14px;">상품 금액</p>
-                        <p style="font-size: 14px;">배송비</p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 14px;"><b>55,000원</b></p>
-                        <p style="font-size: 14px; right:0px; position: absolute; top: 30px;"><b>0원</b></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="recommand-md">
-            <div style="    border-bottom-style: solid;
-            border-width: 1px;
-            border-bottom-color: lightgray; height: 90px;">
-                <div style="height: 30px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute; height: 90px;">
-                        <p style="font-size: 18px;"><b>할인 금액</b></p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 20px;"><b>0원</b></p>
-                    </div>
-                </div>
-                <div className="item-coupon-box" style="height: 70px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 14px;">상품 할인</p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 14px;"><b>0원</b></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="recommand-md">
-            <div style="    border-bottom-style: solid;
-            border-width: 1px;
-            border-bottom-color: lightgray; height: 90px;">
-                <div style="height: 30px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 18px;"><b>결제 금액</b></p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 20px;"><b>55,000원</b></p>
-                    </div>
-                </div>
-                <div className="item-coupon-box" style="height: 70px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 14px;">모바일 상품권</p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 14px;"><b>0원</b></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="recommand-md" style="margin-bottom: 50%;">
-            <div>
-                <div style="height: 30px; position: relative; margin: 10px;">
-                    <div style="left: 0px; position: absolute;">
-                        <p style="font-size: 30px;"><b>최종 결제 금액</b></p>
-                    </div>
-                    <div style="right:0px; position: absolute;">
-                        <p style="font-size: 30px;"><b>55,000원</b></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <footer className="buypage-footer">
-            <div className="buypage-buy-btn">
-                <p>구매하기</p>
-            </div>
-        </footer>
-  */}
+            <button style={{ zIndex: "1" }} onClick={() => onClickPayment()}><FooterButton inputvalue='29,000원 결제하기' /> </button>
         </div>
     )
 }
